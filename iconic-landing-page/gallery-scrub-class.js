@@ -6,7 +6,7 @@
  * `mount()` delegates to {@link createGalleryScrollScrub} from `gallery-scrub-factory.js` and stores the returned
  * `destroy` function. That keeps **one code path** for DOM resolution, cached refs, `onUpdate` transforms, and
  * optional viewport visibility — either **`onToggle` + `isActive`** or **geometry** via
- * **`viewportHideClearPastTopInsetPx`** (see factory JSDoc on `GalleryScrollScrubConfig`).
+ * **`viewportHideClearPastTopInsetPx`** (see {@link createGalleryScrollScrub} config in `gallery-scrub-factory.js`).
  *
  * ## Factory vs class
  *
@@ -28,7 +28,9 @@ export {
 } from "./gallery-scrub-factory.js";
 
 /**
- * @typedef {import('./gallery-scrub-factory.js').GalleryScrollScrubConfig} GalleryScrollScrubConfig
+ * First argument to {@link createGalleryScrollScrub} (see that function’s JSDoc in the factory file).
+ *
+ * @typedef {Parameters<typeof import('./gallery-scrub-factory.js').createGalleryScrollScrub>[0]} GalleryScrollChapterConfig
  */
 
 /**
@@ -37,12 +39,12 @@ export {
  */
 export class GalleryScrollScrub {
   /**
-   * @param {GalleryScrollScrubConfig} config - Same as {@link createGalleryScrollScrub}: `galleryId` and/or
+   * @param {GalleryScrollChapterConfig} config - Same as {@link createGalleryScrollScrub}: `galleryId` and/or
    *   `trigger` + `gridRoot`, motion overrides (`getMaxScale`, `sideTranslateMaxPx`, …), viewport visibility
    *   (`hideViewportWhenTrackInactive`, `viewportHideClearPastTopInsetPx`), and optional `scrollTrigger` extras.
    */
   constructor(config) {
-    /** @type {GalleryScrollScrubConfig} */
+    /** @type {GalleryScrollChapterConfig} */
     this._config = { ...config };
     /** @type {null | (() => void)} */
     this._teardown = null;

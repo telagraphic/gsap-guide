@@ -1,221 +1,226 @@
 /**
- * @fileoverview Factory API for a scroll-scrubbed image gallery driven by GSAP ScrollTrigger.
+ * Scrubbed gallery motion: one `ScrollTrigger` maps `progress` (0→1) to inline transforms on a cached grid.
+ * Layering, Lenis, and the scroll “ruler” vs fixed stage are documented in `ANIMATION.md`.
  *
- * ## How it fits together
+ * Core math (same intent as `script.js` reference — values tunable via `createGalleryScrollScrub` / `computeGalleryScrubTransforms`):
  *
- * - A **fixed** grid (`.gallery-grid`) sits in a **viewport frame** (`.gallery-viewport`) that clips overflow.
- * - An in-flow **scroll track** section (`.gallery-scroll-track`) does not contain the grid in the DOM; it only
- *   defines **how much vertical scroll** maps to ScrollTrigger `progress` from 0 → 1 (see ANIMATION.md).
- * - Lenis (configured once on the page) calls `ScrollTrigger.update` on scroll; this module only registers
- *   `ScrollTrigger.create` instances.
+ *   maxScale     = innerWidth < 900 ? 4 : 2.65
+ *   scale        = 1 + progress * maxScale          // grid: translate(-50%,-50%) scale(scale)
+ *   yTranslate   = progress * 300                   // side columns: translateY(yTranslate)
+ *   mainImgScale = 2 - progress * 0.85              // hero img: scale(...); 0.85 === (mainImgScaleStart − mainImgScaleEnd) i.e. 2 − 1.15
  *
- * ## Performance
- *
- * All DOM nodes used in `onUpdate` are resolved **once** when `createGalleryScrollScrub` runs. Each scroll tick
- * only runs math and assigns `transform` on those cached elements.
- *
- * ## Pairing multiple galleries
- *
- * Use the same `data-gallery-id` on the viewport block and its matching scroll track. Pass `galleryId` in
- * config (or explicit `trigger` / `gridRoot` selectors). Optional **`viewportHideClearPastTopInsetPx`** (with
- * **`hideViewportWhenTrackInactive`**) drives viewport `visibility` from the trigger’s bounding rect each
- * `onUpdate` so the fixed stage does not linger past the perceived end of the chapter.
+ * This module adds: resolve DOM once per chapter (`galleryId` / selectors), optional fixed-viewport visibility
+ * when multiple chapters stack, and GSAP registration from `globalThis` for the ES module entry.
  */
 
-const gsapGlobal = globalThis.gsap;
-const ScrollTriggerApi = globalThis.ScrollTrigger;
+// =============================================================================
+// GSAP plugin (must run after gsap + ScrollTrigger script tags in HTML)
+// =============================================================================
 
-if (!gsapGlobal || !ScrollTriggerApi) {
+const gsapFromWindow = globalThis.gsap;
+const scrollTriggerFromWindow = globalThis.ScrollTrigger;
+
+if (!gsapFromWindow || !scrollTriggerFromWindow) {
   throw new Error(
-    "[gallery-scrub-factory] Load gsap.min.js and ScrollTrigger.min.js before type=module entry (see index.html)."
+    "[gallery-scrub-factory] Load gsap.min.js and ScrollTrigger.min.js before the type=module entry (index.html)."
   );
 }
 
-gsapGlobal.registerPlugin(ScrollTriggerApi);
+gsapFromWindow.registerPlugin(scrollTriggerFromWindow);
+
+// =============================================================================
+// Public — math (pure, easy to test or reuse)
+// =============================================================================
 
 /**
- * Default breakpoint for stronger zoom on narrow viewports (matches original demo).
+ * Responsive zoom cap: stronger on narrow screens (original demo values).
  *
- * @param {number} screenWidth - Typically `window.innerWidth`.
- * @returns {number} Upper bound multiplier for gallery scale at progress === 1 (before the `1 + progress * maxScale` term).
+ * @param {number} viewportWidthPx
+ * @returns {number} Added to base scale as `1 + progress * maxScale` at full progress.
  */
-export function defaultGetMaxScale(screenWidth) {
-  return screenWidth < 900 ? 4 : 2.65;
+export function defaultGetMaxScale(viewportWidthPx) {
+  return viewportWidthPx < 900 ? 4 : 2.65;
 }
 
 /**
- * Pure math: maps normalized scroll progress and viewport width to transform inputs.
- * Variable names match ANIMATION.md (`maxScale`, `scale`, `yTranslate`, `mainImgScale`).
+ * Maps ScrollTrigger progress and viewport width to the three transform channels (see ANIMATION.md).
  *
- * @param {number} progress - ScrollTrigger `self.progress`, in the range [0, 1].
- * @param {number} screenWidth - Used with `getMaxScale` for responsive zoom cap.
- * @param {GalleryScrubComputeOptions} [options] - Optional overrides for motion extents.
- * @returns {GalleryScrubTransformState}
+ * @param {number} scrollProgress01 - `self.progress`, in [0, 1].
+ * @param {number} viewportWidthPx - Usually `window.innerWidth`.
+ * @param {object} [motionOverrides]
+ * @param {(w: number) => number} [motionOverrides.getMaxScale]
+ * @param {number} [motionOverrides.sideTranslateMaxPx=300]
+ * @param {number} [motionOverrides.mainImgScaleStart=2]
+ * @param {number} [motionOverrides.mainImgScaleEnd=1.15]
+ * @returns {{ maxScale: number, scale: number, yTranslate: number, mainImgScale: number }}
  */
-export function computeGalleryScrubTransforms(progress, screenWidth, options = {}) {
-  const getMaxScale = options.getMaxScale ?? defaultGetMaxScale;
-  const sideTranslateMaxPx = options.sideTranslateMaxPx ?? 300;
-  const mainImgScaleStart = options.mainImgScaleStart ?? 2;
-  const mainImgScaleEnd = options.mainImgScaleEnd ?? 1.15;
+export function computeGalleryScrubTransforms(scrollProgress01, viewportWidthPx, motionOverrides = {}) {
+  const getMaxScale = motionOverrides.getMaxScale ?? defaultGetMaxScale;
+  const sideTranslateMaxPx = motionOverrides.sideTranslateMaxPx ?? 300;
+  const mainImgScaleStart = motionOverrides.mainImgScaleStart ?? 2;
+  const mainImgScaleEnd = motionOverrides.mainImgScaleEnd ?? 1.15;
 
-  const maxScale = getMaxScale(screenWidth);
-  const scale = 1 + progress * maxScale;
-  const yTranslate = progress * sideTranslateMaxPx;
+  const maxScale = getMaxScale(viewportWidthPx);
+  const scale = 1 + scrollProgress01 * maxScale;
+  const yTranslate = scrollProgress01 * sideTranslateMaxPx;
   const mainImgDelta = mainImgScaleStart - mainImgScaleEnd;
-  const mainImgScale = mainImgScaleStart - progress * mainImgDelta;
+  const mainImgScale = mainImgScaleStart - scrollProgress01 * mainImgDelta;
 
   return { maxScale, scale, yTranslate, mainImgScale };
 }
 
-/**
- * @typedef {Object} GalleryScrubComputeOptions
- * @property {(screenWidth: number) => number} [getMaxScale]
- * @property {number} [sideTranslateMaxPx]
- * @property {number} [mainImgScaleStart]
- * @property {number} [mainImgScaleEnd]
- */
+// =============================================================================
+// Private — write transforms to the cached column / hero nodes
+// =============================================================================
 
 /**
- * @typedef {Object} GalleryScrubTransformState
- * @property {number} maxScale
- * @property {number} scale
- * @property {number} yTranslate
- * @property {number} mainImgScale
+ * @param {{ gridRoot: HTMLElement, sideColumns: NodeListOf<HTMLElement>, mainHeroImg: HTMLElement }} transformTargets
+ * @param {{ scale: number, yTranslate: number, mainImgScale: number }} computedMotion
  */
-
-/**
- * @typedef {Object} GalleryScrubRefs
- * @property {HTMLElement} gridRoot
- * @property {NodeListOf<HTMLElement>} sideColumns
- * @property {HTMLElement} mainHeroImg
- */
-
-/**
- * @typedef {Object} GalleryScrollScrubConfig
- * @property {string|number} [galleryId] - When set, selects `.gallery-scroll-track[data-gallery-id]` and
- *   `.gallery-viewport[data-gallery-id] .gallery-grid` unless `trigger` / `gridRoot` override them.
- * @property {Element|string} [trigger] - ScrollTrigger `trigger` element (in-flow scroll ruler).
- * @property {Element|string} [gridRoot] - Fixed grid whose `transform` includes centering translate + scale.
- * @property {string} [sideColumnSelector='.gallery-col:not(.gallery-col--main)'] - Query relative to `gridRoot`.
- * @property {string} [mainHeroImgSelector='.gallery-tile--hero img'] - Center column hero image; relative to `gridRoot`.
- * @property {number} [scrub=1] - ScrollTrigger scrub lag (see GSAP docs).
- * @property {string} [start='top bottom'] - ScrollTrigger start string.
- * @property {string} [end='bottom bottom'] - ScrollTrigger end string.
- * @property {(w: number) => number} [getMaxScale]
- * @property {number} [sideTranslateMaxPx=300]
- * @property {number} [mainImgScaleStart=2]
- * @property {number} [mainImgScaleEnd=1.15]
- * @property {Element|string|null} [viewportFrame] - Optional clipping frame; used when `hideViewportWhenTrackInactive` is true.
- *   If omitted, `gridRoot.closest('.gallery-viewport')` is used when hiding is enabled.
- * @property {boolean} [hideViewportWhenTrackInactive=false] - When true, toggles `visibility` on the viewport so multiple
- *   fixed galleries do not stack. How visibility is computed depends on `viewportHideClearPastTopInsetPx` (see below).
- * @property {number|null} [viewportHideClearPastTopInsetPx=null] - When `hideViewportWhenTrackInactive` is true **and**
- *   this is a finite number (e.g. `100`), visibility is updated every `onUpdate` from the trigger’s layout box:
- *   **show** while `getBoundingClientRect().bottom > inset` **and** the trigger still intersects the viewport vertically
- *   (`rect.top < window.innerHeight`). **Hide** once the bottom edge has scrolled to or above that Y offset from the
- *   viewport top (0 = flush with top edge). This avoids a brief wrong frame when `onToggle` / `isActive` and perceived
- *   “track has left the screen” disagree (e.g. Lenis + scrub). When `null`, visibility uses **`onToggle` + `isActive`** only.
- * @property {Object} [scrollTrigger] - Additional options passed to `ScrollTrigger.create` (e.g. `onEnter`, `markers`).
- */
-
-/**
- * @param {GalleryScrubRefs} refs
- * @param {GalleryScrubTransformState} state
- */
-function applyGalleryScrubTransforms(refs, state) {
-  const { gridRoot, sideColumns, mainHeroImg } = refs;
-  const { scale, yTranslate, mainImgScale } = state;
+function writeGalleryScrubTransformsToDom(transformTargets, computedMotion) {
+  const { gridRoot, sideColumns, mainHeroImg } = transformTargets;
+  const { scale, yTranslate, mainImgScale } = computedMotion;
 
   gridRoot.style.transform = `translate(-50%, -50%) scale(${scale})`;
-  sideColumns.forEach((col) => {
-    col.style.transform = `translateY(${yTranslate}px)`;
+  sideColumns.forEach((columnElement) => {
+    columnElement.style.transform = `translateY(${yTranslate}px)`;
   });
   mainHeroImg.style.transform = `scale(${mainImgScale})`;
 }
 
+// =============================================================================
+// Private — resolve elements from config / gallery id
+// =============================================================================
+
 /**
- * @param {Element|string} target
+ * @param {Element|string} selectorOrElement
  * @returns {HTMLElement}
  */
-function resolveElement(target) {
-  if (typeof target === "string") {
-    const el = document.querySelector(target);
-    if (!el) {
-      throw new Error(`[gallery-scrub-factory] No element matching selector: ${target}`);
+function getHTMLElementFromSelectorOrElement(selectorOrElement) {
+  if (typeof selectorOrElement === "string") {
+    const found = document.querySelector(selectorOrElement);
+    if (!found) {
+      throw new Error(`[gallery-scrub-factory] No element for selector: ${selectorOrElement}`);
     }
-    return /** @type {HTMLElement} */ (el);
+    return /** @type {HTMLElement} */ (found);
   }
-  if (target instanceof HTMLElement) return target;
+  if (selectorOrElement instanceof HTMLElement) return selectorOrElement;
   throw new Error("[gallery-scrub-factory] Expected HTMLElement or selector string");
 }
 
 /**
- * Builds selector-safe attribute fragment for `[data-gallery-id="…"]`.
- *
  * @param {string|number} galleryId
- * @returns {string}
+ * @returns {string} Safe for use inside `[data-gallery-id="…"]`
  */
-function galleryIdAttrSelector(galleryId) {
-  const id = String(galleryId);
+function escapeGalleryIdForCssAttribute(galleryId) {
+  const asString = String(galleryId);
   if (typeof CSS !== "undefined" && typeof CSS.escape === "function") {
-    return CSS.escape(id);
+    return CSS.escape(asString);
   }
-  return id.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  return asString.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
 
 /**
- * Resolves `trigger`, `gridRoot`, and optional `viewportFrame` from `galleryId` and/or explicit elements.
+ * Finds the in-flow scroll track, the fixed grid root, and the clipping viewport for one chapter.
  *
- * @param {GalleryScrollScrubConfig} config
- * @returns {{ triggerEl: HTMLElement, gridRootEl: HTMLElement, viewportFrameEl: HTMLElement|null }}
+ * @param {object} chapterConfig
+ * @param {string|number} [chapterConfig.galleryId]
+ * @param {Element|string} [chapterConfig.trigger]
+ * @param {Element|string} [chapterConfig.gridRoot]
+ * @param {Element|string|null} [chapterConfig.viewportFrame]
+ * @returns {{ scrollTrackElement: HTMLElement, gridRootElement: HTMLElement, viewportClipElement: HTMLElement|null }}
  */
-function resolveGalleryElements(config) {
-  const { galleryId, trigger, gridRoot, viewportFrame } = config;
+function findChapterElementsFromConfig(chapterConfig) {
+  const { galleryId, trigger, gridRoot, viewportFrame } = chapterConfig;
 
   if (galleryId != null && String(galleryId).length > 0) {
-    const idSel = galleryIdAttrSelector(galleryId);
-    const triggerSelector = `.gallery-scroll-track[data-gallery-id="${idSel}"]`;
-    const viewportSelector = `.gallery-viewport[data-gallery-id="${idSel}"]`;
-    const gridSelector = `${viewportSelector} .gallery-grid`;
+    const escapedId = escapeGalleryIdForCssAttribute(galleryId);
+    const scrollTrackSelector = `.gallery-scroll-track[data-gallery-id="${escapedId}"]`;
+    const viewportSelector = `.gallery-viewport[data-gallery-id="${escapedId}"]`;
+    const gridUnderViewportSelector = `${viewportSelector} .gallery-grid`;
 
-    const triggerEl = resolveElement(trigger ?? triggerSelector);
-    const gridRootEl = resolveElement(gridRoot ?? gridSelector);
+    const scrollTrackElement = getHTMLElementFromSelectorOrElement(trigger ?? scrollTrackSelector);
+    const gridRootElement = getHTMLElementFromSelectorOrElement(gridRoot ?? gridUnderViewportSelector);
 
-    let viewportFrameEl = null;
+    let viewportClipElement = null;
     if (viewportFrame != null && viewportFrame !== "auto") {
-      viewportFrameEl = resolveElement(viewportFrame);
+      viewportClipElement = getHTMLElementFromSelectorOrElement(viewportFrame);
     } else {
-      viewportFrameEl = gridRootEl.closest(".gallery-viewport");
+      viewportClipElement = gridRootElement.closest(".gallery-viewport");
     }
 
-    return { triggerEl, gridRootEl, viewportFrameEl };
+    return { scrollTrackElement, gridRootElement, viewportClipElement };
   }
 
   if (trigger == null || gridRoot == null) {
-    throw new Error(
-      "[gallery-scrub-factory] Provide `galleryId`, or both `trigger` and `gridRoot`"
-    );
+    throw new Error("[gallery-scrub-factory] Set `galleryId`, or both `trigger` and `gridRoot`.");
   }
 
-  const triggerEl = resolveElement(trigger);
-  const gridRootEl = resolveElement(gridRoot);
+  const scrollTrackElement = getHTMLElementFromSelectorOrElement(trigger);
+  const gridRootElement = getHTMLElementFromSelectorOrElement(gridRoot);
 
-  let viewportFrameEl = null;
+  let viewportClipElement = null;
   if (viewportFrame != null && viewportFrame !== "auto") {
-    viewportFrameEl = resolveElement(viewportFrame);
+    viewportClipElement = getHTMLElementFromSelectorOrElement(viewportFrame);
   }
 
-  return { triggerEl, gridRootEl, viewportFrameEl };
+  return { scrollTrackElement, gridRootElement, viewportClipElement };
 }
 
+// =============================================================================
+// Private — fixed viewport visibility (stacking + “track has left the screen”)
+// =============================================================================
+
 /**
- * Creates one scrubbed gallery ScrollTrigger instance: caches DOM, wires `onUpdate` + optional viewport visibility
- * (`onToggle` and/or geometry from `viewportHideClearPastTopInsetPx`).
+ * When `useBoundingRectVisibility` is true, show the fixed viewport only while the scroll track still crosses
+ * the window vertically and its bottom edge is below `clearPastTopInsetPx` (viewport coordinates).
  *
- * @param {GalleryScrollScrubConfig} config
- * @returns {{ destroy: () => void, scrollTrigger: object }} scrollTrigger is the GSAP ScrollTrigger instance
+ * @param {object} args
+ * @param {HTMLElement|null} args.fixedViewportToShowOrHide
+ * @param {HTMLElement} args.scrollTrackTriggerElement
+ * @param {boolean} args.useBoundingRectVisibility
+ * @param {number} args.clearPastTopInsetPx
  */
-export function createGalleryScrollScrub(config) {
+function applyGeometryBasedViewportVisibility(args) {
+  const { fixedViewportToShowOrHide, scrollTrackTriggerElement, useBoundingRectVisibility, clearPastTopInsetPx } =
+    args;
+
+  if (!fixedViewportToShowOrHide || !useBoundingRectVisibility) return;
+
+  const trackRect = scrollTrackTriggerElement.getBoundingClientRect();
+  const viewportHeightPx = window.innerHeight;
+  const trackStillCrossesWindowVertically = trackRect.top < viewportHeightPx;
+  const trackBottomStillBelowTopInset = trackRect.bottom > clearPastTopInsetPx;
+  const shouldShowFixedViewport = trackStillCrossesWindowVertically && trackBottomStillBelowTopInset;
+
+  fixedViewportToShowOrHide.style.visibility = shouldShowFixedViewport ? "visible" : "hidden";
+}
+
+// =============================================================================
+// Public — factory (one ScrollTrigger per call)
+// =============================================================================
+
+/**
+ * Registers one scrubbed gallery: caches DOM once, updates transforms on scroll, optionally toggles viewport visibility.
+ *
+ * **Config fields**
+ *
+ * - `galleryId` (optional) — Selects `.gallery-scroll-track[data-gallery-id]` and `.gallery-viewport … .gallery-grid`
+ *   unless `trigger` / `gridRoot` override.
+ * - `trigger`, `gridRoot` — Explicit elements or selectors if you skip `galleryId`.
+ * - `sideColumnSelector`, `mainHeroImgSelector` — Queries under `gridRoot` (defaults match iconic markup).
+ * - `scrub`, `start`, `end` — Passed to `ScrollTrigger.create`.
+ * - `getMaxScale`, `sideTranslateMaxPx`, `mainImgScaleStart`, `mainImgScaleEnd` — Motion overrides.
+ * - `viewportFrame` — Optional clip frame; else `gridRoot.closest('.gallery-viewport')`.
+ * - `hideViewportWhenTrackInactive` — When true, drive `visibility` on that viewport so fixed chapters do not stack.
+ * - `viewportHideClearPastTopInsetPx` — When this is a finite number **and** `hideViewportWhenTrackInactive`, use
+ *   bounding-rect visibility every `onUpdate` (and `onRefresh`); when `null`, use `onToggle` + `isActive` only.
+ * - `scrollTrigger` — Extra options for `ScrollTrigger.create` (merged; your `onRefresh` runs after ours).
+ *
+ * @param {object} chapterConfig
+ * @returns {{ destroy: () => void, scrollTrigger: object }}
+ */
+export function createGalleryScrollScrub(chapterConfig) {
   const {
     sideColumnSelector = ".gallery-col:not(.gallery-col--main)",
     mainHeroImgSelector = ".gallery-tile--hero img",
@@ -228,93 +233,92 @@ export function createGalleryScrollScrub(config) {
     mainImgScaleEnd = 1.15,
     hideViewportWhenTrackInactive = false,
     viewportHideClearPastTopInsetPx = null,
-    scrollTrigger: scrollTriggerExtras = {},
-  } = config;
+    scrollTrigger: extraScrollTriggerOptions = {},
+  } = chapterConfig;
 
-  const { triggerEl, gridRootEl, viewportFrameEl } = resolveGalleryElements(config);
+  const { scrollTrackElement, gridRootElement, viewportClipElement } =
+    findChapterElementsFromConfig(chapterConfig);
 
-  const sideColumns = gridRootEl.querySelectorAll(sideColumnSelector);
-  const mainHeroImg = gridRootEl.querySelector(mainHeroImgSelector);
-  if (!mainHeroImg) {
+  const sideColumnNodeList = gridRootElement.querySelectorAll(sideColumnSelector);
+  const mainHeroImageElement = gridRootElement.querySelector(mainHeroImgSelector);
+  if (!mainHeroImageElement) {
     throw new Error(
-      `[gallery-scrub-factory] Missing hero img for selector "${mainHeroImgSelector}" under grid`
+      `[gallery-scrub-factory] Missing hero image for selector "${mainHeroImgSelector}" under the grid.`
     );
   }
 
-  /** @type {GalleryScrubRefs} */
-  const refs = {
-    gridRoot: gridRootEl,
-    sideColumns: /** @type {NodeListOf<HTMLElement>} */ (sideColumns),
-    mainHeroImg: /** @type {HTMLElement} */ (mainHeroImg),
+  const transformTargets = {
+    gridRoot: gridRootElement,
+    sideColumns: /** @type {NodeListOf<HTMLElement>} */ (sideColumnNodeList),
+    mainHeroImg: /** @type {HTMLElement} */ (mainHeroImageElement),
   };
 
-  const computeOpts = {
+  const motionOptionsForCompute = {
     getMaxScale,
     sideTranslateMaxPx,
     mainImgScaleStart,
     mainImgScaleEnd,
   };
 
-  const viewportForVisibility =
-    hideViewportWhenTrackInactive && viewportFrameEl ? viewportFrameEl : null;
+  const fixedViewportElementForVisibility =
+    hideViewportWhenTrackInactive && viewportClipElement ? viewportClipElement : null;
 
-  const useGeometryVisibility =
-    Boolean(viewportForVisibility) &&
+  const shouldUseBoundingRectForVisibility =
+    Boolean(fixedViewportElementForVisibility) &&
     typeof viewportHideClearPastTopInsetPx === "number" &&
     Number.isFinite(viewportHideClearPastTopInsetPx);
 
-  const pastTopInsetPx = useGeometryVisibility ? viewportHideClearPastTopInsetPx : 0;
+  const visibilityInsetPx = shouldUseBoundingRectForVisibility ? viewportHideClearPastTopInsetPx : 0;
 
-  /**
-   * Keeps the fixed gallery clipped to moments when the in-flow track still “owns” the vertical band
-   * of the viewport, and hides once the track’s bottom edge clears past `pastTopInsetPx` from the top.
-   */
-  function syncViewportVisibilityFromTriggerGeometry() {
-    if (!viewportForVisibility || !useGeometryVisibility) return;
-    const r = triggerEl.getBoundingClientRect();
-    const vh = window.innerHeight;
-    const intersectsViewportVertically = r.top < vh;
-    const trackBottomBelowInset = r.bottom > pastTopInsetPx;
-    const show = intersectsViewportVertically && trackBottomBelowInset;
-    viewportForVisibility.style.visibility = show ? "visible" : "hidden";
+  function syncViewportVisibilityForThisChapter() {
+    applyGeometryBasedViewportVisibility({
+      fixedViewportToShowOrHide: fixedViewportElementForVisibility,
+      scrollTrackTriggerElement: scrollTrackElement,
+      useBoundingRectVisibility: shouldUseBoundingRectForVisibility,
+      clearPastTopInsetPx: visibilityInsetPx,
+    });
   }
 
-  const { onRefresh: userOnRefresh, ...restScrollTrigger } = scrollTriggerExtras;
+  const { onRefresh: userProvidedOnRefresh, ...scrollTriggerOptionsWithoutOnRefresh } = extraScrollTriggerOptions;
 
-  const st = ScrollTriggerApi.create({
-    trigger: triggerEl,
+  const scrollTriggerInstance = scrollTriggerFromWindow.create({
+    trigger: scrollTrackElement,
     start,
     end,
     scrub,
-    ...restScrollTrigger,
-    onUpdate(self) {
-      const progress = self.progress;
-      const screenWidth = window.innerWidth;
-      const state = computeGalleryScrubTransforms(progress, screenWidth, computeOpts);
-      applyGalleryScrubTransforms(refs, state);
-      syncViewportVisibilityFromTriggerGeometry();
+    ...scrollTriggerOptionsWithoutOnRefresh,
+    onUpdate(scrollTriggerSelf) {
+      const scrollProgress01 = scrollTriggerSelf.progress;
+      const viewportWidthPx = window.innerWidth;
+      const computedMotion = computeGalleryScrubTransforms(
+        scrollProgress01,
+        viewportWidthPx,
+        motionOptionsForCompute
+      );
+      writeGalleryScrubTransformsToDom(transformTargets, computedMotion);
+      syncViewportVisibilityForThisChapter();
     },
-    onToggle(self) {
-      if (viewportForVisibility && !useGeometryVisibility) {
-        viewportForVisibility.style.visibility = self.isActive ? "visible" : "hidden";
+    onToggle(scrollTriggerSelf) {
+      if (fixedViewportElementForVisibility && !shouldUseBoundingRectForVisibility) {
+        fixedViewportElementForVisibility.style.visibility = scrollTriggerSelf.isActive ? "visible" : "hidden";
       }
     },
-    onRefresh(self) {
-      syncViewportVisibilityFromTriggerGeometry();
-      if (typeof userOnRefresh === "function") {
-        userOnRefresh(self);
+    onRefresh(scrollTriggerSelf) {
+      syncViewportVisibilityForThisChapter();
+      if (typeof userProvidedOnRefresh === "function") {
+        userProvidedOnRefresh(scrollTriggerSelf);
       }
     },
   });
 
   requestAnimationFrame(() => {
-    syncViewportVisibilityFromTriggerGeometry();
+    syncViewportVisibilityForThisChapter();
   });
 
   return {
-    scrollTrigger: st,
+    scrollTrigger: scrollTriggerInstance,
     destroy() {
-      st.kill();
+      scrollTriggerInstance.kill();
     },
   };
 }
