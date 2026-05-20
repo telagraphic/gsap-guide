@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --font-sans-serif: var(--font-giest);
+}
+
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  color-scheme: dark;
+  background-color: #000;
+  color: #fff;
+  font-synthesis: none;
+}
+
+.page .frame {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #000;
+}
+
+.page .frame__headline {
+  margin: 0;
+  text-transform: uppercase;
+  max-width: 14ch;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-align: center;
+  /* text-wrap: balance; */
+  font-family: var(--font-sans-serif);
+}

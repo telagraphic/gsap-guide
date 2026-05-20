@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP SplitText — Body Copy</title>
+    <link rel="stylesheet" href="fonts.css" />
+    <link rel="stylesheet" href="body.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="frame frame--1" aria-label="Frame 1">
+        <p class="frame__copy" data-split>
+          GSAP SplitText breaks a DOM element into characters, words, and lines so you can
+          animate typography with precise control. A character reveal staggers each letter into
+          place—ideal for hero copy, editorial intros, and scroll-driven storytelling when paired
+          with ScrollTrigger.
+        </p>
+      </section>
+      <section class="frame frame--2" aria-label="Frame 2">
+        <p class="frame__copy" data-split>
+          SplitText can wrap words in masks, letting you slide or clip content without splitting
+          your markup by hand. Word-level masks pair naturally with staggered tweens: each word
+          moves on its own timeline while ScrollTrigger scrubs progress as you move through the
+          section.
+        </p>
+      </section>
+      <section class="frame frame--3" aria-label="Frame 3">
+        <p class="frame__copy" data-split>
+          Beyond position and opacity, SplitText targets are plain elements—filters, blur, and
+          scale all work per word. Stagger spreads the motion across the phrase so the paragraph
+          feels rhythmic instead of monolithic, which reads better on long body copy like this.
+        </p>
+      </section>
+      <section class="frame frame--4" aria-label="Frame 4">
+        <p class="frame__copy" data-split>
+          You can split by characters and words in one pass, then animate both sets for layered
+          motion. Smart splitting respects nested tags and responsive reflow; autoSplit re-runs
+          when the layout changes so line breaks stay accurate after fonts load and the viewport
+          resizes.
+        </p>
+      </section>
+      <section class="frame frame--5" aria-label="Frame 5">
+        <p class="frame__copy" data-split>
+          Line-based splits are sensitive to font metrics—always wait for document.fonts.ready
+          before measuring. Animate lines with staggered from-tweens and scrollTrigger on the
+          tween, not inside onEnter, so initial styles apply before the first paint and the
+          reveal does not flash finished.
+        </p>
+      </section>
+      <section class="frame frame--6" aria-label="Frame 6">
+        <p class="frame__copy" data-split>
+          Line masks clip overflowing content so reveals feel like curtains rising on each row.
+          Combine words and lines when you need per-line masking with word-level nuance inside
+          long paragraphs. Revert splits on cleanup to restore accessible, semantic HTML when
+          animations unmount.
+        </p>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+    <script src="body.js" defer></script>
+  </body>
+</html>
