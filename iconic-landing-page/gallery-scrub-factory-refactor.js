@@ -25,12 +25,20 @@ if (!gsapFromWindow || !scrollTriggerPlugin) {
 
 gsapFromWindow.registerPlugin(scrollTriggerPlugin);
 
-/** @param {number} viewportWidthPx */
+/** 
+ * Returns the default maximum scale for the gallery.
+ * 
+ * @param {number} viewportWidthPx
+ * @returns {number}
+ * */
 function defaultGetMaxScale(viewportWidthPx) {
   return viewportWidthPx < 900 ? 4 : 2.65;
 }
 
 /**
+ * Rename to something simpler like `resolveGalleryElements`.
+ * Finds the scroll track, grid root, and viewport for a gallery chapter.
+ * What is the track, viewport in the DOM? Should rename to be simpler and clearer.
  * @param {string | number} galleryId
  * @returns {{ scrollTrack: HTMLElement, gridRoot: HTMLElement, viewport: HTMLElement }}
  */

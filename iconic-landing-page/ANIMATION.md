@@ -2,7 +2,7 @@
 
 This document explains **layering**, **timing**, **what transforms change**, and **how centering + sizing** work together so you can re-read it later and **recreate or adapt** the effect.
 
-**Source files:** `index.html`, `styles.css`, `main.js` (Lenis + `ScrollTrigger.refresh` wiring), `gallery-scrub-factory.js` / `gallery-scrub-class.js` (scrub logic). Pair chapters with **`data-gallery-id`** on `.gallery-viewport` and `.gallery-scroll-track`.
+**Source files:** `index.html`, `styles.css`, `main.js` (Lenis + `ScrollTrigger.refresh` wiring), `gallery-scrub-factory-refactor.js` (scrub logic). Pair chapters with **`data-gallery-id`** on `.gallery-viewport` and `.gallery-scroll-track`. For a teaching-oriented walkthrough from `script.js` through the refactor (including metaphors and a step-by-step pattern to reuse), see **`REFACTOR_GUIDE.md`**. Older reference implementations: `gallery-scrub-factory.js`, `gallery-scrub-class.js`.
 
 ---
 
@@ -240,3 +240,10 @@ If you only duplicated **`.gallery-viewport`** with a new id and skipped the tra
 ---
 
 *End of reference.*
+
+
+
+
+
+
+
