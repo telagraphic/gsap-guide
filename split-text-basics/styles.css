@@ -6,6 +6,10 @@
 
 :root {
   --font-sans-serif: var(--font-giest);
+  --playground-line-height: 1.05;
+  --playground-letter-spacing: -0.02em;
+  --playground-text-align: center;
+  --playground-text-transform: uppercase;
 }
 
 
@@ -35,13 +39,13 @@ body {
 
 .page .frame__headline {
   margin: 0;
-  text-transform: uppercase;
+  text-transform: var(--playground-text-transform);
   max-width: 14ch;
   font-size: clamp(2.5rem, 8vw, 6rem);
   font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-align: center;
+  line-height: var(--playground-line-height);
+  letter-spacing: var(--playground-letter-spacing);
+  text-align: var(--playground-text-align);
   /* text-wrap: balance; */
   font-family: var(--font-sans-serif);
 }

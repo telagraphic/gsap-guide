@@ -21,11 +21,19 @@ Use static weight/style files instead of `[wght]` variable fonts for reliable lo
 node generate-fonts.mjs
 ```
 
+## Docs
+
+| File | Notes |
+|------|--------|
+| `SPLITTEXT_GUIDE.md` | SplitText API and patterns |
+| `EDGE_CASES.md` | Line-mask clipping, font metrics (ink vs line box), CSS mitigations |
+
 ## Pages
 
 | File | Script | Notes |
 |------|--------|--------|
 | `index.html` | `script.js` | Starter / headline experiments |
+| `controls.html` | `controls.js` | Headline playground + `Shift+C` typography/split panel |
 | `body.html` | `body.js` | Paragraph copy, frames 2–6 demos |
 
 ## Start dev server
@@ -35,8 +43,9 @@ node generate-fonts.mjs
 ```bash
 cd split-text-basics
 python3 -m http.server 8000
-# http://localhost:8000/          → index.html
-# http://localhost:8000/body.html → body copy demos
+# http://localhost:8000/            → index.html
+# http://localhost:8000/controls.html → playground controls (Shift+C)
+# http://localhost:8000/body.html   → body copy demos
 ```
 
 Or use the helper script from the repo root:

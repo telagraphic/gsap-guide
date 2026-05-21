@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP SplitText — Playground Controls</title>
+    <link rel="stylesheet" href="fonts.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="controls.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="frame frame--1" aria-label="Frame 1">
+        <h1 class="frame__headline" data-split>Character Reveal Text</h1>
+      </section>
+      <section class="frame frame--2" aria-label="Frame 2">
+        <h1 class="frame__headline" data-split>Word stagger mask reveal text animation</h1>
+      </section>
+      <section class="frame frame--3" aria-label="Frame 3">
+        <h1 class="frame__headline" data-split>Word stagger by stagger by filter</h1>
+      </section>
+      <section class="frame frame--4" aria-label="Frame 4">
+        <h1 class="frame__headline" data-split>Target Every Character and Word in this Paragraph</h1>
+      </section>
+      <section class="frame frame--5" aria-label="Frame 5">
+        <h1 class="frame__headline" data-split>Animate the line stagger and reveal</h1>
+      </section>
+      <section class="frame frame--6" aria-label="Frame 6">
+        <h1 class="frame__headline" data-split>Apply a mask to the line and reveal</h1>
+      </section>
+    </main>
+
+    <header
+      id="controls-panel"
+      class="controls-bar"
+      hidden
+      aria-hidden="true"
+      role="region"
+      aria-label="SplitText playground controls"
+    >
+      <div class="controls-bar__inner">
+        <form class="controls-bar__form" id="controls-form">
+          <label class="controls-bar__field">
+            <span class="controls-bar__control-wrap">
+              <select id="controls-font" name="font"></select>
+            </span>
+          </label>
+
+          <label class="controls-bar__field">
+            <span class="controls-bar__control-wrap">
+              <span class="controls-bar__label">
+                <output id="controls-line-height-value" for="controls-line-height">1.05</output>
+              </span>
+              <input
+                type="range"
+                id="controls-line-height"
+                name="lineHeight"
+                min="0.8"
+                max="2"
+                step="0.05"
+                value="1.05"
+              />
+            </span>
+          </label>
+
+          <label class="controls-bar__field">
+            <span class="controls-bar__control-wrap">
+              <span class="controls-bar__label">
+                <output id="controls-letter-spacing-value" for="controls-letter-spacing">-0.02em</output>
+              </span>
+              <input
+                type="range"
+                id="controls-letter-spacing"
+                name="letterSpacing"
+                min="-0.1"
+                max="0.2"
+                step="0.01"
+                value="-0.02"
+              />
+            </span>
+          </label>
+
+          <label class="controls-bar__field">
+            <span class="controls-bar__control-wrap">
+              <select id="controls-text-align" name="textAlign">
+                <option value="left">LEFT</option>
+                <option value="center" selected>CENTER</option>
+                <option value="right">RIGHT</option>
+                <option value="justify">JUSTIFY</option>
+              </select>
+            </span>
+          </label>
+
+          <label class="controls-bar__field">
+            <span class="controls-bar__control-wrap">
+              <select id="controls-text-transform" name="textTransform">
+                <option value="none">NONE</option>
+                <option value="uppercase" selected>UPPER</option>
+                <option value="lowercase">LOWER</option>
+                <option value="capitalize">CAPITALIZE</option>
+              </select>
+            </span>
+          </label>
+
+          <label class="controls-bar__field">
+            <span class="controls-bar__control-wrap">
+              <select id="controls-split-type" name="splitType">
+                <option value="chars">CHARS</option>
+                <option value="words" selected>WORDS</option>
+                <option value="lines">LINES</option>
+              </select>
+            </span>
+          </label>
+        </form>
+      </div>
+    </header>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+    <script>
+      window.__splitTextPlayground = true;
+    </script>
+    <script src="script.js" defer></script>
+    <script src="controls.js" defer></script>
+  </body>
+</html>
