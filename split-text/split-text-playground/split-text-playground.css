@@ -50,7 +50,7 @@
   min-height: 3.5rem;
   padding: 0.875rem 2.5rem;
   border-radius: var(--controls-radius);
-  background: var(--controls-bg);
+  /* background: var(--controls-bg); */
   color: var(--controls-text);
   box-sizing: border-box;
   outline: none;
@@ -88,6 +88,7 @@
   transition: background-color 0.15s ease;
 }
 
+.controls-bar__control-wrap:hover,
 .controls-bar__control-wrap:focus-within {
   background: var(--controls-chip-bg-focus);
 }
@@ -105,7 +106,11 @@
 }
 
 .controls-bar__label output {
+  display: inline-block;
+  min-width: 5ch;
+  text-align: right;
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
   font-weight: 500;
   color: var(--controls-text-muted);
 }
@@ -183,16 +188,27 @@
 }
 
 .controls-bar__copy-btn {
-  padding: 0.4rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.375rem;
+  height: 2.375rem;
+  padding: 0;
   border: none;
   border-radius: var(--controls-radius);
   background: var(--controls-chip-bg);
   color: var(--controls-text);
-  font: inherit;
-  font-size: 0.9375rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.controls-bar__copy-icon {
+  display: block;
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .controls-bar__copy-btn:hover,

@@ -98,6 +98,13 @@
     };
   }
 
+  /** Fixed character width: always includes sign (+ / −) so the label slot never shifts. */
+  function formatLetterSpacingValue(value) {
+    const n = Math.abs(value).toFixed(2);
+    const sign = value < 0 ? "-" : "+";
+    return `${sign}${n}`;
+  }
+
   function applyTypographyVars(settings) {
     const root = document.documentElement;
 
@@ -111,15 +118,19 @@
     root.style.setProperty("--playground-text-align", settings.textAlign);
     root.style.setProperty("--playground-text-transform", settings.textTransform);
 
-    fontSizeOutput.textContent = `${settings.fontSize.toFixed(2)}rem`;
+    fontSizeOutput.textContent = settings.fontSize.toFixed(2);
     lineHeightOutput.textContent = settings.lineHeight.toFixed(2);
-    letterSpacingOutput.textContent = `${settings.letterSpacing.toFixed(2)}em`;
+    letterSpacingOutput.textContent = formatLetterSpacingValue(
+      settings.letterSpacing
+    );
   }
 
   function updateControlOutputs(settings) {
-    fontSizeOutput.textContent = `${settings.fontSize.toFixed(2)}rem`;
+    fontSizeOutput.textContent = settings.fontSize.toFixed(2);
     lineHeightOutput.textContent = settings.lineHeight.toFixed(2);
-    letterSpacingOutput.textContent = `${settings.letterSpacing.toFixed(2)}em`;
+    letterSpacingOutput.textContent = formatLetterSpacingValue(
+      settings.letterSpacing
+    );
   }
 
   function exportSettingsCss(settings) {
@@ -285,11 +296,13 @@
 
     try {
       await navigator.clipboard.writeText(css);
-      const label = copyBtn.textContent;
-      copyBtn.textContent = "Copied";
+      const label = copyBtn.getAttribute("aria-label") || "Copy CSS";
+      copyBtn.setAttribute("aria-label", "Copied");
+      copyBtn.setAttribute("title", "Copied");
       copyBtn.classList.add("controls-bar__copy-btn--done");
       setTimeout(() => {
-        copyBtn.textContent = label;
+        copyBtn.setAttribute("aria-label", label);
+        copyBtn.setAttribute("title", label);
         copyBtn.classList.remove("controls-bar__copy-btn--done");
       }, 1600);
     } catch (err) {
@@ -319,7 +332,7 @@
           <label class="controls-bar__field">
             <span class="controls-bar__control-wrap">
               <span class="controls-bar__label">
-                <output id="controls-font-size-value" for="controls-font-size">4rem</output>
+                <output id="controls-font-size-value" for="controls-font-size">4.00</output>
               </span>
               <input type="range" id="controls-font-size" name="fontSize" min="1" max="8" step="0.25" value="4" />
             </span>
@@ -335,7 +348,7 @@
           <label class="controls-bar__field">
             <span class="controls-bar__control-wrap">
               <span class="controls-bar__label">
-                <output id="controls-letter-spacing-value" for="controls-letter-spacing">-0.02em</output>
+                <output id="controls-letter-spacing-value" for="controls-letter-spacing">-0.02</output>
               </span>
               <input type="range" id="controls-letter-spacing" name="letterSpacing" min="-0.1" max="1" step="0.01" value="-0.02" />
             </span>
@@ -360,7 +373,39 @@
               </select>
             </span>
           </label>
-          <button type="button" class="controls-bar__copy-btn" id="controls-copy-css">Copy CSS</button>
+          <button
+            type="button"
+            class="controls-bar__copy-btn"
+            id="controls-copy-css"
+            aria-label="Copy CSS"
+            title="Copy CSS"
+          >
+            <svg
+              class="controls-bar__copy-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <rect
+                x="6.25"
+                y="6.25"
+                width="9.5"
+                height="9.5"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.25"
+              />
+              <path
+                d="M4 12V4.75A1.75 1.75 0 0 1 5.75 3h7.5"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
         </form>
       </div>
     `;
