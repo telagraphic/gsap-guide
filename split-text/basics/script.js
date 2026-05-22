@@ -1,43 +1,16 @@
 /**
- * GSAP SplitText headline demos (index.html / controls.html).
- * Exposes initSplitTextDemos() for teardown + rebuild from the controls panel.
+ * GSAP SplitText headline demos (basics/index.html).
+ * Split type is fixed per frame — tune typography via SplitTextPlayground only.
  */
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
-const VALID_SPLIT_TYPES = ["chars", "words", "lines"];
+/** Default headline split; frames 2–6 use this unless noted in create(). */
+const HEADLINE_SPLIT = "words";
 
-function targets(self, splitType) {
-  return self[splitType];
-}
-
-// #region agent log
-function debugLog(location, message, data, hypothesisId, runId = "pre-fix") {
-  fetch("http://127.0.0.1:7509/ingest/09e99314-03c2-424f-9072-97c1caca0479", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Debug-Session-Id": "1bb1f6",
-    },
-    body: JSON.stringify({
-      sessionId: "1bb1f6",
-      runId,
-      hypothesisId,
-      location,
-      message,
-      data,
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-}
-// #endregion
-
-function initSplitTextDemos({ splitType = "words" } = {}) {
-  if (!VALID_SPLIT_TYPES.includes(splitType)) {
-    throw new Error(`splitType must be one of: ${VALID_SPLIT_TYPES.join(", ")}`);
-  }
-
+function initBasicsHeadlines(_settings) {
   const splits = [];
+  const tweenTargets = ".split-target, .split-target *";
 
   function track(split) {
     splits.push(split);
@@ -47,25 +20,13 @@ function initSplitTextDemos({ splitType = "words" } = {}) {
   // Frame 2 — mask reveal
   track(
     SplitText.create(".frame--2 h1", {
-      type: splitType,
-      mask: splitType,
+      type: HEADLINE_SPLIT,
+      mask: HEADLINE_SPLIT,
       autoSplit: true,
       smartSplit: true,
       onSplit: (self) => {
-        const els = targets(self, splitType);
+        const els = self.words;
         gsap.set(els, { yPercent: 100 });
-        // #region agent log
-        debugLog(
-          "script.js:onSplit",
-          "frame 2 onSplit fired",
-          {
-            frame: 2,
-            elCount: els?.length ?? 0,
-            stCount: ScrollTrigger.getAll().length,
-          },
-          "B"
-        );
-        // #endregion
         return gsap.to(els, {
           yPercent: 0,
           stagger: 0.1,
@@ -84,9 +45,9 @@ function initSplitTextDemos({ splitType = "words" } = {}) {
 
   // Frame 3 — blur stagger
   const headlineThree = track(
-    SplitText.create(".frame--3 h1", { type: splitType })
+    SplitText.create(".frame--3 h1", { type: HEADLINE_SPLIT })
   );
-  const frameThreeEls = targets(headlineThree, splitType);
+  const frameThreeEls = headlineThree.words;
   gsap.set(frameThreeEls, { opacity: 0, y: 100, filter: "blur(15px)" });
   gsap.to(frameThreeEls, {
     opacity: 1,
@@ -106,11 +67,11 @@ function initSplitTextDemos({ splitType = "words" } = {}) {
   // Frame 4 — opacity / blur reveal
   track(
     SplitText.create(".frame--4 h1", {
-      type: splitType,
+      type: HEADLINE_SPLIT,
       autoSplit: true,
       smartSplit: true,
       onSplit: (self) => {
-        const els = targets(self, splitType);
+        const els = self.words;
         gsap.set(els, { opacity: 0, y: 40, filter: "blur(15px)" });
         return gsap.to(els, {
           opacity: 1,
@@ -130,14 +91,14 @@ function initSplitTextDemos({ splitType = "words" } = {}) {
     })
   );
 
-  // Frame 5 — stagger reveal (eager split for playground rebuild)
+  // Frame 5 — stagger reveal
   track(
     SplitText.create(".frame--5 h1", {
-      type: splitType,
+      type: HEADLINE_SPLIT,
       autoSplit: true,
       smartSplit: true,
       onSplit: (self) => {
-        const els = targets(self, splitType);
+        const els = self.words;
         gsap.set(els, { opacity: 0, y: 100, filter: "blur(15px)" });
         return gsap.to(els, {
           opacity: 1,
@@ -160,12 +121,12 @@ function initSplitTextDemos({ splitType = "words" } = {}) {
   // Frame 6 — mask reveal
   track(
     SplitText.create(".frame--6 h1", {
-      type: splitType,
+      type: HEADLINE_SPLIT,
       autoSplit: true,
       smartSplit: true,
-      mask: splitType,
+      mask: HEADLINE_SPLIT,
       onSplit: (self) => {
-        const els = targets(self, splitType);
+        const els = self.words;
         gsap.set(els, { yPercent: 100 });
         return gsap.to(els, {
           yPercent: 0,
@@ -187,32 +148,17 @@ function initSplitTextDemos({ splitType = "words" } = {}) {
   );
 
   return function teardown() {
-    // #region agent log
-    const stBefore = ScrollTrigger.getAll().length;
-    // #endregion
     ScrollTrigger.getAll().forEach((st) => st.kill());
-    gsap.killTweensOf(".frame__headline, .frame__headline *");
+    gsap.killTweensOf(tweenTargets);
     splits.forEach((split) => {
       if (split && typeof split.revert === "function") split.revert();
       if (split && typeof split.kill === "function") split.kill();
     });
-    // #region agent log
-    debugLog(
-      "script.js:teardown",
-      "teardown complete",
-      {
-        stBefore,
-        stAfter: ScrollTrigger.getAll().length,
-        splitsCount: splits.length,
-      },
-      "C"
-    );
-    // #endregion
   };
 }
 
-window.initSplitTextDemos = initSplitTextDemos;
+window.initBasicsHeadlines = initBasicsHeadlines;
 
-if (!window.__splitTextPlayground) {
-  document.fonts.ready.then(() => initSplitTextDemos());
+if (!window.__splitTextPlaygroundAttach) {
+  document.fonts.ready.then(() => initBasicsHeadlines());
 }

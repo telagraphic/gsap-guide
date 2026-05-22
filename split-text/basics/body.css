@@ -6,8 +6,12 @@
 
 :root {
   --font-sans-serif: var(--font-fh-enso);
+  --playground-font-size: 1.25rem;
+  --playground-line-height: 1.5;
+  --playground-letter-spacing: 0em;
+  --playground-text-align: left;
+  --playground-text-transform: none;
 }
-
 
 html {
   -webkit-font-smoothing: antialiased;
@@ -33,22 +37,15 @@ body {
   background-color: #000;
 }
 
-.page .frame__headline {
+.page .frame__copy,
+.page .split-target.frame__copy {
   margin: 0;
-  text-transform: uppercase;
-  max-width: 14ch;
-  font-size: clamp(2.5rem, 8vw, 6rem);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-align: left;
-  text-wrap: balance;
-  font-family: var(--font-sans-serif);
-}
-
-.page .frame__copy {
   max-width: 40ch;
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  line-height: 1.5;
   font-family: var(--font-sans-serif);
+  font-size: var(--playground-font-size);
+  font-weight: 400;
+  line-height: var(--playground-line-height);
+  letter-spacing: var(--playground-letter-spacing);
+  text-align: var(--playground-text-align);
+  text-transform: var(--playground-text-transform);
 }

@@ -13,7 +13,6 @@
   --playground-text-transform: uppercase;
 }
 
-
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,15 +37,15 @@ body {
   background-color: #000;
 }
 
-.page .frame__headline {
+.page .frame__headline,
+.page .split-target.frame__headline {
   margin: 0;
-  text-transform: var(--playground-text-transform);
   max-width: 14ch;
+  font-family: var(--font-sans-serif);
   font-size: var(--playground-font-size);
   font-weight: 400;
   line-height: var(--playground-line-height);
   letter-spacing: var(--playground-letter-spacing);
   text-align: var(--playground-text-align);
-  /* text-wrap: balance; */
-  font-family: var(--font-sans-serif);
+  text-transform: var(--playground-text-transform);
 }

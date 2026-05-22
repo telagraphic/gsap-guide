@@ -3,7 +3,7 @@ import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const FONTS_DIR = join(__dirname, "..", "fonts");
+const FONTS_DIR = join(__dirname, "fonts");
 const OUTPUT = join(__dirname, "fonts.css");
 
 const EXTENSIONS = new Set([".woff2", ".woff", ".otf", ".ttf"]);
