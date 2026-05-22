@@ -1,9 +1,7 @@
-
 ---
 name: gsap-refactor
 description: "GSAP Refactor by Nick Lyons — a toolkit for storyboarding, auditing, refactoring and documenting spaghetti code to component/modules. Inspired and borrows from Josh Puckett's Interface Craft skills. Triggers on: overview, summarize, animate, animation, transition, storyboard, refactor, document, audit."
 argument-hint: "[description, file path, or sub-skill name]"
-
 ---
 
 # GSAP: Refactoring, Documenting, and Teaching
@@ -12,7 +10,6 @@ argument-hint: "[description, file path, or sub-skill name]"
 
 A toolkit for understanding gsap animations, auditing code, refactoring, and teaching via documentation.
 
-
 | Skill                       | When to Use                                                                                                                      | Invoke                                                                                                 |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | [storyboard](storyboard.md) | Writing or attempting to understand what the animation code does or how it works into a human-readable DSL                       | `/gsap-code storyboard` or asked to describe an animation                                              |
@@ -20,9 +17,7 @@ A toolkit for understanding gsap animations, auditing code, refactoring, and tea
 | [refactor](refactor.md)     | Implement suggested code improvements, ask questions about refactoring approaches or preferences for the implementation refactor | `/gsap-code refactor` or asked to refactor or improve the code                                         |
 | [document](document.md)     | Document the code refactoring changes with teachable explanations and details about implements and approaches                    | `/gsap-code document` or asked to explain the decisions or approaches for the code changes implemented |
 
-
 ## Sub-Skill Routing
-
 
 When the user invokes `/gsap-code`:
 
@@ -37,14 +32,3 @@ When the user invokes `/gsap-code`:
 
 1. **Readable over clever** — Anyone should be able to scan the top of a file and understand the animation sequence without reading implementation code
 2. **Teaching in Documentation** — Implement a teaching based documentation approach when explaining API methods or code concepts/changes to underscore the importance of your suggestions
-
-
-
-
-
-
-
-
-
-
-
