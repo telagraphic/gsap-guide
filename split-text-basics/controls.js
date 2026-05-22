@@ -5,7 +5,49 @@
 
 const STORAGE_KEY = "splitTextPlayground";
 
-const REBUILD_DEBOUNCE_MS = 100;
+const REBUILD_DEBOUNCE_MS = 150;
+
+// #region agent log
+function debugLog(location, message, data, hypothesisId, runId = "pre-fix") {
+  const entry = {
+    sessionId: "1bb1f6",
+    runId,
+    hypothesisId,
+    location,
+    message,
+    data,
+    timestamp: Date.now(),
+  };
+  window.__agentDebugLogs = window.__agentDebugLogs || [];
+  window.__agentDebugLogs.push(entry);
+  try {
+    sessionStorage.setItem(
+      "agentDebugLogs",
+      JSON.stringify(window.__agentDebugLogs.slice(-50))
+    );
+  } catch {
+    /* ignore */
+  }
+  fetch("http://127.0.0.1:7509/ingest/09e99314-03c2-424f-9072-97c1caca0479", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Debug-Session-Id": "1bb1f6",
+    },
+    body: JSON.stringify(entry),
+  }).catch(() => {});
+}
+
+function countScrollTriggers() {
+  return typeof ScrollTrigger !== "undefined" ? ScrollTrigger.getAll().length : -1;
+}
+
+function hasSplitDom() {
+  return Boolean(
+    document.querySelector(".frame__headline .word, .frame__headline .char, .frame__headline .line")
+  );
+}
+// #endregion
 
 const FONTS = [
   { label: "Basier Circle", cssVar: "--font-basier-circle" },
@@ -37,6 +79,7 @@ const FONTS = [
 
 const DEFAULTS = {
   fontVar: "--font-giest",
+  fontSize: 4,
   lineHeight: 1.05,
   letterSpacing: -0.02,
   textAlign: "center",
@@ -46,6 +89,8 @@ const DEFAULTS = {
 
 let panel;
 let fontSelect;
+let fontSizeInput;
+let fontSizeOutput;
 let lineHeightInput;
 let lineHeightOutput;
 let letterSpacingInput;
@@ -81,6 +126,7 @@ function saveSettings(settings) {
 function getSettings() {
   return {
     fontVar: fontSelect.value,
+    fontSize: parseFloat(fontSizeInput.value),
     lineHeight: parseFloat(lineHeightInput.value),
     letterSpacing: parseFloat(letterSpacingInput.value),
     textAlign: textAlignSelect.value,
@@ -92,6 +138,7 @@ function getSettings() {
 /** Live preview via CSS variables only — never touch split DOM (avoids autoSplit races). */
 function applyTypographyVars({
   fontVar,
+  fontSize,
   lineHeight,
   letterSpacing,
   textAlign,
@@ -100,13 +147,22 @@ function applyTypographyVars({
   const root = document.documentElement;
 
   root.style.setProperty("--font-sans-serif", `var(${fontVar})`);
+  root.style.setProperty("--playground-font-size", `${fontSize}rem`);
   root.style.setProperty("--playground-line-height", String(lineHeight));
   root.style.setProperty("--playground-letter-spacing", `${letterSpacing}em`);
   root.style.setProperty("--playground-text-align", textAlign);
   root.style.setProperty("--playground-text-transform", textTransform);
 
+  fontSizeOutput.textContent = `${fontSize.toFixed(2)}rem`;
   lineHeightOutput.textContent = lineHeight.toFixed(2);
   letterSpacingOutput.textContent = `${letterSpacing.toFixed(2)}em`;
+}
+
+/** Update slider readouts only — no CSS (avoids autoSplit races on live split DOM). */
+function updateControlOutputs(settings) {
+  fontSizeOutput.textContent = `${settings.fontSize.toFixed(2)}rem`;
+  lineHeightOutput.textContent = settings.lineHeight.toFixed(2);
+  letterSpacingOutput.textContent = `${settings.letterSpacing.toFixed(2)}em`;
 }
 
 function populateFontSelect(selectedVar) {
@@ -182,12 +238,34 @@ async function rebuildDemos() {
 
   if (rebuildPending) {
     rebuildQueued = true;
+    // #region agent log
+    debugLog(
+      "controls.js:rebuildDemos",
+      "rebuild skipped — already pending",
+      { rebuildQueued: true, stCount: countScrollTriggers() },
+      "A"
+    );
+    // #endregion
     return;
   }
 
   const generation = ++rebuildGeneration;
   rebuildPending = true;
   setPanelSyncing(true);
+
+  // #region agent log
+  debugLog(
+    "controls.js:rebuildDemos",
+    "rebuild start",
+    {
+      generation,
+      stCountBefore: countScrollTriggers(),
+      hasSplitDom: hasSplitDom(),
+      rebuildGeneration,
+    },
+    "D"
+  );
+  // #endregion
 
   try {
     const settings = getSettings();
@@ -197,6 +275,20 @@ async function rebuildDemos() {
       teardownDemos();
       teardownDemos = null;
     }
+
+    // #region agent log
+    debugLog(
+      "controls.js:rebuildDemos",
+      "after teardown",
+      {
+        generation,
+        stCountAfterTeardown: countScrollTriggers(),
+        hasSplitDom: hasSplitDom(),
+        generationMatch: generation === rebuildGeneration,
+      },
+      "C"
+    );
+    // #endregion
 
     if (generation !== rebuildGeneration) return;
 
@@ -214,10 +306,41 @@ async function rebuildDemos() {
       return;
     }
 
-    ScrollTrigger.refresh();
+    await new Promise((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    });
+    ScrollTrigger.refresh(true);
     ScrollTrigger.update();
+
+    // #region agent log
+    const triggers = ScrollTrigger.getAll();
+    debugLog(
+      "controls.js:rebuildDemos",
+      "rebuild complete",
+      {
+        generation,
+        stCountAfter: triggers.length,
+        triggerProgress: triggers.map((st) => ({
+          id: st.vars?.id ?? st.trigger?.className?.slice?.(0, 40),
+          progress: Number(st.progress.toFixed(3)),
+          isActive: st.isActive,
+        })),
+        scrollY: window.scrollY,
+        hasSplitDom: hasSplitDom(),
+      },
+      "E"
+    );
+    // #endregion
   } catch (err) {
     console.error("[controls] rebuild failed:", err);
+    // #region agent log
+    debugLog(
+      "controls.js:rebuildDemos",
+      "rebuild error",
+      { error: String(err) },
+      "D"
+    );
+    // #endregion
   } finally {
     rebuildPending = false;
     setPanelSyncing(false);
@@ -230,10 +353,30 @@ async function rebuildDemos() {
 }
 
 /** Coalesce rapid control changes into one rebuild with the latest settings. */
-function requestRebuild() {
+function requestRebuild(event) {
   const settings = getSettings();
-  applyTypographyVars(settings);
+
+  if (event?.target?.type === "range") {
+    updateControlOutputs(settings);
+  }
+
   saveSettings(settings);
+
+  // #region agent log
+  debugLog(
+    "controls.js:requestRebuild",
+    "control change",
+    {
+      eventType: event?.type ?? "unknown",
+      sourceId: event?.target?.id ?? "unknown",
+      stCount: countScrollTriggers(),
+      hasSplitDom: hasSplitDom(),
+      rebuildPending,
+      debounceMs: REBUILD_DEBOUNCE_MS,
+    },
+    event?.type === "change" ? "A" : "B"
+  );
+  // #endregion
 
   if (rebuildPending) {
     rebuildQueued = true;
@@ -247,18 +390,20 @@ function requestRebuild() {
 }
 
 function bindControlEvents() {
-  const inputs = [
+  const selects = [
     fontSelect,
-    lineHeightInput,
-    letterSpacingInput,
     textAlignSelect,
     textTransformSelect,
     splitTypeSelect,
   ];
+  const ranges = [fontSizeInput, lineHeightInput, letterSpacingInput];
 
-  inputs.forEach((el) => {
-    el.addEventListener("input", requestRebuild);
+  selects.forEach((el) => {
     el.addEventListener("change", requestRebuild);
+  });
+
+  ranges.forEach((el) => {
+    el.addEventListener("input", requestRebuild);
   });
 }
 
@@ -289,6 +434,8 @@ function bindEvents() {
 function cacheElements() {
   panel = document.getElementById("controls-panel");
   fontSelect = document.getElementById("controls-font");
+  fontSizeInput = document.getElementById("controls-font-size");
+  fontSizeOutput = document.getElementById("controls-font-size-value");
   lineHeightInput = document.getElementById("controls-line-height");
   lineHeightOutput = document.getElementById("controls-line-height-value");
   letterSpacingInput = document.getElementById("controls-letter-spacing");
@@ -303,6 +450,8 @@ function cacheElements() {
   if (
     !panel ||
     !fontSelect ||
+    !fontSizeInput ||
+    !fontSizeOutput ||
     !lineHeightInput ||
     !lineHeightOutput ||
     !letterSpacingInput ||
@@ -322,6 +471,7 @@ async function init() {
   const settings = loadSettings();
 
   populateFontSelect(settings.fontVar);
+  fontSizeInput.value = settings.fontSize;
   lineHeightInput.value = settings.lineHeight;
   letterSpacingInput.value = settings.letterSpacing;
   textAlignSelect.value = settings.textAlign;

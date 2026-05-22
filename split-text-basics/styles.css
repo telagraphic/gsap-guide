@@ -6,6 +6,7 @@
 
 :root {
   --font-sans-serif: var(--font-giest);
+  --playground-font-size: 4rem;
   --playground-line-height: 1.05;
   --playground-letter-spacing: -0.02em;
   --playground-text-align: center;
@@ -41,7 +42,7 @@ body {
   margin: 0;
   text-transform: var(--playground-text-transform);
   max-width: 14ch;
-  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-size: var(--playground-font-size);
   font-weight: 400;
   line-height: var(--playground-line-height);
   letter-spacing: var(--playground-letter-spacing);

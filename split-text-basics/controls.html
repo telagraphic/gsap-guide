@@ -49,14 +49,31 @@
           <label class="controls-bar__field">
             <span class="controls-bar__control-wrap">
               <span class="controls-bar__label">
+                <output id="controls-font-size-value" for="controls-font-size">4rem</output>
+              </span>
+              <input
+                type="range"
+                id="controls-font-size"
+                name="fontSize"
+                min="1"
+                max="8"
+                step="0.25"
+                value="4"
+              />
+            </span>
+          </label>
+
+          <label class="controls-bar__field">
+            <span class="controls-bar__control-wrap">
+              <span class="controls-bar__label">
                 <output id="controls-line-height-value" for="controls-line-height">1.05</output>
               </span>
               <input
                 type="range"
                 id="controls-line-height"
                 name="lineHeight"
-                min="0.8"
-                max="2"
+                min="0.2"
+                max="4"
                 step="0.05"
                 value="1.05"
               />
@@ -73,7 +90,7 @@
                 id="controls-letter-spacing"
                 name="letterSpacing"
                 min="-0.1"
-                max="0.2"
+                max="1"
                 step="0.01"
                 value="-0.02"
               />
