@@ -37,8 +37,9 @@ split-text/
 2. Link fonts: `../split-text-playground/fonts.css`
 3. Add `.split-target` on split elements and map `--playground-*` vars in CSS (see `basics/styles.css`).
 4. Export `initYourDemo(settings)` returning a `teardown` function (see teardown checklist in `split-text-playground/README.md`).
-5. Optionally include the playground (DEV ONLY blocks in `basics/index.html`).
-6. Add a link on `split-text/index.html`.
+5. Implement **`setupPlayground()`** in `script.js` with a **`splits` registry** at the bottom — see [`split-text-playground/README.md`](split-text-playground/README.md) for the full step-by-step.
+6. Add DEV ONLY playground blocks to `index.html` (`init: setupPlayground`).
+7. Add a link on `split-text/index.html`.
 
 Split `type`, masks, and `autoSplit` are defined in **your** `script.js` — not in the playground panel.
 
