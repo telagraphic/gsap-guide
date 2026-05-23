@@ -1,15 +1,13 @@
-**Part of [GSAP Refactor](SKILL.md) by Nick Lyons**
+**Part of [GSAP Refactor](SKILL.md) by Nick Lyons** · Follow the Shared Rules in [SKILL.md](SKILL.md)
 
 Implement a code refactoring to improve spaghetti GSAP code to a more component/module pattern.
 
 Reference the `./docs/ANIMATION_AUDIT.md` if it exists to assist for this task.
-
-
 ## Guided Flow Questions
 
 Review `./docs/ANIMATION_AUDIT.md` and ask enough follow up questions on how to address each design and code issue. Refer to the Refactoring Goals section below for more questions.
 
-If no `./docs/ANIMATION_AUDIT.md` exists, proceed with reviewing the `code-audit.md` skill to derive a set of questions to ask for finalizing the refactoring requirements and final plan. Refer to the Refactoring Goals section below for more questions.
+If no `./docs/ANIMATION_AUDIT.md` exists, proceed with reviewing the `audit.md` skill to derive a set of questions to ask for finalizing the refactoring requirements and final plan. Refer to the Refactoring Goals section below for more questions.
 
 Generate a `./docs/REFACTOR_PLAN.md` once the question and answer conversation is complete and final to record an artifact for future review.
 
