@@ -24,12 +24,13 @@ const DEFAULT_CONFIG = {
     ease: "power2.out",
   },
   stagger: {
-    mode: "advanced",
-    value: 0.1,
+    timing: "amount",
     amount: 0.1,
-    each: null,
+    each: 0.1,
     from: "start",
     ease: null,
+    grid: null,
+    axis: "both",
   },
   scrollTrigger: {
     trigger: ".frame--2",
@@ -68,15 +69,29 @@ function animateTargetAvailable(splitTextType, animate) {
 
 function buildStagger(stagger) {
   if (!stagger) return undefined;
-  if (stagger.mode === "simple") {
-    const n = stagger.value ?? 0.1;
-    return n > 0 ? n : undefined;
-  }
-  const out = { amount: stagger.amount ?? 0.1, from: stagger.from || "start" };
-  if (stagger.each != null && stagger.each !== "" && !Number.isNaN(Number(stagger.each))) {
-    out.each = Number(stagger.each);
+  const timing =
+    stagger.timing ??
+    (stagger.mode === "simple"
+      ? "each"
+      : stagger.each != null && stagger.each !== ""
+        ? "each"
+        : "amount");
+  const out = { from: stagger.from || "start" };
+  if (timing === "each") {
+    const each =
+      stagger.mode === "simple" ? (stagger.value ?? stagger.each ?? 0.1) : (stagger.each ?? 0.1);
+    if (each <= 0) return undefined;
+    out.each = each;
+  } else {
+    const amount = stagger.amount ?? 0.1;
+    if (amount <= 0) return undefined;
+    out.amount = amount;
   }
   if (stagger.ease && stagger.ease !== "none") out.ease = stagger.ease;
+  if (Array.isArray(stagger.grid) && stagger.grid.length >= 2) {
+    out.grid = [stagger.grid[0], stagger.grid[1]];
+  }
+  if (stagger.axis === "x" || stagger.axis === "y") out.axis = stagger.axis;
   return out;
 }
 
@@ -183,7 +198,7 @@ function setupAnimation(config) {
       return runAnimation(self);
     },
   };
-  if (cfg.splitText.mask) splitOpts.mask = cfg.splitText.mask;
+  if (cfg.splitText.mask && cfg.splitText.mask !== "none") splitOpts.mask = cfg.splitText.mask;
 
   split = SplitText.create(cfg.targets.text, splitOpts);
 

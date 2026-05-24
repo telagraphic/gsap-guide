@@ -2,7 +2,8 @@
 
 Dev-only tuning panel for a **single** SplitText + ScrollTrigger scrub animation. Use it on a test page before copying settings into production.
 
-**Spec:** [PLAYGROUND_V2_PRD.md](./PLAYGROUND_V2_PRD.md)
+**Spec:** [PLAYGROUND_V2_PRD.md](./PLAYGROUND_V2_PRD.md)  
+**Panel UI standards:** [INTERFACE_RULES.md](../INTERFACE_RULES.md)
 
 ## Quick start
 

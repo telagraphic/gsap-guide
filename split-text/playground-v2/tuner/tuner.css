@@ -5,7 +5,7 @@
 }
 
 :root {
-  --font-sans-serif: var(--font-geist-sans);
+  --font-sans-serif: var(--font-giest);
   --playground-font-size: 1.25rem;
   --playground-line-height: 1.5;
   --playground-letter-spacing: 0em;
@@ -59,7 +59,7 @@ body {
 
 .page .frame--1 .frame__copy,
 .page .frame--3 .frame__copy {
-  opacity: 0.2;
+  opacity: 0.4;
   font-size: 0.875rem;
   max-width: 28ch;
 }

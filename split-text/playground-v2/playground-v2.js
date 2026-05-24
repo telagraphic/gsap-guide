@@ -53,6 +53,27 @@
   const SCROLL_EDGE_OPTIONS = ["top", "center", "bottom"];
   const SCROLL_VIEW_PRESETS = ["top", "center", "bottom"];
 
+  const ICON_RESET = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>`;
+
+  const ICON_ALIGN_LEFT = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="2" y="2.5" width="12" height="1.25" rx="0.25"/><rect x="2" y="6" width="8" height="1.25" rx="0.25"/><rect x="2" y="9.5" width="12" height="1.25" rx="0.25"/><rect x="2" y="13" width="8" height="1.25" rx="0.25"/></svg>`;
+  const ICON_ALIGN_CENTER = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="2" y="2.5" width="12" height="1.25" rx="0.25"/><rect x="4" y="6" width="8" height="1.25" rx="0.25"/><rect x="2" y="9.5" width="12" height="1.25" rx="0.25"/><rect x="4" y="13" width="8" height="1.25" rx="0.25"/></svg>`;
+  const ICON_ALIGN_RIGHT = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="2" y="2.5" width="12" height="1.25" rx="0.25"/><rect x="6" y="6" width="8" height="1.25" rx="0.25"/><rect x="2" y="9.5" width="12" height="1.25" rx="0.25"/><rect x="6" y="13" width="8" height="1.25" rx="0.25"/></svg>`;
+  const ICON_ALIGN_JUSTIFY = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="2" y="2.5" width="12" height="1.25" rx="0.25"/><rect x="2" y="6" width="12" height="1.25" rx="0.25"/><rect x="2" y="9.5" width="12" height="1.25" rx="0.25"/><rect x="2" y="13" width="12" height="1.25" rx="0.25"/></svg>`;
+
+  const TEXT_ALIGN_OPTIONS = [
+    { value: "left", label: "Left", icon: ICON_ALIGN_LEFT },
+    { value: "center", label: "Center", icon: ICON_ALIGN_CENTER },
+    { value: "right", label: "Right", icon: ICON_ALIGN_RIGHT },
+    { value: "justify", label: "Justify", icon: ICON_ALIGN_JUSTIFY },
+  ];
+
+  const TEXT_TRANSFORM_OPTIONS = [
+    { value: "none", label: "Aa" },
+    { value: "uppercase", label: "AA" },
+    { value: "lowercase", label: "aa" },
+    { value: "capitalize", label: "Ab" },
+  ];
+
   const ANIM_PROPS = [
     { key: "opacity", type: "range", min: 0, max: 1, step: 0.01, defaultFrom: 1, defaultTo: 1 },
     { key: "x", type: "range", min: -400, max: 400, step: 1, defaultFrom: 0, defaultTo: 0 },
@@ -216,7 +237,7 @@
   function buildScrollPositionFieldHTML({ idPrefix, label, defaultStr }) {
     const parsed = parseScrollPosition(defaultStr);
     return `
-      <div class="pg-field pg-st-position-field" data-st-position="${idPrefix}">
+      <div class="pg-field pg-st-position-field pg-scroll-section" data-st-position="${idPrefix}">
         <span class="pg-field__label">${label}</span>
         <div class="pg-st-position">
           <div class="pg-st-position__col">
@@ -243,10 +264,89 @@
 
   function buildDropdownFieldHTML({ id, label, optionsHtml, inputAttrs = "" }) {
     return `
-      <div class="pg-dropdown-field">
+      <div class="pg-dropdown-field pg-field-block">
         <label class="pg-dropdown-field__label" for="${id}">${label}</label>
         <select class="pg-select" id="${id}" ${inputAttrs}>${optionsHtml}</select>
       </div>`;
+  }
+
+  /** Inline label + select in one control row (matches track slider / segment row rhythm). */
+  function buildSelectRowHTML({ id, label, optionsHtml, inputAttrs = "" }) {
+    return `
+      <div class="pg-select-row pg-field-block">
+        <label class="pg-select-row__label" for="${id}">${label}</label>
+        <select class="pg-select pg-select--row" id="${id}" ${inputAttrs}>${optionsHtml}</select>
+      </div>`;
+  }
+
+  function buildSegmentBarHTML({ className = "", role, ariaLabel, buttonsHtml }) {
+    const roleAttr = role ? ` role="${role}"` : "";
+    const ariaAttr = ariaLabel ? ` aria-label="${ariaLabel}"` : "";
+    return `
+      <div class="pg-segment-bar pg-field-block${className ? ` ${className}` : ""}"${roleAttr}${ariaAttr}>
+        <div class="pg-segment">${buttonsHtml}</div>
+      </div>`;
+  }
+
+  function buildSegmentRowHTML({ id, label, options, defaultValue }) {
+    const initial = defaultValue ?? options[0]?.value ?? "";
+    const buttons = options
+      .map((opt) => {
+        const pressed = opt.value === initial;
+        const inner = opt.icon
+          ? opt.icon
+          : `<span class="pg-segment__text">${opt.label}</span>`;
+        return `<button
+          type="button"
+          class="pg-segment__btn${opt.icon ? " pg-segment__btn--icon" : ""}"
+          data-value="${opt.value}"
+          aria-label="${opt.label}"
+          aria-pressed="${pressed ? "true" : "false"}"
+        >${inner}</button>`;
+      })
+      .join("");
+
+    return `
+      <div class="pg-segment-row pg-field-block" id="${id}" role="group" aria-label="${label}">
+        <span class="pg-segment-row__label">${label}</span>
+        <div class="pg-segment">${buttons}</div>
+        <input type="hidden" data-role="segment-value" value="${initial}" />
+      </div>`;
+  }
+
+  function getSegmentGroupValue(container) {
+    if (!container) return "";
+    const pressed = container.querySelector('.pg-segment__btn[aria-pressed="true"]');
+    if (pressed?.dataset.value) return pressed.dataset.value;
+    return container.querySelector('[data-role="segment-value"]')?.value ?? "";
+  }
+
+  function setSegmentGroupValue(container, value) {
+    if (!container) return;
+    let matched = false;
+    container.querySelectorAll(".pg-segment__btn").forEach((btn) => {
+      const on = btn.dataset.value === value;
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      if (on) matched = true;
+    });
+    if (!matched && container.querySelector(".pg-segment__btn")) {
+      const first = container.querySelector(".pg-segment__btn");
+      first.setAttribute("aria-pressed", "true");
+      value = first.dataset.value;
+    }
+    const hidden = container.querySelector('[data-role="segment-value"]');
+    if (hidden) hidden.value = value;
+  }
+
+  function bindSegmentGroup(container, onChange) {
+    if (!container || container.dataset.pgSegmentBound) return;
+    container.dataset.pgSegmentBound = "1";
+    container.querySelectorAll(".pg-segment__btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setSegmentGroupValue(container, btn.dataset.value);
+        onChange?.();
+      });
+    });
   }
 
   function buildTrackSliderHTML({
@@ -277,7 +377,7 @@
         : "";
 
     return `
-      <div class="${classes.join(" ")}" data-value-format="${format}">
+      <div class="${classes.join(" ")} pg-field-block" data-value-format="${format}">
         ${labelAbove}
         <div class="pg-track-slider__chrome">
           <div class="pg-track-slider__fill" aria-hidden="true"></div>
@@ -362,8 +462,8 @@
   }
 
   function setPendingUI() {
-    tabButtons[0]?.classList.toggle("pg-tabs__btn--pending", typographyDirty);
-    tabButtons[2]?.classList.toggle("pg-tabs__btn--pending", splitTextDirty);
+    tabButtons[0]?.classList.toggle("pg-segment__btn--pending", typographyDirty);
+    tabButtons[2]?.classList.toggle("pg-segment__btn--pending", splitTextDirty);
   }
 
   function getTypeArray() {
@@ -386,19 +486,23 @@
   }
 
   function getMaskButtons() {
-    return [el.maskNone, el.maskChars, el.maskWords, el.maskLines].filter(Boolean);
+    return [el.maskChars, el.maskWords, el.maskLines].filter(Boolean);
+  }
+
+  function normalizeMaskValue(mask) {
+    if (!mask || mask === "none") return "none";
+    return mask;
   }
 
   function getMaskValue() {
     if (el.maskChars?.getAttribute("aria-pressed") === "true") return "chars";
     if (el.maskWords?.getAttribute("aria-pressed") === "true") return "words";
     if (el.maskLines?.getAttribute("aria-pressed") === "true") return "lines";
-    return "";
+    return "none";
   }
 
   function setMaskToggle(mask) {
-    const value = mask || "";
-    el.maskNone?.setAttribute("aria-pressed", value === "" ? "true" : "false");
+    const value = normalizeMaskValue(mask);
     el.maskChars?.setAttribute("aria-pressed", value === "chars" ? "true" : "false");
     el.maskWords?.setAttribute("aria-pressed", value === "words" ? "true" : "false");
     el.maskLines?.setAttribute("aria-pressed", value === "lines" ? "true" : "false");
@@ -449,14 +553,15 @@
       }
     });
 
-    const staggerMode = el.staggerMode?.getAttribute("data-mode") || "simple";
+    const staggerTiming = el.staggerTiming?.getAttribute("data-timing") || "amount";
     const stagger = {
-      mode: staggerMode,
-      value: parseFloat(el.staggerValue?.value) || 0.1,
+      timing: staggerTiming,
       amount: parseFloat(el.staggerAmount?.value) || 0.1,
-      each: el.staggerEach?.value ? parseFloat(el.staggerEach.value) : null,
+      each: parseFloat(el.staggerEach?.value) ?? 0.1,
       from: el.staggerFrom?.value || "start",
       ease: el.staggerEase?.value === "none" ? null : el.staggerEase?.value,
+      grid: parseStaggerGrid(el.staggerGrid?.value),
+      axis: getStaggerAxis(),
     };
 
     const scrubFields = readScrubFromUI();
@@ -500,15 +605,80 @@
         fontSize: parseFloat(el.fontSize?.value),
         lineHeight: parseFloat(el.lineHeight?.value),
         letterSpacing: parseFloat(el.letterSpacing?.value),
-        textAlign: el.textAlign?.value,
-        textTransform: el.textTransform?.value,
+        textAlign: getSegmentGroupValue(el.textAlign),
+        textTransform: getSegmentGroupValue(el.textTransform),
       },
+    };
+  }
+
+  function parseStaggerGrid(raw) {
+    const s = raw?.trim();
+    if (!s) return null;
+    const tryParse = (text) => {
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed) || parsed.length < 2) return null;
+      const nums = parsed.slice(0, 2).map(Number);
+      return nums.every((n) => Number.isFinite(n)) ? nums : null;
+    };
+    try {
+      const fromJson = tryParse(s.startsWith("[") ? s : `[${s}]`);
+      if (fromJson) return fromJson;
+    } catch {
+      /* fall through */
+    }
+    const parts = s
+      .replace(/^\[|\]$/g, "")
+      .split(",")
+      .map((part) => parseFloat(part.trim()));
+    if (parts.length >= 2 && parts.every((n) => Number.isFinite(n))) {
+      return [parts[0], parts[1]];
+    }
+    return null;
+  }
+
+  function formatStaggerGridForInput(grid) {
+    if (!grid || !Array.isArray(grid) || grid.length < 2) return "";
+    return `[${grid[0]}, ${grid[1]}]`;
+  }
+
+  function getStaggerAxis() {
+    if (el.staggerAxisX?.getAttribute("aria-pressed") === "true") return "x";
+    if (el.staggerAxisY?.getAttribute("aria-pressed") === "true") return "y";
+    return "both";
+  }
+
+  function setStaggerAxis(axis) {
+    const value = axis === "x" || axis === "y" ? axis : "both";
+    el.staggerAxisBoth?.setAttribute("aria-pressed", value === "both" ? "true" : "false");
+    el.staggerAxisX?.setAttribute("aria-pressed", value === "x" ? "true" : "false");
+    el.staggerAxisY?.setAttribute("aria-pressed", value === "y" ? "true" : "false");
+  }
+
+  function normalizeStaggerConfig(stagger) {
+    const s = stagger ? { ...stagger } : {};
+    if (s.mode === "simple") {
+      s.timing = "each";
+      s.each = s.value ?? s.each ?? 0.1;
+    }
+    if (!s.timing) {
+      s.timing = s.each != null && s.each !== "" ? "each" : "amount";
+    }
+    delete s.mode;
+    delete s.value;
+    return {
+      timing: s.timing === "each" ? "each" : "amount",
+      amount: s.amount ?? 0.1,
+      each: s.each ?? 0.1,
+      from: s.from || "start",
+      ease: s.ease && s.ease !== "none" ? s.ease : null,
+      grid: Array.isArray(s.grid) && s.grid.length >= 2 ? [s.grid[0], s.grid[1]] : null,
+      axis: s.axis === "x" || s.axis === "y" ? s.axis : "both",
     };
   }
 
   function fillFormFromConfig(cfg) {
     setTypeToggles(cfg.splitText.type);
-    setMaskToggle(cfg.splitText.mask || "");
+    setMaskToggle(cfg.splitText.mask);
     el.splitAutoSplit?.setAttribute("aria-pressed", cfg.splitText.autoSplit ? "true" : "false");
     el.splitSmartSplit?.setAttribute("aria-pressed", cfg.splitText.smartSplit ? "true" : "false");
     el.targetElement.value = cfg.targets.element;
@@ -529,20 +699,14 @@
     el.duration.value = cfg.to.duration ?? 1;
     el.ease.value = cfg.to.ease ?? "power2.out";
 
-    const staggerMode = cfg.stagger?.mode || "simple";
-    el.staggerMode.setAttribute("data-mode", staggerMode);
-    el.staggerSimpleWrap.hidden = staggerMode !== "simple";
-    el.staggerAdvancedWrap.hidden = staggerMode !== "advanced";
-    el.staggerModeSimple?.setAttribute("aria-pressed", staggerMode === "simple" ? "true" : "false");
-    el.staggerModeAdvanced?.setAttribute(
-      "aria-pressed",
-      staggerMode === "advanced" ? "true" : "false"
-    );
-    el.staggerValue.value = cfg.stagger?.value ?? 0.1;
-    el.staggerAmount.value = cfg.stagger?.amount ?? 0.1;
-    el.staggerEach.value = cfg.stagger?.each ?? "";
-    el.staggerFrom.value = cfg.stagger?.from || "start";
-    el.staggerEase.value = cfg.stagger?.ease || "none";
+    const stagger = normalizeStaggerConfig(cfg.stagger);
+    el.staggerAmount.value = stagger.amount;
+    el.staggerEach.value = stagger.each;
+    setStaggerTiming(stagger.timing);
+    el.staggerFrom.value = stagger.from;
+    el.staggerEase.value = stagger.ease || "none";
+    el.staggerGrid.value = formatStaggerGridForInput(stagger.grid);
+    setStaggerAxis(stagger.axis);
 
     el.stTrigger.value = cfg.scrollTrigger.trigger;
 
@@ -567,8 +731,8 @@
     el.fontSize.value = cfg.typography.fontSize;
     el.lineHeight.value = cfg.typography.lineHeight;
     el.letterSpacing.value = cfg.typography.letterSpacing;
-    el.textAlign.value = cfg.typography.textAlign;
-    el.textTransform.value = cfg.typography.textTransform;
+    setSegmentGroupValue(el.textAlign, cfg.typography.textAlign);
+    setSegmentGroupValue(el.textTransform, cfg.typography.textTransform);
 
     syncAllTrackSliders();
   }
@@ -749,35 +913,33 @@
     });
   }
 
+  function setStaggerTiming(timing) {
+    const mode = timing === "each" ? "each" : "amount";
+    el.staggerTiming?.setAttribute("data-timing", mode);
+    el.staggerTiming?.classList.toggle("is-timing-amount", mode === "amount");
+    el.staggerTiming?.classList.toggle("is-timing-each", mode === "each");
+  }
+
   function buildStaggerBlockHTML(staggerFromOptions, easeOptions) {
     return `
-      <div class="pg-stagger-block">
-        <div class="pg-toggle-group" id="pg-stagger-mode" data-mode="simple">
-          <button type="button" class="pg-toggle" id="pg-stagger-simple" aria-pressed="true">Simple</button>
-          <button type="button" class="pg-toggle" id="pg-stagger-advanced" aria-pressed="false">Advanced</button>
-        </div>
-        <div id="pg-stagger-simple-wrap">
-          ${buildTrackSliderHTML({
-            id: "pg-stagger-value",
-            label: "Stagger",
-            min: 0,
-            max: 2,
-            step: 0.01,
-            value: 0.1,
-          })}
-        </div>
-        <div id="pg-stagger-advanced-wrap" hidden>
-          ${buildTrackSliderHTML({
-            id: "pg-stagger-amount",
-            label: "Amount",
-            min: 0,
-            max: 2,
-            step: 0.01,
-            value: 0.1,
-          })}
-          <div class="pg-control-bar">
-            <span class="pg-control-bar__label">Each</span>
-            <input type="number" class="pg-input" id="pg-stagger-each" step="0.01" placeholder="—" />
+        <div class="pg-stagger-block">
+          <div class="pg-stagger-timing-row is-timing-amount" id="pg-stagger-timing" data-timing="amount">
+            ${buildTrackSliderHTML({
+              id: "pg-stagger-amount",
+              label: "Amount",
+              min: 0,
+              max: 2,
+              step: 0.01,
+              value: 0.1,
+            })}
+            ${buildTrackSliderHTML({
+              id: "pg-stagger-each",
+              label: "Each",
+              min: 0,
+              max: 2,
+              step: 0.01,
+              value: 0.1,
+            })}
           </div>
           ${buildDropdownFieldHTML({
             id: "pg-stagger-from",
@@ -789,57 +951,107 @@
             label: "Ease",
             optionsHtml: easeOptions,
           })}
-        </div>
-      </div>`;
+          <div class="pg-field">
+            <span class="pg-field__label">Grid</span>
+            <div class="pg-control-bar pg-control-bar--value-only pg-control-bar--no-focus-ring">
+              <input
+                type="text"
+                class="pg-input"
+                id="pg-stagger-grid"
+                placeholder="[5, 19]"
+                aria-label="Stagger grid"
+                spellcheck="false"
+              />
+            </div>
+          </div>
+          <div class="pg-field">
+            <span class="pg-field__label">Axis</span>
+            ${buildSegmentBarHTML({
+              buttonsHtml: `
+                <button type="button" class="pg-segment__btn" id="pg-stagger-axis-both" aria-pressed="true">both</button>
+                <button type="button" class="pg-segment__btn" id="pg-stagger-axis-x" aria-pressed="false">x</button>
+                <button type="button" class="pg-segment__btn" id="pg-stagger-axis-y" aria-pressed="false">y</button>`,
+            })}
+          </div>
+        </div>`;
+  }
+
+  function resetAnimProp(propKey) {
+    const prop = ANIM_PROPS.find((p) => p.key === propKey);
+    if (!prop) return;
+    const startEl = el[`prop_${prop.key}_start`];
+    const endEl = el[`prop_${prop.key}_end`];
+    if (startEl) {
+      startEl.value = prop.defaultFrom;
+      syncTrackSlider(startEl);
+    }
+    if (endEl) {
+      endEl.value = prop.defaultTo;
+      syncTrackSlider(endEl);
+    }
+    requestLiveUpdate();
   }
 
   function buildPropGridHTML() {
+    const resetBtn = (key) => `
+      <button
+        type="button"
+        class="pg-prop-reset pg-prop-row__reset"
+        data-prop-reset="${key}"
+        aria-label="Reset ${key} to defaults"
+        title="Reset to defaults"
+      >${ICON_RESET}</button>`;
+
     const blocks = ANIM_PROPS.map((prop) => {
       if (prop.type === "text") {
         return `
-          <div class="pg-prop-block pg-prop-block--text" data-prop="${prop.key}">
-            <span class="pg-section-title pg-section-title--prop">${prop.key}</span>
-            <div class="pg-prop-block__controls">
-              <div class="pg-control-bar pg-control-bar--compact">
-                <span class="pg-control-bar__label">Start</span>
-                <input type="text" class="pg-input" id="pg-prop-${prop.key}-start" data-role="prop-start" />
-              </div>
-              <div class="pg-control-bar pg-control-bar--compact">
-                <span class="pg-control-bar__label">End</span>
-                <input type="text" class="pg-input" id="pg-prop-${prop.key}-end" data-role="prop-end" />
-              </div>
+          <div class="pg-prop-row pg-prop-row--text" data-prop="${prop.key}">
+            <div class="pg-control-bar pg-control-bar--compact">
+              <span class="pg-control-bar__label pg-control-bar__label--prop">${prop.key}</span>
+              <input type="text" class="pg-input" id="pg-prop-${prop.key}-start" data-role="prop-start" aria-label="${prop.key} start" placeholder="—" />
+            </div>
+            ${resetBtn(prop.key)}
+            <div class="pg-control-bar pg-control-bar--value-only">
+              <input type="text" class="pg-input" id="pg-prop-${prop.key}-end" data-role="prop-end" aria-label="${prop.key} end" placeholder="—" />
             </div>
           </div>`;
       }
       return `
-        <div class="pg-prop-block" data-prop="${prop.key}">
-          <span class="pg-section-title pg-section-title--prop">${prop.key}</span>
-          <div class="pg-prop-block__controls">
-            ${buildTrackSliderHTML({
-              id: `pg-prop-${prop.key}-start`,
-              label: "Start",
-              min: prop.min,
-              max: prop.max,
-              step: prop.step,
-              value: prop.defaultFrom,
-              labelPlacement: "inside",
-              inputAttrs: `data-role="prop-start" aria-label="${prop.key} start"`,
-            })}
-            ${buildTrackSliderHTML({
-              id: `pg-prop-${prop.key}-end`,
-              label: "End",
-              min: prop.min,
-              max: prop.max,
-              step: prop.step,
-              value: prop.defaultTo,
-              labelPlacement: "inside",
-              inputAttrs: `data-role="prop-end" aria-label="${prop.key} end"`,
-            })}
-          </div>
+        <div class="pg-prop-row" data-prop="${prop.key}">
+          ${buildTrackSliderHTML({
+            id: `pg-prop-${prop.key}-start`,
+            label: prop.key,
+            min: prop.min,
+            max: prop.max,
+            step: prop.step,
+            value: prop.defaultFrom,
+            compact: true,
+            labelPlacement: "inside",
+            inputAttrs: `data-role="prop-start" aria-label="${prop.key} start"`,
+          })}
+          ${resetBtn(prop.key)}
+          ${buildTrackSliderHTML({
+            id: `pg-prop-${prop.key}-end`,
+            min: prop.min,
+            max: prop.max,
+            step: prop.step,
+            value: prop.defaultTo,
+            compact: true,
+            labelPlacement: "none",
+            inputAttrs: `data-role="prop-end" aria-label="${prop.key} end"`,
+          })}
         </div>`;
     }).join("");
 
-    return `<div class="pg-prop-list">${blocks}</div>`;
+    return `
+      <div class="pg-prop-list">
+        <div class="pg-prop-row pg-prop-row--head" aria-hidden="true">
+          <span class="pg-prop-row__head">Start</span>
+          <span class="pg-prop-row__head-spacer"></span>
+          <span class="pg-prop-row__head">End</span>
+        </div>
+        ${blocks}
+      </div>`;
   }
 
   function injectPanel() {
@@ -863,17 +1075,24 @@
 
     aside.innerHTML = `
       <div class="pg-panel__header">
-        <div class="pg-panel__actions">
-          <button type="button" class="pg-btn pg-btn--primary" id="pg-copy-config">Copy config</button>
-          <button type="button" class="pg-btn" id="pg-copy-code">Copy code</button>
-          <button type="button" class="pg-btn pg-btn--ghost" id="pg-reset">Reset</button>
+        <div class="pg-panel__header-actions">
+          <button
+            type="button"
+            class="pg-prop-reset"
+            id="pg-reset"
+            aria-label="Reset to defaults"
+            title="Reset to defaults"
+          >${ICON_RESET}</button>
         </div>
-        <div class="pg-tabs" role="tablist">
-          <button type="button" class="pg-tabs__btn" role="tab" data-tab="0" aria-selected="true">Typography</button>
-          <button type="button" class="pg-tabs__btn" role="tab" data-tab="1">Properties</button>
-          <button type="button" class="pg-tabs__btn" role="tab" data-tab="2">SplitText</button>
-          <button type="button" class="pg-tabs__btn" role="tab" data-tab="3">ScrollTrigger</button>
-        </div>
+        ${buildSegmentBarHTML({
+          className: "pg-segment-bar--tabs",
+          role: "tablist",
+          buttonsHtml: `
+            <button type="button" class="pg-segment__btn pg-segment__btn--tab" role="tab" data-tab="0" aria-selected="true">Type</button>
+            <button type="button" class="pg-segment__btn pg-segment__btn--tab" role="tab" data-tab="1">Tween</button>
+            <button type="button" class="pg-segment__btn pg-segment__btn--tab" role="tab" data-tab="2">Split</button>
+            <button type="button" class="pg-segment__btn pg-segment__btn--tab" role="tab" data-tab="3">Scroll</button>`,
+        })}
       </div>
       <div class="pg-panel__body">
         <div class="pg-tab-panel" data-tab-panel="0" role="tabpanel">
@@ -903,27 +1122,20 @@
             value: 0,
             format: "letterSpacing",
           })}
-          ${buildDropdownFieldHTML({
+          ${buildSegmentRowHTML({
             id: "pg-text-align",
             label: "Align",
-            optionsHtml: `
-              <option value="left">Left</option>
-              <option value="center">Center</option>
-              <option value="right">Right</option>
-              <option value="justify">Justify</option>`,
+            options: TEXT_ALIGN_OPTIONS,
+            defaultValue: "left",
           })}
-          ${buildDropdownFieldHTML({
+          ${buildSegmentRowHTML({
             id: "pg-text-transform",
             label: "Transform",
-            optionsHtml: `
-              <option value="none">None</option>
-              <option value="uppercase">Uppercase</option>
-              <option value="lowercase">Lowercase</option>
-              <option value="capitalize">Capitalize</option>`,
+            options: TEXT_TRANSFORM_OPTIONS,
+            defaultValue: "none",
           })}
-          <button type="button" class="pg-btn" id="pg-copy-css">Copy CSS</button>
         </div>
-        <div class="pg-tab-panel" data-tab-panel="1" role="tabpanel" hidden>
+        <div class="pg-tab-panel pg-tab-panel--props" data-tab-panel="1" role="tabpanel" hidden>
           <div class="pg-control-stack">
             ${buildTrackSliderHTML({
               id: "pg-duration",
@@ -933,51 +1145,62 @@
               step: 0.05,
               value: 1,
             })}
-            ${buildDropdownFieldHTML({ id: "pg-ease", label: "Ease", optionsHtml: easeOptions })}
-          </div>
-          ${buildDropdownFieldHTML({
-            id: "pg-animate-target",
-            label: "Animate",
-            optionsHtml: `
+            ${buildSelectRowHTML({ id: "pg-ease", label: "Ease", optionsHtml: easeOptions })}
+            ${buildSelectRowHTML({
+              id: "pg-animate-target",
+              label: "Animate",
+              optionsHtml: `
               <option value="lines">lines</option>
               <option value="words">words</option>
               <option value="chars">chars</option>`,
-          })}
-          <div class="pg-subtabs" role="tablist" aria-label="Tween properties">
-            <button type="button" class="pg-subtabs__btn" role="tab" data-subtab="0" aria-selected="true">Properties</button>
-            <button type="button" class="pg-subtabs__btn" role="tab" data-subtab="1">Stagger</button>
+            })}
           </div>
-          <div class="pg-subtab-panel" data-subtab-panel="0" role="tabpanel">
-            ${buildPropGridHTML()}
-          </div>
-          <div class="pg-subtab-panel" data-subtab-panel="1" role="tabpanel" hidden>
-            ${buildStaggerBlockHTML(staggerFromOptions, easeOptions)}
-          </div>
+          <fieldset class="pg-props-fieldset">
+            <legend class="pg-sr-only">Properties and stagger</legend>
+            ${buildSegmentBarHTML({
+              className: "pg-segment-bar--subtabs",
+              role: "tablist",
+              ariaLabel: "Tween properties",
+              buttonsHtml: `
+                <button type="button" class="pg-segment__btn pg-segment__btn--tab" role="tab" data-subtab="0" aria-selected="true">Properties</button>
+                <button type="button" class="pg-segment__btn pg-segment__btn--tab" role="tab" data-subtab="1">Stagger</button>`,
+            })}
+            <div class="pg-subtab-panel" data-subtab-panel="0" role="tabpanel">
+              ${buildPropGridHTML()}
+            </div>
+            <div class="pg-subtab-panel" data-subtab-panel="1" role="tabpanel" hidden>
+              ${buildStaggerBlockHTML(staggerFromOptions, easeOptions)}
+            </div>
+          </fieldset>
         </div>
         <div class="pg-tab-panel" data-tab-panel="2" role="tabpanel" hidden>
           <div class="pg-field">
             <span class="pg-field__label">Type</span>
-            <div class="pg-toggle-group">
-              <button type="button" class="pg-toggle" id="pg-type-chars" aria-pressed="false">chars</button>
-              <button type="button" class="pg-toggle" id="pg-type-words" aria-pressed="true">words</button>
-              <button type="button" class="pg-toggle" id="pg-type-lines" aria-pressed="true">lines</button>
-            </div>
+            ${buildSegmentBarHTML({
+              buttonsHtml: `
+                <button type="button" class="pg-segment__btn" id="pg-type-chars" aria-pressed="false">chars</button>
+                <button type="button" class="pg-segment__btn" id="pg-type-words" aria-pressed="true">words</button>
+                <button type="button" class="pg-segment__btn" id="pg-type-lines" aria-pressed="true">lines</button>`,
+            })}
           </div>
           <div class="pg-field">
             <span class="pg-field__label">Mask</span>
-            <div class="pg-toggle-group" id="pg-mask-group">
-              <button type="button" class="pg-toggle" id="pg-mask-none" aria-pressed="false">none</button>
-              <button type="button" class="pg-toggle" id="pg-mask-chars" aria-pressed="false">chars</button>
-              <button type="button" class="pg-toggle" id="pg-mask-words" aria-pressed="false">words</button>
-              <button type="button" class="pg-toggle" id="pg-mask-lines" aria-pressed="true">lines</button>
+            <div id="pg-mask-group">
+              ${buildSegmentBarHTML({
+                buttonsHtml: `
+                  <button type="button" class="pg-segment__btn" id="pg-mask-chars" aria-pressed="false">chars</button>
+                  <button type="button" class="pg-segment__btn" id="pg-mask-words" aria-pressed="false">words</button>
+                  <button type="button" class="pg-segment__btn" id="pg-mask-lines" aria-pressed="true">lines</button>`,
+              })}
             </div>
           </div>
           <div class="pg-field">
             <span class="pg-field__label">Split options</span>
-            <div class="pg-toggle-group">
-              <button type="button" class="pg-toggle" id="pg-split-autosplit" aria-pressed="true">autoSplit</button>
-              <button type="button" class="pg-toggle" id="pg-split-smartsplit" aria-pressed="true">smartSplit</button>
-            </div>
+            ${buildSegmentBarHTML({
+              buttonsHtml: `
+                <button type="button" class="pg-segment__btn" id="pg-split-autosplit" aria-pressed="true">autoSplit</button>
+                <button type="button" class="pg-segment__btn" id="pg-split-smartsplit" aria-pressed="true">smartSplit</button>`,
+            })}
           </div>
           <fieldset class="pg-fieldset">
             <legend class="pg-fieldset__legend">Targets</legend>
@@ -991,8 +1214,8 @@
             </div>
           </fieldset>
         </div>
-        <div class="pg-tab-panel" data-tab-panel="3" role="tabpanel" hidden>
-          <div class="pg-field">
+        <div class="pg-tab-panel pg-tab-panel--scroll" data-tab-panel="3" role="tabpanel" hidden>
+          <div class="pg-field pg-scroll-section">
             <span class="pg-field__label">Trigger</span>
             <input type="text" class="pg-input" id="pg-st-trigger" />
           </div>
@@ -1006,12 +1229,15 @@
             label: "End",
             defaultStr: codeDefaults?.scrollTrigger?.end || "top top",
           })}
-          <div class="pg-field pg-field--scrub">
+          <div class="pg-field pg-field--scrub pg-scroll-section">
             <span class="pg-field__label">Scrub</span>
-            <div class="pg-scrub-modes" id="pg-scrub-mode" data-mode="on">
-              <button type="button" class="pg-toggle" id="pg-scrub-off">Off</button>
-              <button type="button" class="pg-toggle" id="pg-scrub-on" aria-pressed="true">On</button>
-              <button type="button" class="pg-toggle" id="pg-scrub-smooth">Smooth</button>
+            <div id="pg-scrub-mode" data-mode="on">
+              ${buildSegmentBarHTML({
+                buttonsHtml: `
+                  <button type="button" class="pg-segment__btn" id="pg-scrub-off">Off</button>
+                  <button type="button" class="pg-segment__btn" id="pg-scrub-on" aria-pressed="true">On</button>
+                  <button type="button" class="pg-segment__btn" id="pg-scrub-smooth">Smooth</button>`,
+              })}
             </div>
             <div id="pg-scrub-smooth-wrap" hidden>
               ${buildTrackSliderHTML({
@@ -1024,13 +1250,22 @@
               })}
             </div>
           </div>
-          <div class="pg-field">
+          <div class="pg-field pg-scroll-section">
             <span class="pg-field__label">Debug</span>
-            <div class="pg-toggle-group">
-              <button type="button" class="pg-toggle" id="pg-st-markers" aria-pressed="false">markers</button>
-            </div>
+            ${buildSegmentBarHTML({
+              buttonsHtml: `<button type="button" class="pg-segment__btn" id="pg-st-markers" aria-pressed="false">markers</button>`,
+            })}
           </div>
         </div>
+      </div>
+      <div class="pg-panel__dock">
+        ${buildSegmentBarHTML({
+          className: "pg-segment-bar--dock",
+          buttonsHtml: `
+            <button type="button" class="pg-segment__btn pg-segment__btn--accent" id="pg-copy-config">Config</button>
+            <button type="button" class="pg-segment__btn" id="pg-copy-code">Code</button>
+            <button type="button" class="pg-segment__btn" id="pg-copy-css">CSS</button>`,
+        })}
       </div>
       <footer class="pg-footer">
         <kbd>⌘K</kbd> panel · <kbd>⌘1</kbd>–<kbd>⌘4</kbd> tabs · <kbd>Esc</kbd> close &amp; commit
@@ -1043,12 +1278,12 @@
 
   function cacheElements() {
     panel = document.getElementById("playground-v2-panel");
-    tabButtons = [...panel.querySelectorAll(".pg-tabs__btn")];
+    tabButtons = [...panel.querySelectorAll(".pg-segment-bar--tabs .pg-segment__btn")];
     tabPanels = [...panel.querySelectorAll(".pg-tab-panel")];
 
     const propertiesPanel = panel.querySelector('[data-tab-panel="1"]');
     if (propertiesPanel) {
-      subTabButtons = [...propertiesPanel.querySelectorAll(".pg-subtabs__btn")];
+      subTabButtons = [...propertiesPanel.querySelectorAll(".pg-segment-bar--subtabs .pg-segment__btn")];
       subTabPanels = [...propertiesPanel.querySelectorAll(".pg-subtab-panel")];
     }
 
@@ -1067,23 +1302,21 @@
     el.ease = document.getElementById("pg-ease");
     el.animateTarget = document.getElementById("pg-animate-target");
 
-    el.staggerMode = document.getElementById("pg-stagger-mode");
-    el.staggerModeSimple = document.getElementById("pg-stagger-simple");
-    el.staggerModeAdvanced = document.getElementById("pg-stagger-advanced");
-    el.staggerSimpleWrap = document.getElementById("pg-stagger-simple-wrap");
-    el.staggerAdvancedWrap = document.getElementById("pg-stagger-advanced-wrap");
-    el.staggerValue = document.getElementById("pg-stagger-value");
-    el.staggerValueOut = document.getElementById("pg-stagger-value-out");
+    el.staggerTiming = document.getElementById("pg-stagger-timing");
     el.staggerAmount = document.getElementById("pg-stagger-amount");
     el.staggerAmountOut = document.getElementById("pg-stagger-amount-out");
     el.staggerEach = document.getElementById("pg-stagger-each");
+    el.staggerEachOut = document.getElementById("pg-stagger-each-out");
     el.staggerFrom = document.getElementById("pg-stagger-from");
     el.staggerEase = document.getElementById("pg-stagger-ease");
+    el.staggerGrid = document.getElementById("pg-stagger-grid");
+    el.staggerAxisBoth = document.getElementById("pg-stagger-axis-both");
+    el.staggerAxisX = document.getElementById("pg-stagger-axis-x");
+    el.staggerAxisY = document.getElementById("pg-stagger-axis-y");
 
     el.typeChars = document.getElementById("pg-type-chars");
     el.typeWords = document.getElementById("pg-type-words");
     el.typeLines = document.getElementById("pg-type-lines");
-    el.maskNone = document.getElementById("pg-mask-none");
     el.maskChars = document.getElementById("pg-mask-chars");
     el.maskWords = document.getElementById("pg-mask-words");
     el.maskLines = document.getElementById("pg-mask-lines");
@@ -1135,10 +1368,15 @@
   }
 
   function buildStaggerLiteral(stagger) {
-    if (stagger.mode === "simple") return String(stagger.value ?? 0.1);
-    const parts = [`amount: ${stagger.amount ?? 0.1}`, `from: ${JSON.stringify(stagger.from || "start")}`];
-    if (stagger.each != null && stagger.each !== "") parts.push(`each: ${stagger.each}`);
-    if (stagger.ease && stagger.ease !== "none") parts.push(`ease: ${JSON.stringify(stagger.ease)}`);
+    const s = normalizeStaggerConfig(stagger);
+    const from = JSON.stringify(s.from || "start");
+    const parts =
+      s.timing === "each"
+        ? [`each: ${s.each}`, `from: ${from}`]
+        : [`amount: ${s.amount}`, `from: ${from}`];
+    if (s.ease) parts.push(`ease: ${JSON.stringify(s.ease)}`);
+    if (s.grid) parts.push(`grid: [${s.grid[0]}, ${s.grid[1]}]`);
+    if (s.axis !== "both") parts.push(`axis: ${JSON.stringify(s.axis)}`);
     return `{ ${parts.join(", ")} }`;
   }
 
@@ -1152,7 +1390,10 @@
     delete toVars.ease;
     const toLit = JSON.stringify(toVars, null, 2).split("\n").join("\n      ");
     const staggerLit = buildStaggerLiteral(cfg.stagger);
-    const maskLine = cfg.splitText.mask ? `\n  mask: ${JSON.stringify(cfg.splitText.mask)},` : "";
+    const maskLine =
+      cfg.splitText.mask && cfg.splitText.mask !== "none"
+        ? `\n  mask: ${JSON.stringify(cfg.splitText.mask)},`
+        : "";
     const scrubVal =
       cfg.scrollTrigger.scrub === false
         ? "false"
@@ -1186,10 +1427,10 @@
   async function flashButton(btn, label) {
     const prev = btn.textContent;
     btn.textContent = label;
-    btn.classList.add("pg-btn--done");
+    btn.classList.add("pg-segment__btn--done");
     await new Promise((r) => setTimeout(r, 1400));
     btn.textContent = prev;
-    btn.classList.remove("pg-btn--done");
+    btn.classList.remove("pg-segment__btn--done");
   }
 
   function bindLiveControls() {
@@ -1197,11 +1438,11 @@
       el.duration,
       el.ease,
       el.animateTarget,
-      el.staggerValue,
       el.staggerAmount,
       el.staggerEach,
       el.staggerFrom,
       el.staggerEase,
+      el.staggerGrid,
       el.stTrigger,
       el.stStartElement,
       el.stStartView,
@@ -1214,23 +1455,29 @@
     ].filter(Boolean);
 
     liveInputs.forEach((input) => {
-      const evt = input.type === "range" ? "input" : "change";
+      const evt = input.type === "range" || input.id === "pg-stagger-grid" ? "input" : "change";
       input.addEventListener(evt, () => requestLiveUpdate());
+      if (input.id === "pg-stagger-grid") {
+        input.addEventListener("change", () => requestLiveUpdate());
+      }
     });
   }
 
   function bindTypographyControls() {
-    const inputs = [
-      el.fontSelect,
-      el.fontSize,
-      el.lineHeight,
-      el.letterSpacing,
-      el.textAlign,
-      el.textTransform,
-    ];
+    const inputs = [el.fontSelect, el.fontSize, el.lineHeight, el.letterSpacing];
     inputs.forEach((input) => {
       const evt = input.type === "range" ? "input" : "change";
       input.addEventListener(evt, () => markTypographyDirty());
+    });
+    bindSegmentGroup(el.textAlign, markTypographyDirty);
+    bindSegmentGroup(el.textTransform, markTypographyDirty);
+  }
+
+  function bindPropResets() {
+    panel?.querySelectorAll("[data-prop-reset]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        resetAnimProp(btn.dataset.propReset);
+      });
     });
   }
 
@@ -1247,8 +1494,9 @@
     });
     getMaskButtons().forEach((btn) => {
       btn.addEventListener("click", () => {
+        const pressed = btn.getAttribute("aria-pressed") === "true";
         getMaskButtons().forEach((b) => b.setAttribute("aria-pressed", "false"));
-        btn.setAttribute("aria-pressed", "true");
+        if (!pressed) btn.setAttribute("aria-pressed", "true");
         markSplitTextDirty();
       });
     });
@@ -1265,22 +1513,31 @@
     });
   }
 
-  function bindStaggerMode() {
-    el.staggerModeSimple.addEventListener("click", () => {
-      el.staggerMode.setAttribute("data-mode", "simple");
-      el.staggerModeSimple.setAttribute("aria-pressed", "true");
-      el.staggerModeAdvanced.setAttribute("aria-pressed", "false");
-      el.staggerSimpleWrap.hidden = false;
-      el.staggerAdvancedWrap.hidden = true;
-      requestLiveUpdate();
+  function bindStaggerAxis() {
+    [
+      { btn: el.staggerAxisBoth, axis: "both" },
+      { btn: el.staggerAxisX, axis: "x" },
+      { btn: el.staggerAxisY, axis: "y" },
+    ].forEach(({ btn, axis }) => {
+      btn?.addEventListener("click", () => {
+        setStaggerAxis(axis);
+        requestLiveUpdate();
+      });
     });
-    el.staggerModeAdvanced.addEventListener("click", () => {
-      el.staggerMode.setAttribute("data-mode", "advanced");
-      el.staggerModeSimple.setAttribute("aria-pressed", "false");
-      el.staggerModeAdvanced.setAttribute("aria-pressed", "true");
-      el.staggerSimpleWrap.hidden = true;
-      el.staggerAdvancedWrap.hidden = false;
-      requestLiveUpdate();
+  }
+
+  function bindStaggerTimingActivation() {
+    const activateAmount = () => setStaggerTiming("amount");
+    const activateEach = () => setStaggerTiming("each");
+    [el.staggerAmount].filter(Boolean).forEach((input) => {
+      input.addEventListener("pointerdown", activateAmount);
+      input.addEventListener("focus", activateAmount);
+      input.addEventListener("input", activateAmount);
+    });
+    [el.staggerEach].filter(Boolean).forEach((input) => {
+      input.addEventListener("pointerdown", activateEach);
+      input.addEventListener("focus", activateEach);
+      input.addEventListener("input", activateEach);
     });
   }
 
@@ -1405,6 +1662,7 @@
     cacheElements();
 
     workingConfig = loadStoredConfig();
+    workingConfig.stagger = normalizeStaggerConfig(workingConfig.stagger);
     committedConfig = deepClone(workingConfig);
     fillFormFromConfig(workingConfig);
     typographyDirty = false;
@@ -1415,10 +1673,12 @@
 
     bindTypographyControls();
     bindSplitTextControls();
-    bindStaggerMode();
+    bindStaggerTimingActivation();
+    bindStaggerAxis();
     bindScrubMode();
     bindScrollPositionControls();
     bindLiveControls();
+    bindPropResets();
     bindTabsAndHeader();
     bindKeyboard();
 

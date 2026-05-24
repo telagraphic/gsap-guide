@@ -4,6 +4,8 @@
 
 **Context:** Dev-only tuning sidebar (PRD: dark sidebar, ~320–360px, dense controls). Your observations on small type, weak contrast, flat borders, and timid radii are accurate and are the main drivers of the “unfinished tool” feel.
 
+**Current standards (post-fix):** [INTERFACE_RULES.md](./INTERFACE_RULES.md)
+
 ---
 
 ## Executive summary
@@ -84,7 +86,7 @@ Token block:
   --pg-border: rgb(255 255 255 / 0.08);
   --pg-text: #f2f2f2;
   --pg-text-muted: rgb(255 255 255 / 0.45);
-  --pg-accent: #5b8def;
+  --pg-accent: var(--pg-bg);
 ```
 
 **Approximate contrast (on `#161616`):**

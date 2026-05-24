@@ -113,6 +113,7 @@
   font-feature-settings: "tnum";
   font-weight: 500;
   color: var(--controls-text-muted);
+  font-family: var(--font-monospace);
 }
 
 .controls-bar__control-wrap select {
