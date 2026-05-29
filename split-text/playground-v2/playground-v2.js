@@ -52,6 +52,12 @@
 
   const SCROLL_EDGE_OPTIONS = ["top", "center", "bottom"];
   const SCROLL_VIEW_PRESETS = ["top", "center", "bottom"];
+  const SCROLL_OFFSET_UNITS = ["%", "vh", "px"];
+  const SCROLL_OFFSET_LIMITS = {
+    "%": { min: 0, max: 100, step: 1 },
+    vh: { min: 0, max: 100, step: 1 },
+    px: { min: 0, max: 800, step: 5 },
+  };
 
   const ICON_RESET = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>`;
 
@@ -200,22 +206,161 @@
     return `${sign}${n}`;
   }
 
-  function parseScrollPosition(str) {
-    const parts = String(str || "top top").trim().split(/\s+/).filter(Boolean);
-    const element = SCROLL_EDGE_OPTIONS.includes(parts[0]) ? parts[0] : "top";
-    const viewPart = parts.slice(1).join(" ") || "top";
-    if (SCROLL_VIEW_PRESETS.includes(viewPart)) {
-      return { element, viewPreset: viewPart, viewCustom: "" };
+  function parseScrollOffsetPart(part) {
+    const s = String(part || "").trim();
+    if (SCROLL_EDGE_OPTIONS.includes(s)) {
+      return { edge: s, offset: 0, unit: "%" };
     }
-    return { element, viewPreset: "top", viewCustom: viewPart };
+    const match = s.match(/^([\d.]+)(%|vh|px)$/i);
+    if (match) {
+      const unit = match[2] === "%" ? "%" : match[2].toLowerCase();
+      return { edge: "top", offset: parseFloat(match[1]), unit };
+    }
+    const n = parseFloat(s);
+    if (Number.isFinite(n)) {
+      return { edge: "top", offset: n, unit: "%" };
+    }
+    return { edge: "top", offset: 0, unit: "%" };
   }
 
-  function formatScrollPosition(element, viewPreset, viewCustom) {
-    const edge = SCROLL_EDGE_OPTIONS.includes(element) ? element : "top";
-    const offset = (viewCustom || "").trim();
-    if (offset) return `${edge} ${offset}`;
-    const view = SCROLL_VIEW_PRESETS.includes(viewPreset) ? viewPreset : "top";
-    return `${edge} ${view}`;
+  function parseScrollPosition(str) {
+    const parts = String(str || "top top").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) {
+      return {
+        elementEdge: "top",
+        elementOffset: 0,
+        elementUnit: "%",
+        viewEdge: "top",
+        viewOffset: 0,
+        viewUnit: "%",
+      };
+    }
+    const element = parseScrollOffsetPart(parts[0]);
+    const viewPart = parts.slice(1).join(" ") || "top";
+    const view = parseScrollOffsetPart(viewPart);
+    return {
+      elementEdge: element.edge,
+      elementOffset: element.offset,
+      elementUnit: SCROLL_OFFSET_UNITS.includes(element.unit) ? element.unit : "%",
+      viewEdge: view.edge,
+      viewOffset: view.offset,
+      viewUnit: SCROLL_OFFSET_UNITS.includes(view.unit) ? view.unit : "%",
+    };
+  }
+
+  function formatScrollPositionPart(edge, offset, unit) {
+    const e = SCROLL_EDGE_OPTIONS.includes(edge) ? edge : "top";
+    const n = parseFloat(offset) || 0;
+    if (n <= 0) return e;
+    const u = SCROLL_OFFSET_UNITS.includes(unit) ? unit : "%";
+    const value = u === "%" ? Math.round(n) : n;
+    const display = u === "px" ? value : Number(value.toFixed(u === "vh" ? 1 : 0));
+    return `${display}${u}`;
+  }
+
+  function formatScrollPosition(parts) {
+    const p = typeof parts === "string" ? parseScrollPosition(parts) : parts;
+    const el = formatScrollPositionPart(p.elementEdge, p.elementOffset, p.elementUnit);
+    const view = formatScrollPositionPart(p.viewEdge, p.viewOffset, p.viewUnit);
+    return `${el} ${view}`;
+  }
+
+  function getScrollOffsetUnit(container) {
+    const pressed = container?.querySelector('.pg-segment__btn[aria-pressed="true"]');
+    const unit = pressed?.dataset?.value;
+    return SCROLL_OFFSET_UNITS.includes(unit) ? unit : "%";
+  }
+
+  function setScrollOffsetUnit(container, unit) {
+    if (!container) return;
+    const value = SCROLL_OFFSET_UNITS.includes(unit) ? unit : "%";
+    container.querySelectorAll(".pg-segment__btn").forEach((btn) => {
+      btn.setAttribute("aria-pressed", btn.dataset.value === value ? "true" : "false");
+    });
+  }
+
+  function applyScrollOffsetSliderLimits(input, unit) {
+    if (!input) return;
+    const limits = SCROLL_OFFSET_LIMITS[unit] || SCROLL_OFFSET_LIMITS["%"];
+    input.min = limits.min;
+    input.max = limits.max;
+    input.step = limits.step;
+    const val = parseFloat(input.value);
+    if (Number.isFinite(val)) {
+      if (val > limits.max) input.value = limits.max;
+      if (val < limits.min) input.value = limits.min;
+    }
+    syncTrackSlider(input);
+  }
+
+  function setScrollPositionSideMode(prefix, side, mode) {
+    const field = panel?.querySelector(`[data-st-position="${prefix}"]`);
+    if (!field) return;
+    const useOffset = mode === "offset";
+    const edge = field.querySelector(`#pg-st-${prefix}-${side}-edge`);
+    edge?.classList.toggle("is-offset-active", useOffset);
+    edge?.classList.toggle("is-edge-selected", !useOffset);
+    field
+      .querySelector(`#pg-st-${prefix}-${side}-offset-col`)
+      ?.classList.toggle("is-edge-selected", !useOffset);
+  }
+
+  function syncScrollPositionSideModes(prefix) {
+    ["element", "view"].forEach((side) => {
+      const offset = parseFloat(document.getElementById(`pg-st-${prefix}-${side}-offset`)?.value) || 0;
+      setScrollPositionSideMode(prefix, side, offset > 0 ? "offset" : "edge");
+    });
+  }
+
+  function resetScrollOffsetSide(prefix, side) {
+    const offsetInput = document.getElementById(`pg-st-${prefix}-${side}-offset`);
+    const units = document.getElementById(`pg-st-${prefix}-${side}-units`);
+    if (offsetInput) {
+      offsetInput.value = 0;
+      setScrollOffsetUnit(units, "%");
+      applyScrollOffsetSliderLimits(offsetInput, "%");
+    }
+    setScrollPositionSideMode(prefix, side, "edge");
+  }
+
+  function readScrollPositionFromUI(prefix) {
+    const elementEdge = document.getElementById(`pg-st-${prefix}-element`)?.value || "top";
+    const viewEdge = document.getElementById(`pg-st-${prefix}-view`)?.value || "top";
+    const elementOffset = parseFloat(document.getElementById(`pg-st-${prefix}-element-offset`)?.value) || 0;
+    const viewOffset = parseFloat(document.getElementById(`pg-st-${prefix}-view-offset`)?.value) || 0;
+    const elementUnit = getScrollOffsetUnit(document.getElementById(`pg-st-${prefix}-element-units`));
+    const viewUnit = getScrollOffsetUnit(document.getElementById(`pg-st-${prefix}-view-units`));
+    return formatScrollPosition({
+      elementEdge,
+      elementOffset,
+      elementUnit,
+      viewEdge,
+      viewOffset,
+      viewUnit,
+    });
+  }
+
+  function fillScrollPositionToUI(prefix, str) {
+    const p = parseScrollPosition(str);
+    const elementSelect = document.getElementById(`pg-st-${prefix}-element`);
+    const viewSelect = document.getElementById(`pg-st-${prefix}-view`);
+    const elementOffset = document.getElementById(`pg-st-${prefix}-element-offset`);
+    const viewOffset = document.getElementById(`pg-st-${prefix}-view-offset`);
+    if (elementSelect) elementSelect.value = p.elementEdge;
+    if (viewSelect) {
+      viewSelect.value = SCROLL_VIEW_PRESETS.includes(p.viewEdge) ? p.viewEdge : "top";
+    }
+    if (elementOffset) {
+      elementOffset.value = p.elementOffset;
+      setScrollOffsetUnit(document.getElementById(`pg-st-${prefix}-element-units`), p.elementUnit);
+      applyScrollOffsetSliderLimits(elementOffset, p.elementUnit);
+    }
+    if (viewOffset) {
+      viewOffset.value = p.viewOffset;
+      setScrollOffsetUnit(document.getElementById(`pg-st-${prefix}-view-units`), p.viewUnit);
+      applyScrollOffsetSliderLimits(viewOffset, p.viewUnit);
+    }
+    syncScrollPositionSideModes(prefix);
   }
 
   function buildScrollEdgeOptions(selected) {
@@ -224,14 +369,32 @@
     ).join("");
   }
 
-  function buildScrollViewOptions(selectedPreset) {
-    const preset =
-      SCROLL_VIEW_PRESETS.includes(selectedPreset) && selectedPreset !== "custom"
-        ? selectedPreset
-        : "top";
-    return SCROLL_VIEW_PRESETS.map(
-      (v) => `<option value="${v}"${v === preset ? " selected" : ""}>${v}</option>`
+  function buildScrollOffsetUnitButtons(selected) {
+    return SCROLL_OFFSET_UNITS.map(
+      (unit) =>
+        `<button type="button" class="pg-segment__btn pg-segment__btn--unit" data-value="${unit}" aria-pressed="${unit === selected ? "true" : "false"}">${unit}</button>`
     ).join("");
+  }
+
+  function buildScrollOffsetColumnHTML({ idPrefix, side, offset, unit }) {
+    const sideId = side === "view" ? "view" : "element";
+    const hint = side === "view" ? "Viewport offset" : "Element offset";
+    return `
+      <div class="pg-st-position__offset-col is-edge-selected" id="pg-st-${idPrefix}-${sideId}-offset-col">
+        ${buildTrackSliderHTML({
+          id: `pg-st-${idPrefix}-${sideId}-offset`,
+          label: hint,
+          min: 0,
+          max: 100,
+          step: 1,
+          value: offset,
+          compact: true,
+          format: "scrollOffset",
+        })}
+        <div class="pg-st-position__units" id="pg-st-${idPrefix}-${sideId}-units" role="group" aria-label="${hint} unit">
+          <div class="pg-segment pg-segment--units">${buildScrollOffsetUnitButtons(unit)}</div>
+        </div>
+      </div>`;
   }
 
   function buildScrollPositionFieldHTML({ idPrefix, label, defaultStr }) {
@@ -240,23 +403,29 @@
       <div class="pg-field pg-st-position-field pg-scroll-section" data-st-position="${idPrefix}">
         <span class="pg-field__label">${label}</span>
         <div class="pg-st-position">
-          <div class="pg-st-position__col">
-            <span class="pg-st-position__hint">Element</span>
-            <select class="pg-select" id="pg-st-${idPrefix}-element">${buildScrollEdgeOptions(parsed.element)}</select>
+          <div class="pg-st-position__edges">
+            <div class="pg-st-position__edge is-edge-selected" id="pg-st-${idPrefix}-element-edge">
+              <span class="pg-st-position__hint">Element</span>
+              <select class="pg-select" id="pg-st-${idPrefix}-element">${buildScrollEdgeOptions(parsed.elementEdge)}</select>
+            </div>
+            <div class="pg-st-position__edge is-edge-selected" id="pg-st-${idPrefix}-view-edge">
+              <span class="pg-st-position__hint">Viewport</span>
+              <select class="pg-select" id="pg-st-${idPrefix}-view">${buildScrollEdgeOptions(parsed.viewEdge)}</select>
+            </div>
           </div>
-          <div class="pg-st-position__col">
-            <span class="pg-st-position__hint">Viewport</span>
-            <select class="pg-select" id="pg-st-${idPrefix}-view">${buildScrollViewOptions(parsed.viewPreset)}</select>
-          </div>
-          <div class="pg-st-position__offset">
-            <span class="pg-st-position__hint">Offset</span>
-            <input
-              type="text"
-              class="pg-input pg-st-position__custom"
-              id="pg-st-${idPrefix}-view-custom"
-              value="${parsed.viewCustom}"
-              placeholder="25%, 100px (optional)"
-            />
+          <div class="pg-st-position__offsets">
+            ${buildScrollOffsetColumnHTML({
+              idPrefix,
+              side: "element",
+              offset: parsed.elementOffset,
+              unit: parsed.elementUnit,
+            })}
+            ${buildScrollOffsetColumnHTML({
+              idPrefix,
+              side: "view",
+              offset: parsed.viewOffset,
+              unit: parsed.viewUnit,
+            })}
           </div>
         </div>
       </div>`;
@@ -404,6 +573,15 @@
     const v = parseFloat(input.value);
     if (format === "letterSpacing") return formatLetterSpacing(v);
     if (format === "integer") return String(Math.round(v));
+    if (format === "scrollOffset") {
+      const unit = getScrollOffsetUnit(
+        input.closest(".pg-st-position__offset-col")?.querySelector(".pg-st-position__units")
+      );
+      const step = parseFloat(input.step) || 1;
+      const decimals = unit === "px" && step >= 5 ? 0 : unit === "vh" ? 1 : 0;
+      const display = decimals === 0 ? Math.round(v) : v.toFixed(decimals);
+      return `${display}${unit}`;
+    }
     const step = parseFloat(input.step) || 1;
     const decimals = step < 0.05 ? 2 : step < 1 ? 1 : 0;
     return v.toFixed(decimals);
@@ -587,16 +765,8 @@
       stagger,
       scrollTrigger: {
         trigger: el.stTrigger?.value || codeDefaults.scrollTrigger.trigger,
-        start: formatScrollPosition(
-          el.stStartElement?.value,
-          el.stStartView?.value,
-          el.stStartViewCustom?.value
-        ),
-        end: formatScrollPosition(
-          el.stEndElement?.value,
-          el.stEndView?.value,
-          el.stEndViewCustom?.value
-        ),
+        start: readScrollPositionFromUI("start"),
+        end: readScrollPositionFromUI("end"),
         ...scrubFields,
         markers: el.stMarkers?.getAttribute("aria-pressed") === "true",
       },
@@ -710,19 +880,8 @@
 
     el.stTrigger.value = cfg.scrollTrigger.trigger;
 
-    const startPos = parseScrollPosition(cfg.scrollTrigger.start);
-    el.stStartElement.value = startPos.element;
-    el.stStartView.value = SCROLL_VIEW_PRESETS.includes(startPos.viewPreset)
-      ? startPos.viewPreset
-      : "top";
-    el.stStartViewCustom.value = startPos.viewCustom;
-
-    const endPos = parseScrollPosition(cfg.scrollTrigger.end);
-    el.stEndElement.value = endPos.element;
-    el.stEndView.value = SCROLL_VIEW_PRESETS.includes(endPos.viewPreset)
-      ? endPos.viewPreset
-      : "top";
-    el.stEndViewCustom.value = endPos.viewCustom;
+    fillScrollPositionToUI("start", cfg.scrollTrigger.start);
+    fillScrollPositionToUI("end", cfg.scrollTrigger.end);
 
     el.stMarkers?.setAttribute("aria-pressed", cfg.scrollTrigger.markers ? "true" : "false");
     setScrubUI(cfg.scrollTrigger);
@@ -1328,10 +1487,12 @@
     el.stTrigger = document.getElementById("pg-st-trigger");
     el.stStartElement = document.getElementById("pg-st-start-element");
     el.stStartView = document.getElementById("pg-st-start-view");
-    el.stStartViewCustom = document.getElementById("pg-st-start-view-custom");
+    el.stStartElementOffset = document.getElementById("pg-st-start-element-offset");
+    el.stStartViewOffset = document.getElementById("pg-st-start-view-offset");
     el.stEndElement = document.getElementById("pg-st-end-element");
     el.stEndView = document.getElementById("pg-st-end-view");
-    el.stEndViewCustom = document.getElementById("pg-st-end-view-custom");
+    el.stEndElementOffset = document.getElementById("pg-st-end-element-offset");
+    el.stEndViewOffset = document.getElementById("pg-st-end-view-offset");
     el.stMarkers = document.getElementById("pg-st-markers");
     el.scrubMode = document.getElementById("pg-scrub-mode");
     el.scrubOff = document.getElementById("pg-scrub-off");
@@ -1446,10 +1607,12 @@
       el.stTrigger,
       el.stStartElement,
       el.stStartView,
-      el.stStartViewCustom,
+      el.stStartElementOffset,
+      el.stStartViewOffset,
       el.stEndElement,
       el.stEndView,
-      el.stEndViewCustom,
+      el.stEndElementOffset,
+      el.stEndViewOffset,
       el.scrubSmooth,
       ...ANIM_PROPS.flatMap((p) => [el[`prop_${p.key}_start`], el[`prop_${p.key}_end`]]),
     ].filter(Boolean);
@@ -1556,17 +1719,48 @@
     el.scrubSmooth.addEventListener("input", () => requestLiveUpdate());
   }
 
+  function bindScrollOffsetControls() {
+    ["start", "end"].forEach((prefix) => {
+      ["element", "view"].forEach((side) => {
+        const units = document.getElementById(`pg-st-${prefix}-${side}-units`);
+        const offsetInput = document.getElementById(`pg-st-${prefix}-${side}-offset`);
+        const activateOffset = () => {
+          const value = parseFloat(offsetInput?.value) || 0;
+          if (value > 0) setScrollPositionSideMode(prefix, side, "offset");
+        };
+        units?.querySelectorAll(".pg-segment__btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const unit = btn.dataset.value;
+            setScrollOffsetUnit(units, unit);
+            applyScrollOffsetSliderLimits(offsetInput, unit);
+            activateOffset();
+            requestLiveUpdate();
+          });
+        });
+        offsetInput?.addEventListener("pointerdown", activateOffset);
+        offsetInput?.addEventListener("focus", activateOffset);
+        offsetInput?.addEventListener("input", () => {
+          const value = parseFloat(offsetInput.value) || 0;
+          setScrollPositionSideMode(prefix, side, value > 0 ? "offset" : "edge");
+          requestLiveUpdate();
+        });
+      });
+    });
+  }
+
   function bindScrollPositionControls() {
     ["start", "end"].forEach((which) => {
       const element = which === "start" ? el.stStartElement : el.stEndElement;
       const view = which === "start" ? el.stStartView : el.stEndView;
-      const custom = which === "start" ? el.stStartViewCustom : el.stEndViewCustom;
-      [element, view, custom].forEach((input) => {
-        if (!input) return;
-        input.addEventListener("change", () => requestLiveUpdate());
-        if (input === custom) {
-          input.addEventListener("input", () => requestLiveUpdate());
-        }
+      element?.addEventListener("change", () => {
+        resetScrollOffsetSide(which, "element");
+        syncScrollPositionSideModes(which);
+        requestLiveUpdate();
+      });
+      view?.addEventListener("change", () => {
+        resetScrollOffsetSide(which, "view");
+        syncScrollPositionSideModes(which);
+        requestLiveUpdate();
       });
     });
 
@@ -1677,6 +1871,7 @@
     bindStaggerAxis();
     bindScrubMode();
     bindScrollPositionControls();
+    bindScrollOffsetControls();
     bindLiveControls();
     bindPropResets();
     bindTabsAndHeader();
