@@ -1,57 +1,209 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ScrollTrigger Architecture</title>
+    <link rel="stylesheet" href="fonts.css" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="hero">
-      <h1>ScrollTrigger Architecture</h1>
-      <p>Scroll to see the starter animation.</p>
+      <div class="hero__circle" aria-hidden="true"></div>
+      <div class="hero__main">
+        <h1>ScrollTrigger</h1>
+        <h1>Architecture</h1>
+      </div>
+      <p class="hero__scroll-hint">scroll down for scroll trigger experience</p>
     </header>
 
     <main>
       <section class="panel" data-panel="1">
         <div class="panel__content">
-          <h2>Panel one</h2>
-          <p>Add ScrollTrigger timelines and config here.</p>
+          <h1>SplitText</h1>
+          <div class="panel__content__more">
+            <p>
+              Add ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here.
+            </p>
+          </div>
         </div>
       </section>
 
       <section class="panel" data-panel="2">
         <div class="panel__content">
-          <h2>Panel two</h2>
-          <p>Each section can own its own trigger and animation.</p>
+          <h2>GSAP COMPONENT</h2>
+          <div class="panel__content__more">
+            <p>
+              Add ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here.
+            </p>
+
+            <p>
+              Add ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here.
+            </p>
+            <p>
+              Add ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here.
+            </p>
+          </div>
         </div>
       </section>
 
       <section class="panel" data-panel="3">
         <div class="panel__content">
-          <h2>Panel three</h2>
-          <p>Refactor shared values into config objects as you grow.</p>
+          <h1>Rolly Texty</h1>
+          <div class="panel__content__more">
+            <p>
+              Add ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here. Add ScrollTrigger timelines and config
+              here. Add ScrollTrigger timelines and config here. Add
+              ScrollTrigger timelines and config here. Add ScrollTrigger
+              timelines and config here.
+            </p>
+          </div>
         </div>
       </section>
 
       <section class="panel" data-panel="4">
         <div class="panel__content">
-          <h2>Panel four</h2>
-          <p>Group related triggers into modules or classes.</p>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 1; --row: 1"
+          >
+            <img src="images/tarot-1.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 3; --row: 1"
+          >
+            <img src="images/tarot-2.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 2; --row: 2"
+          >
+            <img src="images/tarot-3.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 4; --row: 2"
+          >
+            <img src="images/tarot-4.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 2; --row: 1"
+          >
+            <h1>Trigger</h1>
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 4; --row: 1"
+          >
+            <h1>Start</h1>
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 1; --row: 2"
+          >
+            <h1>Scrub</h1>
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 3; --row: 2"
+          >
+            <h1>End</h1>
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 1; --row: 3"
+          >
+            <img src="images/tarot-5.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 3; --row: 3"
+          >
+            <img src="images/tarot-6.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 2; --row: 3"
+          >
+            <h1>Pin</h1>
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 4; --row: 3"
+          >
+            <h1>Markers</h1>
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 2; --row: 4"
+          >
+            <img src="images/tarot-7.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 4; --row: 4"
+          >
+            <img src="images/tarot-8.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 1; --row: 4"
+          >
+            <h1>Refresh</h1>
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 3; --row: 4"
+          >
+            <h1>Batch</h1>
+          </div>
         </div>
       </section>
 
       <section class="panel" data-panel="5">
         <div class="panel__content">
-          <h2>Panel five</h2>
-          <p>Share scrub, start, and end values from one config.</p>
+          <h1>From</h1>
+          <h1>To</h1>
         </div>
       </section>
 
       <section class="panel" data-panel="6">
         <div class="panel__content">
-          <h2>Panel six</h2>
-          <p>Keep timelines readable at the top of each file.</p>
+          <h1>THE END</h1>
         </div>
       </section>
     </main>
