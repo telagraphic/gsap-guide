@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScrollTrigger Architecture</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>ScrollTrigger Architecture</h1>
+      <p>Scroll to see the starter animation.</p>
+    </header>
+
+    <main>
+      <section class="panel" data-panel="1">
+        <div class="panel__content">
+          <h2>Panel one</h2>
+          <p>Add ScrollTrigger timelines and config here.</p>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="2">
+        <div class="panel__content">
+          <h2>Panel two</h2>
+          <p>Each section can own its own trigger and animation.</p>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="3">
+        <div class="panel__content">
+          <h2>Panel three</h2>
+          <p>Refactor shared values into config objects as you grow.</p>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="4">
+        <div class="panel__content">
+          <h2>Panel four</h2>
+          <p>Group related triggers into modules or classes.</p>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="5">
+        <div class="panel__content">
+          <h2>Panel five</h2>
+          <p>Share scrub, start, and end values from one config.</p>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="6">
+        <div class="panel__content">
+          <h2>Panel six</h2>
+          <p>Keep timelines readable at the top of each file.</p>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+  --black: #000;
+  --white: #fff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--black);
+  color: var(--white);
+  line-height: 1.5;
+}
+
+.hero,
+.panel {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  place-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--black);
+}
+
+.hero {
+  border-bottom: 1px solid var(--white);
+}
+
+.panel {
+  overflow: hidden;
+  border-bottom: 1px solid var(--white);
+}
+
+.panel__content {
+  max-width: 36ch;
+}
+
+.hero h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.hero p,
+.panel p {
+  margin: 0;
+}
+
+.panel h2 {
+  margin: 0 0 0.75rem;
+}
