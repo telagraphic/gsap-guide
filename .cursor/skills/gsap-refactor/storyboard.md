@@ -1,20 +1,17 @@
-**Part of [GSAP Refactor](SKILL.md) by Nick Lyons**
+**Part of [GSAP Refactor](SKILL.md) by Nick Lyons** · Follow the Shared Rules in [SKILL.md](SKILL.md)
 
 A pattern for writing and refactoring GSAP animations into a human-readable storyboard format. Every timing value, scale, position, and spring config is extracted to named constants at the top of the file so you can read the animation like a script and tune any value instantly.
 
-Generate a file named ANIMATION_OVERVIEW.md in a folder named `./docs`. Create `./docs` if it does not exist.
-
+Generate a file named `./docs/ANIMATION_STORYBOARD.md`  in a folder named. Create `./docs` if it does not exist.
 
 ## Big Picture
 
 Provide a big picture of the animation describing if time or scroll or other based animation, layering, types of transforms, and css or javascript techniques implemented to be aware of.
 
-
 ## When to use
 
 - User says "summarize animation", "explain this animation", "what is this animation", "storyboard", etc.
 - User points to a file or current directory that has html, css and javascript files
-
 
 ## The Storyboard Pattern
 
@@ -41,82 +38,12 @@ const TIMING = {
 ```
 
 
-If not time based, use scroll progress as percentage or viewport progress as the replacement for timing:
+**Scroll-based variants.** When the animation is scrubbed rather than timed, replace `ms` with `progress` (0→1) or viewport percentage. Two forms:
 
-```javascript
-/*
- * ANIMATION STORYBOARD (scroll-scrubbed via .gallery-scroll-track)
- *
- * progress: 0 at start: "top bottom"
- *           1 at end:   "bottom bottom"
- * scrub: 1 — values ease toward scroll position
- *
- * LAYERING: fixed .gallery-viewport + .gallery-grid under scrolling
- *           .container; scroll track section is transparent (see §2.1–2.2).
- *
- * progress 0.00    Gallery: translate(-50%,-50%) scale(1)
- *                  Sides:   translateY(0px)
- *                  Main img: scale(2)
- *
- * progress 0.25    scale ≈ 1 + 0.25×maxScale;  sides +75px;
- *                  main img scale ≈ 2 − 0.2125
- *
- * progress 0.50    scale ≈ 1 + 0.50×maxScale;  sides +150px;
- *                  main img scale ≈ 2 − 0.425
- *
- * progress 0.75    scale ≈ 1 + 0.75×maxScale;  sides +225px;
- *                  main img scale ≈ 2 − 0.6375
- *
- * progress 1.00    Gallery: scale(1 + maxScale)
- *                  Sides:   translateY(300px)
- *                  Main img: scale(1.15)   [since 2 − 0.85]
- *
- * All three channels update together (continuous scrub).
- */
-```
+- **Progress list** — each keyframe (0.00, 0.25, 0.50, 0.75, 1.00) lists every channel's value on its own line, noting `scrub` and that channels update together. Use when the reader needs exact values per step.
+- **Viewport paint diagram** — a phase table (BEFORE / START / INSIDE / END / AFTER) showing scroll position, paint stack (bottom→top DOM order), progress, and inline transforms side by side. Use when *layering* and what-paints-over-what is the thing that confuses people. Include a legend for fill characters.
 
-
-Scroll-based with ScrollTrigger storyboard:
-
-```
-VIEWPORT (what you SEE — top paints over bottom in DOM order)
-══════════════════════════════════════════════════════════════
-
-PHASE ──► scroll position          paint stack (bottom → top)     progress    transforms (inline)
-──────────────────────────────────────────────────────────────────────────────────────────────────
-
-BEFORE    │....................│  [ fixed gallery stage ]         (idle /     defaults or
-TRACK     │  hero │ intro ████ │  ████████████████████████         last)       last values*
-          └─ opaque .container ─┘           ▲
-                                    covered by scrolling content
-
-
-START     track top ─── hits ───► bottom edge of viewport
-          │.....................│  [ fixed gallery ]              p → 0        grid scale(1)
-          │ ░░░ track (0px) ░░░ │  █ transparent “hole”           trigger      sides +0
-          │        (start)      │                                 arms         hero img scale(2)
-
-
-INSIDE    ~600vh of track in view  [ fixed gallery ] READS AS    p : 0→1      • grid scale ↑
-TRACK     │ ░░░░░░░░░░░░░░░░░░░ │  foreground (mostly air)                     (1 → 1+maxScale)
-(scrub)   │  transparent ruler  │  ▲ still see fixed stage                      • sides translateY ↑
-          │....................│                                              • hero img scale ↓
-                                                                              scrub lags scroll ~1s
-
-
-END       track bottom ── hits ──► viewport bottom
-          │.....................│  same stack                    p → 1        grid scale(1+maxScale)
-          │ ░░░ track (end) ░░░ │                                 “rest”       sides +300px
-          └────────────────────┘                                              hero ~1.15
-
-
-AFTER     outro / footer ████ again
-TRACK     │....................│  [ fixed gallery ]             (inactive)    transforms NOT reset
-          └─ opaque ──────────┘           ▲                    in this proj
-                                     covered again
-
-Legend: ███ opaque section   ░░░ transparent .gallery-scroll-track   * inactive trigger
-```
+Both follow the same rules below; pick the one that clarifies the specific animation. Don't produce all three forms for one animation.
 
 
 
@@ -167,9 +94,7 @@ const ROWS = {
 
 ### 4. Show connections across HTML, CSS, JS
 
-Identify important connections between CSS properties and values for an element or layer and how it is modified by Javascript. CSS will typically be applied before Javascript executes so it is important to call out what properties and values have an effect on the styling and transforms by the GSAP code.
-
-
+Identify important CSS properties and values that are used in the animation how they are modified by Javascript. CSS will typically be applied before Javascript executes so it is important to call out what properties and values have an effect on the styling and transforms by the GSAP code.
 
 
 ## How to apply
