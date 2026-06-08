@@ -70,39 +70,34 @@
           </section>
       </section>
 
+      
+
       <section class="panel" data-panel="3">
         <div class="panel__content">
           <div class="panel__body">
-            <p class="panel__title">1 — An Ever-Expanding Cosmos</p>
+            <p class="panel__title">Screen reader Accessibility</p>
             <p>
-              The universe is constantly expanding, stretching the fabric of
-              space in all directions with a quiet, relentless motion. Galaxies
-              drift apart over immense distances, carried by this cosmic flow
-              that began with the Big Bang. What once existed as an incredibly
-              dense and hot point has unfolded into a vast and ever-growing
-              expanse.
+              Adds aria-label to the split element(s) and aria-hidden to the
+              freshly-created line/word/character elements.
             </p>
-            <p class="panel__title">2 — Light as a Measure of Distance</p>
+            <p class="panel__title">Responsive re-splitting</p>
             <p>
-              Scientists observe this expansion through the redshift of light, a
-              subtle sign that everything is moving away from everything else.
-              Despite its scale, this phenomenon feels almost abstract,
-              unfolding far beyond human perception. Yet it shapes the very
-              structure of reality, influencing how galaxies form, evolve, and
-              eventually fade.
+              Avoid funky line breaks when resizing or when fonts load with autoSplit and onSplit().
+              Offers automatic cleanup and resuming of animations too!
             </p>
-            <p class="panel__title">3 — The Uncertain Future of Space</p>
+            <p class="panel__title">Slice right through nested elements</p>
             <p>
-              As space continues to expand, questions remain about its ultimate
-              fate, whether it will stretch forever into darkness or transform
-              in ways we have yet to understand.
+              Elements like span, strong, and a that span multiple lines are handled effortlessly
+              with deepSlice so they don't stretch lines vertically.
             </p>
-            <p class="panel__title">4 — Cosmology</p>
+            <p class="panel__title">Masking</p>
             <p>
-              Cosmology is the study of the universe as a whole, including its
-              origin, evolution, and ultimate fate. It is a field that combines
-              astronomy, physics, and mathematics to understand the universe on
-              the largest scales.
+              Wrap characters, words or lines with an extra clipping element for easy mask/reveal effects.
+            </p>
+
+            <p class="panel__title">Flexible targeting</p>
+            <p>
+              Apply your own class names to characters, words, or lines. Append "++" to auto-increment them (e.g. word1, word2, etc.). Enable propIndex* to apply CSS variables like --word: 3.
             </p>
           </div>
         </div>
@@ -110,6 +105,7 @@
 
       <section class="panel" data-panel="4">
         <div class="panel__content">
+          <!-- 
           <div class="panel__content-word">
             <h1 class="word-hidden">CHARS</h1>
             <h1 class="word-visible">CHARS</h1>
@@ -170,6 +166,71 @@
             <h1 class="word-hidden">PROPINDEX</h1>
             <h1 class="word-visible">PROPINDEX</h1>
           </div>
+           -->
+
+
+          <p class="panel__content-word">
+            <span class="word">
+                <span class="word-hidden">CHARS</span>
+                <span class="word-visible">CHARS</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">WORDS</span>
+                <span class="word-visible">WORDS</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">LINES</span>
+                <span class="word-visible">LINES</span>
+            </span>
+            <!-- <span class="word">
+                <span class="word-hidden">SMARTWRAP</span>
+                <span class="word-visible">SMARTWRAP</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">AUTOSPLIT</span>
+                <span class="word-visible">AUTOSPLIT</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">SMARTSPLIT</span>
+                <span class="word-visible">SMARTSPLIT</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">TAG</span>
+                <span class="word-visible">TAG</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">TYPE</span>
+                <span class="word-visible">TYPE</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">CHARSCLASS</span>
+                <span class="word-visible">CHARSCLASS</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">WORDSCLASS</span>
+                <span class="word-visible">WORDSCLASS</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">LINESCLASS</span>
+                <span class="word-visible">LINESCLASS</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">PREPARETEXT</span>
+                <span class="word-visible">PREPARETEXT</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">ONSPLIT</span>
+                <span class="word-visible">ONSPLIT</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">WORDDELIMITER</span>
+                <span class="word-visible">WORDDELIMITER</span>
+            </span>
+            <span class="word">
+                <span class="word-hidden">PROPINDEX</span>
+                <span class="word-visible">PROPINDEX</span>
+            </span> -->
+          </p>
         </div>
       </section>
 
