@@ -6,31 +6,39 @@
     <title>ScrollTrigger Architecture</title>
     <link rel="stylesheet" href="fonts.css" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="utils.css" />
   </head>
   <body>
     <header class="hero">
       <div class="hero__circle" aria-hidden="true"></div>
+      <p class="hero__scroll-tag center">scroll trigger experience</p>
       <div class="hero__main">
         <h1>ScrollTrigger</h1>
+        <h1>SplitText</h1>
+        <h1>Timeline</h1>
         <h1>Architecture</h1>
       </div>
-      <p class="hero__scroll-hint">scroll down for scroll trigger experience</p>
+      <p class="hero__scroll-hint center">
+        scroll down for scroll trigger experience
+      </p>
     </header>
 
     <main>
       <section class="panel" data-panel="1">
         <div class="panel__content">
-          <h1>SplitText</h1>
+          <h1>Split Text</h1>
           <div class="panel__content__more">
             <p>
-              Add ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here.
+              SplitText is a small JavaScript library that splits an HTML
+              element's text into individual characters, words, and/or lines
+              (each in its own, newly-created element), allowing you to create
+              gorgeous staggered animations. 
+            </p>
+            <p>
+              It's highly configurable and
+              smarter than other text splitting tools thanks to features like
+              automatic screen reader accessibility, masking for reveal effects,
+              responsive re-splitting, and much more.
             </p>
           </div>
         </div>
@@ -38,62 +46,136 @@
 
       <section class="panel" data-panel="2">
         <div class="panel__content">
-          <h2>GSAP COMPONENT</h2>
-          <div class="panel__content__more">
+          <section class="panel__content-section-1">
+            <h1>WRAPPING</h1>
             <p>
-              Add ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here.
+              Wrapping is the process of wrapping an element around each character, word or line.
+              It's how you can target the text to animate.
             </p>
-
+          </section>
+          <section class="panel__content-section-2">
+            <h1>CLASSES</h1>
             <p>
-              Add ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here.
+              You can add a class to each "wrapper" element to target it with CSS.
+              Custom classes allow you to target specific text elements for your needs.
             </p>
+          </section>
+          <section class="panel__content-section-3">
+            <h1>MASKING</h1>
             <p>
-              Add ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here.
+              Masking is the process of masking an element to reveal the text behind it.
+              This really cool slide up effect from below using a the wrapper element with overflow: none;
+              to achieve a smooth reveal effect.
             </p>
-          </div>
-        </div>
+          </section>
       </section>
 
       <section class="panel" data-panel="3">
         <div class="panel__content">
-          <h1>Rolly Texty</h1>
-          <div class="panel__content__more">
+          <div class="panel__body">
+            <p class="panel__title">1 — An Ever-Expanding Cosmos</p>
             <p>
-              Add ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here. Add ScrollTrigger timelines and config
-              here. Add ScrollTrigger timelines and config here. Add
-              ScrollTrigger timelines and config here. Add ScrollTrigger
-              timelines and config here.
+              The universe is constantly expanding, stretching the fabric of
+              space in all directions with a quiet, relentless motion. Galaxies
+              drift apart over immense distances, carried by this cosmic flow
+              that began with the Big Bang. What once existed as an incredibly
+              dense and hot point has unfolded into a vast and ever-growing
+              expanse.
+            </p>
+            <p class="panel__title">2 — Light as a Measure of Distance</p>
+            <p>
+              Scientists observe this expansion through the redshift of light, a
+              subtle sign that everything is moving away from everything else.
+              Despite its scale, this phenomenon feels almost abstract,
+              unfolding far beyond human perception. Yet it shapes the very
+              structure of reality, influencing how galaxies form, evolve, and
+              eventually fade.
+            </p>
+            <p class="panel__title">3 — The Uncertain Future of Space</p>
+            <p>
+              As space continues to expand, questions remain about its ultimate
+              fate, whether it will stretch forever into darkness or transform
+              in ways we have yet to understand.
+            </p>
+            <p class="panel__title">4 — Cosmology</p>
+            <p>
+              Cosmology is the study of the universe as a whole, including its
+              origin, evolution, and ultimate fate. It is a field that combines
+              astronomy, physics, and mathematics to understand the universe on
+              the largest scales.
             </p>
           </div>
         </div>
       </section>
 
       <section class="panel" data-panel="4">
+        <div class="panel__content">
+          <div class="panel__content-word">
+            <h1 class="word-hidden">CHARS</h1>
+            <h1 class="word-visible">CHARS</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">WORDS</h1>
+            <h1 class="word-visible">WORDS</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">LINES</h1>
+            <h1 class="word-visible">LINES</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">SMARTWRAP</h1>
+            <h1 class="word-visible">SMARTWRAP</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">AUTOSPLIT</h1>
+            <h1 class="word-visible">AUTOSPLIT</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">SMARTSPLIT</h1>
+            <h1 class="word-visible">SMARTSPLIT</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">TAG</h1>
+            <h1 class="word-visible">TAG</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">TYPE</h1>
+            <h1 class="word-visible">TYPE</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">CHARSCLASS</h1>
+            <h1 class="word-visible">CHARSCLASS</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">WORDSCLASS</h1>
+            <h1 class="word-visible">WORDSCLASS</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">LINESCLASS</h1>
+            <h1 class="word-visible">LINESCLASS</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">PREPARETEXT</h1>
+            <h1 class="word-visible">PREPARETEXT</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">ONSPLIT</h1>
+            <h1 class="word-visible">ONSPLIT</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">WORDDELIMITER</h1>
+            <h1 class="word-visible">WORDDELIMITER</h1>
+          </div>
+          <div class="panel__content-word">
+            <h1 class="word-hidden">PROPINDEX</h1>
+            <h1 class="word-visible">PROPINDEX</h1>
+          </div>
+        </div>
+      </section>
+
+      
+
+      <section class="panel" data-panel="5">
         <div class="panel__content">
           <div
             class="panel__grid-cell panel__grid-cell--image"
@@ -102,10 +184,35 @@
             <img src="images/tarot-1.png" alt="" />
           </div>
           <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 2; --row: 1"
+            data-sign="Aries"
+            data-api="start"
+          >
+            <h1>The Ram's Threshold</h1>
+          </div>
+          <div
             class="panel__grid-cell panel__grid-cell--image"
             style="--col: 3; --row: 1"
           >
             <img src="images/tarot-2.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 4; --row: 1"
+            data-sign="Taurus"
+            data-api="pin"
+          >
+            <h1>The Bull's Hold</h1>
+          </div>
+
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 1; --row: 2"
+            data-sign="Gemini"
+            data-api="onToggle"
+          >
+            <h1>The Twin Gates</h1>
           </div>
           <div
             class="panel__grid-cell panel__grid-cell--image"
@@ -114,40 +221,33 @@
             <img src="images/tarot-3.png" alt="" />
           </div>
           <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 3; --row: 2"
+            data-sign="Cancer"
+            data-api="onEnterBack"
+          >
+            <h1>The Returning Tide</h1>
+          </div>
+          <div
             class="panel__grid-cell panel__grid-cell--image"
             style="--col: 4; --row: 2"
           >
             <img src="images/tarot-4.png" alt="" />
           </div>
-          <div
-            class="panel__grid-cell panel__grid-cell--text"
-            style="--col: 2; --row: 1"
-          >
-            <h1>Trigger</h1>
-          </div>
-          <div
-            class="panel__grid-cell panel__grid-cell--text"
-            style="--col: 4; --row: 1"
-          >
-            <h1>Start</h1>
-          </div>
-          <div
-            class="panel__grid-cell panel__grid-cell--text"
-            style="--col: 1; --row: 2"
-          >
-            <h1>Scrub</h1>
-          </div>
-          <div
-            class="panel__grid-cell panel__grid-cell--text"
-            style="--col: 3; --row: 2"
-          >
-            <h1>End</h1>
-          </div>
+
           <div
             class="panel__grid-cell panel__grid-cell--image"
             style="--col: 1; --row: 3"
           >
             <img src="images/tarot-5.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 2; --row: 3"
+            data-sign="Leo"
+            data-api="markers"
+          >
+            <h1>The Lion's Beacon</h1>
           </div>
           <div
             class="panel__grid-cell panel__grid-cell--image"
@@ -157,15 +257,20 @@
           </div>
           <div
             class="panel__grid-cell panel__grid-cell--text"
-            style="--col: 2; --row: 3"
+            style="--col: 4; --row: 3"
+            data-sign="Virgo"
+            data-api="snap"
           >
-            <h1>Pin</h1>
+            <h1>The Virgin's Alignment</h1>
           </div>
+
           <div
             class="panel__grid-cell panel__grid-cell--text"
-            style="--col: 4; --row: 3"
+            style="--col: 1; --row: 4"
+            data-sign="Libra"
+            data-api="scrub"
           >
-            <h1>Markers</h1>
+            <h1>The Scales in Drag</h1>
           </div>
           <div
             class="panel__grid-cell panel__grid-cell--image"
@@ -174,36 +279,154 @@
             <img src="images/tarot-7.png" alt="" />
           </div>
           <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 3; --row: 4"
+            data-sign="Scorpio"
+            data-api="getVelocity"
+          >
+            <h1>The Sting of Velocity</h1>
+          </div>
+          <div
             class="panel__grid-cell panel__grid-cell--image"
             style="--col: 4; --row: 4"
           >
             <img src="images/tarot-8.png" alt="" />
           </div>
-          <div
-            class="panel__grid-cell panel__grid-cell--text"
-            style="--col: 1; --row: 4"
-          >
-            <h1>Refresh</h1>
-          </div>
-          <div
-            class="panel__grid-cell panel__grid-cell--text"
-            style="--col: 3; --row: 4"
-          >
-            <h1>Batch</h1>
-          </div>
-        </div>
-      </section>
 
-      <section class="panel" data-panel="5">
-        <div class="panel__content">
-          <h1>From</h1>
-          <h1>To</h1>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 1; --row: 5"
+          >
+            <img src="images/tarot-9.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 2; --row: 5"
+            data-sign="Sagittarius"
+            data-api="direction"
+          >
+            <h1>The Archer's Bearing</h1>
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--image"
+            style="--col: 3; --row: 5"
+          >
+            <img src="images/tarot-10.png" alt="" />
+          </div>
+          <div
+            class="panel__grid-cell panel__grid-cell--text"
+            style="--col: 4; --row: 5"
+            data-sign="Capricorn"
+            data-api="end"
+          >
+            <h1>The Mountain's Limit</h1>
+          </div>
         </div>
       </section>
 
       <section class="panel" data-panel="6">
         <div class="panel__content">
-          <h1>THE END</h1>
+          <h1>SCROLLTRIGGER</h1>
+          <h1>TECHNIQUES</h1>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="7">
+        <div class="panel__content">
+          <section class="panel__content-section" style="--col: 1; --row: 1">
+            <h1>TRIGGER: ELEMENT</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 2; --row: 2">
+            <h1>START: 50% TOP</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 3; --row: 3">
+            <h1>END: TOP BOTTOM</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 4; --row: 4">
+            <h1>PIN: TRUE</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 3; --row: 5">
+            <h1>SCRUB: 1</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 2; --row: 6">
+            <h1>ONTOGGLE: TRUE</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 1; --row: 7">
+            <h1>ONENTERBACK: TRUE</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 2; --row: 8">
+            <h1>GETVELOCITY: TRUE</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 3; --row: 9">
+            <h1>DIRECTION: TRUE</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 4; --row: 10">
+            <h1>BATCH: TRUE</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 3; --row: 11">
+            <h1>SCROLLER: TRUE</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 2; --row: 12">
+            <h1>MARKERS: TRUE</h1>
+          </section>
+          <section class="panel__content-section" style="--col: 1; --row: 13">
+            <h1>ENDTRIGGER: ELEMENT</h1>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="8">
+        <div class="panel__content">
+          <section class="panel__content-section" style="--col: 1; --row: 1">
+            <h1>ON ENTER</h1>
+            <p>
+              Function - A callback for when the scroll position moves forward past the "start" (typically when the trigger is scrolled into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section" style="--col: 2; --row: 2">
+            <h1>ON ENTER BACK</h1>
+            <p>
+              Function - A callback for when the scroll position moves backward past the "end" (typically when the trigger is scrolled back into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section" style="--col: 3; --row: 3">
+            <h1>ON LEAVE</h1>
+            <p>
+              Function - A callback for when the scroll position moves forward past the "start" (typically when the trigger is scrolled into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section" style="--col: 4; --row: 4">
+            <h1>ON GET VELOCITY</h1>
+            <p>
+              Function - A callback for when the scroll position moves forward past the "start" (typically when the trigger is scrolled into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section" style="--col: 5; --row: 5">
+            <h1>ON DIRECTION</h1>
+            <p>
+              Function - A callback for when the scroll position moves forward past the "start" (typically when the trigger is scrolled into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section" style="--col: 4; --row: 6">
+            <h1>ON LEAVE</h1>
+            <p>
+              A callback for when the scroll position moves forward past the "end" (typically when the trigger is scrolled out of view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section" style="--col: 3; --row: 7">
+            <h1>ON LEAVE BACK</h1>
+            <p>
+              Function - A callback for when the scroll position moves backward past the "start" (typically when the trigger is scrolled all the way backward past the start). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity()
+            </p>
+          </section>
+          <section class="panel__content-section" style="--col: 2; --row: 8">
+            <h1>ON UPDATE</h1>
+            <p>
+              Function - A callback that gets called every time the progress of the ScrollTrigger changes (meaning the scroll position changed). If you have a numeric scrub applied, keep in mind that the associated animation will keep scrubbing for a little while after the scroll position stops, so if your goal is to update something whenever the animation updates, it's best to apply an onUpdate to the animation itself rather than the ScrollTrigger. See a demo here.
+
+              The onUpdate callback receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity(). Example: 
+            </p>
+          </section>
         </div>
       </section>
     </main>
