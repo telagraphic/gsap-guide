@@ -32,13 +32,13 @@
               SplitText is a small JavaScript library that splits an HTML
               element's text into individual characters, words, and/or lines
               (each in its own, newly-created element), allowing you to create
-              gorgeous staggered animations. 
+              gorgeous staggered animations.
             </p>
             <p>
-              It's highly configurable and
-              smarter than other text splitting tools thanks to features like
-              automatic screen reader accessibility, masking for reveal effects,
-              responsive re-splitting, and much more.
+              It's highly configurable and smarter than other text splitting
+              tools thanks to features like automatic screen reader
+              accessibility, masking for reveal effects, responsive
+              re-splitting, and much more.
             </p>
           </div>
         </div>
@@ -49,28 +49,30 @@
           <section class="panel__content-section-1">
             <h1>WRAPPING</h1>
             <p>
-              Wrapping is the process of wrapping an element around each character, word or line.
-              It's how you can target the text to animate.
+              Wrapping is the process of wrapping an element around each
+              character, word or line. It's how you can target the text to
+              animate.
             </p>
           </section>
           <section class="panel__content-section-2">
             <h1>CLASSES</h1>
             <p>
-              You can add a class to each "wrapper" element to target it with CSS.
-              Custom classes allow you to target specific text elements for your needs.
+              You can add a class to each "wrapper" element to target it with
+              CSS. Custom classes allow you to target specific text elements for
+              your needs.
             </p>
           </section>
           <section class="panel__content-section-3">
             <h1>MASKING</h1>
             <p>
-              Masking is the process of masking an element to reveal the text behind it.
-              This really cool slide up effect from below using a the wrapper element with overflow: none;
-              to achieve a smooth reveal effect.
+              Masking is the process of masking an element to reveal the text
+              behind it. This really cool slide up effect from below using a the
+              wrapper element with overflow: none; to achieve a smooth reveal
+              effect.
             </p>
           </section>
+        </div>
       </section>
-
-      
 
       <section class="panel" data-panel="3">
         <div class="panel__content">
@@ -82,22 +84,27 @@
             </p>
             <p class="panel__title">Responsive re-splitting</p>
             <p>
-              Avoid funky line breaks when resizing or when fonts load with autoSplit and onSplit().
-              Offers automatic cleanup and resuming of animations too!
+              Avoid funky line breaks when resizing or when fonts load with
+              autoSplit and onSplit(). Offers automatic cleanup and resuming of
+              animations too!
             </p>
             <p class="panel__title">Slice right through nested elements</p>
             <p>
-              Elements like span, strong, and a that span multiple lines are handled effortlessly
-              with deepSlice so they don't stretch lines vertically.
+              Elements like span, strong, and a that span multiple lines are
+              handled effortlessly with deepSlice so they don't stretch lines
+              vertically.
             </p>
             <p class="panel__title">Masking</p>
             <p>
-              Wrap characters, words or lines with an extra clipping element for easy mask/reveal effects.
+              Wrap characters, words or lines with an extra clipping element for
+              easy mask/reveal effects.
             </p>
 
             <p class="panel__title">Flexible targeting</p>
             <p>
-              Apply your own class names to characters, words, or lines. Append "++" to auto-increment them (e.g. word1, word2, etc.). Enable propIndex* to apply CSS variables like --word: 3.
+              Apply your own class names to characters, words, or lines. Append
+              "++" to auto-increment them (e.g. word1, word2, etc.). Enable
+              propIndex* to apply CSS variables like --word: 3.
             </p>
           </div>
         </div>
@@ -105,136 +112,308 @@
 
       <section class="panel" data-panel="4">
         <div class="panel__content">
-          <!-- 
           <div class="panel__content-word">
-            <h1 class="word-hidden">CHARS</h1>
-            <h1 class="word-visible">CHARS</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">CHARS</span>
+              <span class="word-visible">CHARS</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">WORDS</h1>
-            <h1 class="word-visible">WORDS</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">WORDS</span>
+              <span class="word-visible">WORDS</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">LINES</h1>
-            <h1 class="word-visible">LINES</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">LINES</span>
+              <span class="word-visible">LINES</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">SMARTWRAP</h1>
-            <h1 class="word-visible">SMARTWRAP</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">AUTOSPLIT</span>
+              <span class="word-visible">AUTOSPLIT</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">AUTOSPLIT</h1>
-            <h1 class="word-visible">AUTOSPLIT</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">SMARTWRAP</span>
+              <span class="word-visible">SMARTWRAP</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">SMARTSPLIT</h1>
-            <h1 class="word-visible">SMARTSPLIT</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">ONSPLIT</span>
+              <span class="word-visible">ONSPLIT</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">TAG</h1>
-            <h1 class="word-visible">TAG</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">ONREVERT</span>
+              <span class="word-visible">ONREVERT</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">TYPE</h1>
-            <h1 class="word-visible">TYPE</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">DEEPSLICE</span>
+              <span class="word-visible">DEEPSLICE</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">CHARSCLASS</h1>
-            <h1 class="word-visible">CHARSCLASS</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">CHARSCLASS</span>
+              <span class="word-visible">CHARSCLASS</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">WORDSCLASS</h1>
-            <h1 class="word-visible">WORDSCLASS</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">WORDSCLASS</span>
+              <span class="word-visible">WORDSCLASS</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">LINESCLASS</h1>
-            <h1 class="word-visible">LINESCLASS</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">LINESCLASS</span>
+              <span class="word-visible">LINESCLASS</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">PREPARETEXT</h1>
-            <h1 class="word-visible">PREPARETEXT</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">MASK</span>
+              <span class="word-visible">MASK</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">ONSPLIT</h1>
-            <h1 class="word-visible">ONSPLIT</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">TAG</span>
+              <span class="word-visible">TAG</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">WORDDELIMITER</h1>
-            <h1 class="word-visible">WORDDELIMITER</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">TYPE</span>
+              <span class="word-visible">TYPE</span>
+            </div>
           </div>
           <div class="panel__content-word">
-            <h1 class="word-hidden">PROPINDEX</h1>
-            <h1 class="word-visible">PROPINDEX</h1>
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">PROPINDEX</span>
+              <span class="word-visible">PROPINDEX</span>
+            </div>
           </div>
-           -->
+          <div class="panel__content-word">
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">PREPARETEXT</span>
+              <span class="word-visible">PREPARETEXT</span>
+            </div>
+          </div>
+          <div class="panel__content-word">
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">WORDDELIMITER</span>
+              <span class="word-visible">WORDDELIMITER</span>
+            </div>
+          </div>
 
+          <div class="panel__content-word">
+            <div class="panel__content-word-wrapper word">
+              <span class="word-hidden">reduceWhiteSpace</span>
+              <span class="word-visible">reduceWhiteSpace</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <p class="panel__content-word">
-            <span class="word">
-                <span class="word-hidden">CHARS</span>
-                <span class="word-visible">CHARS</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">WORDS</span>
-                <span class="word-visible">WORDS</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">LINES</span>
-                <span class="word-visible">LINES</span>
-            </span>
-            <!-- <span class="word">
-                <span class="word-hidden">SMARTWRAP</span>
-                <span class="word-visible">SMARTWRAP</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">AUTOSPLIT</span>
-                <span class="word-visible">AUTOSPLIT</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">SMARTSPLIT</span>
-                <span class="word-visible">SMARTSPLIT</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">TAG</span>
-                <span class="word-visible">TAG</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">TYPE</span>
-                <span class="word-visible">TYPE</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">CHARSCLASS</span>
-                <span class="word-visible">CHARSCLASS</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">WORDSCLASS</span>
-                <span class="word-visible">WORDSCLASS</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">LINESCLASS</span>
-                <span class="word-visible">LINESCLASS</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">PREPARETEXT</span>
-                <span class="word-visible">PREPARETEXT</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">ONSPLIT</span>
-                <span class="word-visible">ONSPLIT</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">WORDDELIMITER</span>
-                <span class="word-visible">WORDDELIMITER</span>
-            </span>
-            <span class="word">
-                <span class="word-hidden">PROPINDEX</span>
-                <span class="word-visible">PROPINDEX</span>
-            </span> -->
+      <section class="panel" data-panel="6">
+        <div class="panel__content">
+          <header class="panel__header">SCROLLTRIGGER</header>
+          <p>
+            ScrollTrigger enables anyone to create jaw-dropping scroll-based
+            animations with minimal code. Infinitely flexible. Scrub, pin, snap,
+            or just trigger anything scroll-related, even if it has nothing to
+            do with animation.
           </p>
         </div>
       </section>
 
-      
+      <!-- <section class="panel" data-panel="7"></section> -->
+
+      <section class="panel" data-panel="9">
+        <div class="panel__content">
+          <ul class="panel-nine__list">
+            <li class="panel-nine__line">anticipatePin</li>
+            <li class="panel-nine__line">containerAnimation</li>
+            <li class="panel-nine__line">end</li>
+            <li class="panel-nine__line">endTrigger</li>
+            <li class="panel-nine__line">fastScrollEnd</li>
+            <li class="panel-nine__line">horizontal</li>
+            <li class="panel-nine__line">id</li>
+            <li class="panel-nine__line">immediateRender</li>
+            <li class="panel-nine__line">invalidateOnRefresh</li>
+            <li class="panel-nine__line">markers</li>
+            <li class="panel-nine__line">once</li>
+            <li class="panel-nine__line">onEnter</li>
+            <li class="panel-nine__line">onEnterBack</li>
+            <li class="panel-nine__line">onKill</li>
+            <li class="panel-nine__line">onLeave</li>
+            <li class="panel-nine__line">onLeaveBack</li>
+            <li class="panel-nine__line">onRefresh</li>
+            <li class="panel-nine__line">onRefreshInit</li>
+            <li class="panel-nine__line">onSnapComplete</li>
+            <li class="panel-nine__line">onScrubComplete</li>
+            <li class="panel-nine__line">onUpdate</li>
+            <li class="panel-nine__line">onToggle</li>
+            <li class="panel-nine__line">pin</li>
+            <li class="panel-nine__line">pinnedContainer</li>
+            <li class="panel-nine__line">pinReparent</li>
+            <li class="panel-nine__line">pinSpacing</li>
+            <li class="panel-nine__line">pinSpacer</li>
+            <li class="panel-nine__line">pinType</li>
+            <li class="panel-nine__line">preventOverlaps</li>
+            <li class="panel-nine__line">refreshPriority</li>
+            <li class="panel-nine__line">scroller</li>
+            <li class="panel-nine__line">scrub</li>
+            <li class="panel-nine__line">snap</li>
+            <li class="panel-nine__line">start</li>
+            <li class="panel-nine__line">toggleActions</li>
+            <li class="panel-nine__line">toggleClass</li>
+            <li class="panel-nine__line">trigger</li>
+            <li class="panel-nine__line">animation</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="8">
+        <div class="panel__content">
+          <section class="panel__content-section">
+            <h1>ON ENTER</h1>
+            <p>
+              Function - A callback for when the scroll position moves forward
+              past the "start" (typically when the trigger is scrolled into
+              view). It receives one parameter - the ScrollTrigger instance
+              itself which has properties/methods like progress, direction,
+              isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section">
+            <h1>ON ENTER BACK</h1>
+            <p>
+              Function - A callback for when the scroll position moves backward
+              past the "end" (typically when the trigger is scrolled back into
+              view). It receives one parameter - the ScrollTrigger instance
+              itself which has properties/methods like progress, direction,
+              isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section">
+            <h1>ON LEAVE</h1>
+            <p>
+              Function - A callback for when the scroll position moves forward
+              past the "start" (typically when the trigger is scrolled into
+              view). It receives one parameter - the ScrollTrigger instance
+              itself which has properties/methods like progress, direction,
+              isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section">
+            <h1>ON GET VELOCITY</h1>
+            <p>
+              Function - A callback for when the scroll position moves forward
+              past the "start" (typically when the trigger is scrolled into
+              view). It receives one parameter - the ScrollTrigger instance
+              itself which has properties/methods like progress, direction,
+              isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section">
+            <h1>ON DIRECTION</h1>
+            <p>
+              Function - A callback for when the scroll position moves forward
+              past the "start" (typically when the trigger is scrolled into
+              view). It receives one parameter - the ScrollTrigger instance
+              itself which has properties/methods like progress, direction,
+              isActive, and getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section">
+            <h1>ON LEAVE</h1>
+            <p>
+              A callback for when the scroll position moves forward past the
+              "end" (typically when the trigger is scrolled out of view). It
+              receives one parameter - the ScrollTrigger instance itself which
+              has properties/methods like progress, direction, isActive, and
+              getVelocity().
+            </p>
+          </section>
+          <section class="panel__content-section">
+            <h1>ON LEAVE BACK</h1>
+            <p>
+              Function - A callback for when the scroll position moves backward
+              past the "start" (typically when the trigger is scrolled all the
+              way backward past the start). It receives one parameter - the
+              ScrollTrigger instance itself which has properties/methods like
+              progress, direction, isActive, and getVelocity()
+            </p>
+          </section>
+          <section class="panel__content-section">
+            <h1>ON UPDATE</h1>
+            <p>
+              Function - A callback that gets called every time the progress of
+              the ScrollTrigger changes (meaning the scroll position changed).
+              If you have a numeric scrub applied, keep in mind that the
+              associated animation will keep scrubbing for a little while after
+              the scroll position stops, so if your goal is to update something
+              whenever the animation updates, it's best to apply an onUpdate to
+              the animation itself rather than the ScrollTrigger. See a demo
+              here. The onUpdate callback receives one parameter - the
+              ScrollTrigger instance itself which has properties/methods like
+              progress, direction, isActive, and getVelocity(). Example:
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="10">
+        <div class="panel__content">
+          <h1>Methods</h1>
+          <ul class="panel__phrase-list">
+            <li class="panel__phrase-item">Disable</li>
+            <li class="panel__phrase-item">Enable</li>
+            <li class="panel__phrase-item">getTwen</li>
+            <li class="panel__phrase-item">getVelocity</li>
+            <li class="panel__phrase-item">Kill</li>
+            <li class="panel__phrase-item">LabelToScroll</li>
+            <li class="panel__phrase-item">Next</li>
+            <li class="panel__phrase-item">Previous</li>
+            <li class="panel__phrase-item">Refresh</li>
+            <li class="panel__phrase-item">Scroll</li>
+            <li class="panel__phrase-item">AddEventListener</li>
+            <li class="panel__phrase-item">Batch</li>
+            <li class="panel__phrase-item">clearMatchMedia</li>
+            <li class="panel__phrase-item">clearScrollMemory</li>
+            <li class="panel__phrase-item">Config</li>
+            <li class="panel__phrase-item">Create</li>
+            <li class="panel__phrase-item">Defaults</li>
+            <li class="panel__phrase-item">getAll</li>
+            <li class="panel__phrase-item">getById</li>
+            <li class="panel__phrase-item">IsInViewPort</li>
+            <li class="panel__phrase-item">IsScrolling</li>
+            <li class="panel__phrase-item">killAll</li>
+            <li class="panel__phrase-item">matchMedia</li>
+            <li class="panel__phrase-item">maxScroll</li>
+            <li class="panel__phrase-item">normalizeScroll</li>
+            <li class="panel__phrase-item">observe</li>
+            <li class="panel__phrase-item">positionInViewport</li>
+            <li class="panel__phrase-item">refresh</li>
+            <li class="panel__phrase-item">removeEventListener</li>
+            <li class="panel__phrase-item">saveStyles</li>
+            <li class="panel__phrase-item">scrollerProxy</li>
+            <li class="panel__phrase-item">snapDirectional</li>
+            <li class="panel__phrase-item">sort</li>
+            <li class="panel__phrase-item">update</li>
+          </ul>
+        </div>
+      </section>
 
       <section class="panel" data-panel="5">
         <div class="panel__content">
@@ -382,112 +561,6 @@
           >
             <h1>The Mountain's Limit</h1>
           </div>
-        </div>
-      </section>
-
-      <section class="panel" data-panel="6">
-        <div class="panel__content">
-          <h1>SCROLLTRIGGER</h1>
-          <h1>TECHNIQUES</h1>
-        </div>
-      </section>
-
-      <section class="panel" data-panel="7">
-        <div class="panel__content">
-          <section class="panel__content-section" style="--col: 1; --row: 1">
-            <h1>TRIGGER: ELEMENT</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 2; --row: 2">
-            <h1>START: 50% TOP</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 3; --row: 3">
-            <h1>END: TOP BOTTOM</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 4; --row: 4">
-            <h1>PIN: TRUE</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 3; --row: 5">
-            <h1>SCRUB: 1</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 2; --row: 6">
-            <h1>ONTOGGLE: TRUE</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 1; --row: 7">
-            <h1>ONENTERBACK: TRUE</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 2; --row: 8">
-            <h1>GETVELOCITY: TRUE</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 3; --row: 9">
-            <h1>DIRECTION: TRUE</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 4; --row: 10">
-            <h1>BATCH: TRUE</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 3; --row: 11">
-            <h1>SCROLLER: TRUE</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 2; --row: 12">
-            <h1>MARKERS: TRUE</h1>
-          </section>
-          <section class="panel__content-section" style="--col: 1; --row: 13">
-            <h1>ENDTRIGGER: ELEMENT</h1>
-          </section>
-        </div>
-      </section>
-
-      <section class="panel" data-panel="8">
-        <div class="panel__content">
-          <section class="panel__content-section" style="--col: 1; --row: 1">
-            <h1>ON ENTER</h1>
-            <p>
-              Function - A callback for when the scroll position moves forward past the "start" (typically when the trigger is scrolled into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
-            </p>
-          </section>
-          <section class="panel__content-section" style="--col: 2; --row: 2">
-            <h1>ON ENTER BACK</h1>
-            <p>
-              Function - A callback for when the scroll position moves backward past the "end" (typically when the trigger is scrolled back into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
-            </p>
-          </section>
-          <section class="panel__content-section" style="--col: 3; --row: 3">
-            <h1>ON LEAVE</h1>
-            <p>
-              Function - A callback for when the scroll position moves forward past the "start" (typically when the trigger is scrolled into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
-            </p>
-          </section>
-          <section class="panel__content-section" style="--col: 4; --row: 4">
-            <h1>ON GET VELOCITY</h1>
-            <p>
-              Function - A callback for when the scroll position moves forward past the "start" (typically when the trigger is scrolled into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
-            </p>
-          </section>
-          <section class="panel__content-section" style="--col: 5; --row: 5">
-            <h1>ON DIRECTION</h1>
-            <p>
-              Function - A callback for when the scroll position moves forward past the "start" (typically when the trigger is scrolled into view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
-            </p>
-          </section>
-          <section class="panel__content-section" style="--col: 4; --row: 6">
-            <h1>ON LEAVE</h1>
-            <p>
-              A callback for when the scroll position moves forward past the "end" (typically when the trigger is scrolled out of view). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity().
-            </p>
-          </section>
-          <section class="panel__content-section" style="--col: 3; --row: 7">
-            <h1>ON LEAVE BACK</h1>
-            <p>
-              Function - A callback for when the scroll position moves backward past the "start" (typically when the trigger is scrolled all the way backward past the start). It receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity()
-            </p>
-          </section>
-          <section class="panel__content-section" style="--col: 2; --row: 8">
-            <h1>ON UPDATE</h1>
-            <p>
-              Function - A callback that gets called every time the progress of the ScrollTrigger changes (meaning the scroll position changed). If you have a numeric scrub applied, keep in mind that the associated animation will keep scrubbing for a little while after the scroll position stops, so if your goal is to update something whenever the animation updates, it's best to apply an onUpdate to the animation itself rather than the ScrollTrigger. See a demo here.
-
-              The onUpdate callback receives one parameter - the ScrollTrigger instance itself which has properties/methods like progress, direction, isActive, and getVelocity(). Example: 
-            </p>
-          </section>
         </div>
       </section>
     </main>

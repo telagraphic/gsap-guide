@@ -12,6 +12,19 @@
 - Code structure with a storyboard config object for each element
 
 
+## Component Ideas
+
+- Could implement a cloneNode for frame 4 for further optimization
+- How to combine waterfall cascade, slot machine rool, falling letters?
+https://madewithgsap.com/effects/tutorial041
+https://madewithgsap.com/effects/tutorial027
+
+- Component based on html shape
+- Or tagging the html with a data-animation="animationType" to then create the markup, assign styles and run the code
+
+
+
+
 
 # Refactoring Approach
 
