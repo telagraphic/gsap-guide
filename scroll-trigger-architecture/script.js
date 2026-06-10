@@ -38,7 +38,15 @@ CustomEase.create("easeInOutCirc", "M0,0 C0.785,0.135,0.15,0.86,1,1");
  */
 
 document.fonts.ready.then(() => {
-  /// Header Hero — First Frame
+  
+
+  
+  /*
+  *  Header Hero — First Frame
+  *
+  */
+
+
   const hero = document.querySelector(".hero");
   const heroIcon = hero.querySelector(".hero__circle");
   const heroTag = hero.querySelector(".hero__scroll-tag");
@@ -122,7 +130,10 @@ document.fonts.ready.then(() => {
     .add(hintTimeline, ">-.25")
     .add(iconTimeline, ">-.5");
 
-  // Frame 1
+  /*
+  *  Frame 1: Basic Split Text
+  *
+  */
 
   const frameOne = document.querySelector("[data-panel='1']");
   const frameOneHeader = frameOne.querySelector("h1");
@@ -170,7 +181,10 @@ document.fonts.ready.then(() => {
     },
   });
 
-  // Frame 2
+  /*
+  *  Frame 2: Header and Paragraphs
+  *
+  */
 
   const frameTwo = document.querySelector("[data-panel='2']");
   const frameTwoSections = Array.from(frameTwo.querySelectorAll("section"));
@@ -214,7 +228,10 @@ document.fonts.ready.then(() => {
     });
   });
 
-  // Frame 3 — justify spread on scroll
+  /*
+  *  Frame 3: Star Wars Stretch Effect
+  *
+  */
 
   const FRAME_THREE_SPREAD = {
     boundsSelector: ".panel__content",
@@ -303,8 +320,10 @@ document.fonts.ready.then(() => {
     });
   });
 
-  // Frame 4 - Slot Machine Rolly
-  // .word is the clip wrapper (panel__content-word-wrapper), not the grid row
+  /*
+  *  Frame 4: Slot Machine Rolling Effect
+  *
+  */
 
   document.querySelectorAll("[data-panel='4'] .word").forEach((word) => {
     gsap.fromTo(
@@ -328,8 +347,10 @@ document.fonts.ready.then(() => {
     );
   });
 
-
-  // Frame 6 — header character spiral
+  /*
+  *  Frame 6: Character Waterfall Cascade
+  *
+  */
 
   const panelSixRoot = document.querySelector("[data-panel='6']");
   const panelSixHeader = panelSixRoot.querySelector(".panel__header");
@@ -376,7 +397,9 @@ document.fonts.ready.then(() => {
       });
 
       self.chars.forEach((charEl) => {
-        gsap.set(charEl.querySelector(".panel-six__char-visible"), { yPercent: 0 });
+        gsap.set(charEl.querySelector(".panel-six__char-visible"), {
+          yPercent: 0,
+        });
         gsap.set(charEl.querySelector(".panel-six__char-hidden"), {
           yPercent: -100,
         });
@@ -418,16 +441,22 @@ document.fonts.ready.then(() => {
     },
   });
 
-  // Frame 8 — horizontal scroll
+  /*
+  *  Frame 8: Horizontal Scroll
+  *
+  */
 
   const panelEight = document.querySelector("[data-panel='8']");
   const panelEightTrack = panelEight.querySelector(".panel__content");
+  const panelEightSections = panelEight.querySelectorAll(
+    ".panel__content-section",
+  );
 
   function getPanelEightScrollDistance() {
     return panelEightTrack.scrollWidth - window.innerWidth;
   }
 
-  gsap.to(panelEightTrack, {
+  const panelEightTween = gsap.to(panelEightTrack, {
     x: () => -getPanelEightScrollDistance(),
     ease: "none",
     scrollTrigger: {
@@ -441,71 +470,134 @@ document.fonts.ready.then(() => {
     },
   });
 
-  // Frame 9 — letter spiral list
+  panelEightSections.forEach((section) => {
+    const heading = section.querySelector("h1");
+    const paragraph = section.querySelector("p");
 
-  document.querySelectorAll("[data-panel='9'] .panel-nine__line").forEach((line) => {
-    SplitText.create(line, {
-      type: "chars",
-      charsClass: "panel-nine__char",
-      tag: "span",
+    const headingSplit = SplitText.create(heading, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "panel-eight__line",
+    });
+
+    const paragraphSplit = SplitText.create(paragraph, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "panel-eight-paragraph__line",
+      smartSplit: true,
       autoSplit: true,
       onSplit(self) {
-        gsap.set(line, { visibility: "visible" });
+        gsap.set(self.lines, { opacity: 0 });
 
-        self.chars.forEach((charEl) => {
-          const text = charEl.textContent;
-          charEl.textContent = "";
-          charEl.innerHTML = `<span class="panel-nine__char-visible">${text}</span><span class="panel-nine__char-hidden">${text}</span>`;
-        });
-
-        self.chars.forEach((charEl) => {
-          gsap.set(charEl.querySelector(".panel-nine__char-visible"), {
-            yPercent: 0,
-          });
-          gsap.set(charEl.querySelector(".panel-nine__char-hidden"), {
-            yPercent: -100,
-          });
-        });
-
-        const tl = gsap.timeline({
+        // TODO: make this appear closer to the center of the scren
+        gsap.to(self.lines, {
+          opacity: 1,
+          stagger: 0.05,
+          ease: "easeOutQuad",
           scrollTrigger: {
-            trigger: line,
-            start: "center 80%",
-            end: "top center",
-            scrub: 1,
-            invalidateOnRefresh: true,
+            trigger: section,
+            containerAnimation: panelEightTween,
+            start: "left 60%",
+            end: "left 30%",
+            scrub: true,
           },
         });
+      },
+    });
 
-        gsap.utils.shuffle([...self.chars]).forEach((charEl, index) => {
-          const layers = [
-            charEl.querySelector(".panel-nine__char-hidden"),
-            charEl.querySelector(".panel-nine__char-visible"),
-          ];
+    gsap.set(headingSplit.lines, { opacity: 0, yPercent: 100 });
 
-          tl.fromTo(
-            layers,
-            {
-              yPercent: (i, target) =>
-                target.classList.contains("panel-nine__char-hidden") ? -100 : 0,
-            },
-            {
-              yPercent: (i, target) =>
-                target.classList.contains("panel-nine__char-hidden") ? 0 : 100,
-              ease: "easeInOutQuart",
-              duration: 1,
-            },
-            index * 0.05,
-          );
-        });
-
-        return tl;
+    gsap.to(headingSplit.lines, {
+      opacity: 1,
+      yPercent: 0,
+      stagger: 0.03,
+      ease: "easeOutQuint",
+      scrollTrigger: {
+        trigger: section,
+        containerAnimation: panelEightTween,
+        start: "left 65%",
+        end: "left 25%",
+        scrub: true,
       },
     });
   });
 
+  /*
+  *  Frame 9: Letter Spiral List
+  *
+  */
 
-  // Frame 10 — staggered waterfall cascade
+  document
+    .querySelectorAll("[data-panel='9'] .panel-nine__line")
+    .forEach((line) => {
+      SplitText.create(line, {
+        type: "chars",
+        charsClass: "panel-nine__char",
+        tag: "span",
+        autoSplit: true,
+        onSplit(self) {
+          gsap.set(line, { visibility: "visible" });
+
+          self.chars.forEach((charEl) => {
+            const text = charEl.textContent;
+            charEl.textContent = "";
+            charEl.innerHTML = `<span class="panel-nine__char-visible">${text}</span><span class="panel-nine__char-hidden">${text}</span>`;
+          });
+
+          self.chars.forEach((charEl) => {
+            gsap.set(charEl.querySelector(".panel-nine__char-visible"), {
+              yPercent: 0,
+            });
+            gsap.set(charEl.querySelector(".panel-nine__char-hidden"), {
+              yPercent: -100,
+            });
+          });
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: line,
+              start: "center 80%",
+              end: "top center",
+              scrub: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          gsap.utils.shuffle([...self.chars]).forEach((charEl, index) => {
+            const layers = [
+              charEl.querySelector(".panel-nine__char-hidden"),
+              charEl.querySelector(".panel-nine__char-visible"),
+            ];
+
+            tl.fromTo(
+              layers,
+              {
+                yPercent: (i, target) =>
+                  target.classList.contains("panel-nine__char-hidden")
+                    ? -100
+                    : 0,
+              },
+              {
+                yPercent: (i, target) =>
+                  target.classList.contains("panel-nine__char-hidden")
+                    ? 0
+                    : 100,
+                ease: "easeInOutQuart",
+                duration: 1,
+              },
+              index * 0.05,
+            );
+          });
+
+          return tl;
+        },
+      });
+    });
+
+  /*
+  *  Frame 10: Staggered Waterfall Cascade
+  *
+  */
 
   function wrapPhraseChars(element) {
     const text = element.textContent;
@@ -604,4 +696,49 @@ document.fonts.ready.then(() => {
     });
 
   ScrollTrigger.addEventListener("refreshInit", rebuildPanelTenPhrases);
+
+  /*
+  *  Frame 11: Nested Timeline
+  *
+  */
+
+  const panelEleven = document.querySelector("[data-panel='11']");
+  const panelElevenHeader = panelEleven.querySelector("h1");
+  const panelElevenParagraphs = panelEleven.querySelectorAll("p");
+  const panelElevenTimeline = gsap.timeline({ paused: true });
+
+  gsap.set(panelElevenHeader, { opacity: 0 });
+  gsap.set(panelElevenParagraphs, { yPercent: 100 });
+
+  const panelElevenHeaderTimeline = gsap.timeline();
+
+  panelElevenHeaderTimeline.fromTo(
+    panelElevenHeader,
+    { opacity: 0 },
+    { opacity: 1, duration: 0.6, ease: "easeOutExpo" },
+  );
+
+  const panelElevenParagraphsTimeline = gsap.timeline();
+
+  panelElevenParagraphsTimeline.to(panelElevenParagraphs, {
+    yPercent: 0,
+    duration: 1,
+    stagger: 0.05,
+    ease: "easeOutQuad",
+  });
+
+  panelElevenTimeline
+    .add(panelElevenHeaderTimeline)
+    .add(panelElevenParagraphsTimeline, ">+.25");
+
+  ScrollTrigger.create({
+    trigger: panelEleven,
+    start: "top center-=300",
+    end: "bottom 20%",
+    scrub: 2,
+    onEnter: () => panelElevenTimeline.play(),
+    onLeave: () => panelElevenTimeline.reverse(),
+    onEnterBack: () => panelElevenTimeline.play(),
+    onLeaveBack: () => panelElevenTimeline.reverse(),
+  });
 });

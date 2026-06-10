@@ -24,6 +24,15 @@ https://madewithgsap.com/effects/tutorial027
 
 
 
+# Before Refactoring
+
+- convert gsap.set to styles
+- implement css nesting 2-3 levels at most
+- extract repeated properties styles into css properties
+- re-order the html and css to be in sync, make sure each data-panel proceeds ASC
+- review refactoring approaches
+
+
 
 
 # Refactoring Approach

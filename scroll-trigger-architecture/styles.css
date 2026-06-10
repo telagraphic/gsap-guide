@@ -443,8 +443,6 @@ body {
   }
 }
 
-
-
 /* Frame 8: horizontal callback slides */
 .panel[data-panel="8"] {
   padding: 0;
@@ -472,20 +470,39 @@ body {
     text-align: center;
   }
 
+  .panel__content-section {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    padding: 2rem;
+    box-sizing: border-box;
+    text-align: left;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
   .panel__content-section h1 {
     font-size: clamp(2rem, 10vw, 6rem);
     line-height: 0.75;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
+    grid-row: 2;
+    grid-column: 2 / 3;
+  }
+
+  .panel-eight__char {
+    display: inline-block;
   }
 
   .panel__content-section p {
     max-width: 60ch;
-    font-size: max(16px, 1.5vw);
+
+    font-size: max(18px, 2vw);
     line-height: 1.4;
+    grid-row: 3 / 4;
+    grid-column: 2 / 4;
   }
 }
-
 
 /* Frame 9: Letter spiral */
 .panel[data-panel="9"] {
@@ -542,9 +559,7 @@ body {
     left: 0;
     top: 0;
   }
-
 }
-
 
 /* Frame 10: Staggered waterfall cascade */
 .panel[data-panel="10"] {
@@ -605,5 +620,45 @@ body {
   .panel__phrase-item span {
     display: inline-block;
     will-change: transform;
+  }
+}
+
+.panel[data-panel="11"] {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  background: var(--black);
+  overflow: hidden;
+  border-bottom: 1px solid var(--white);
+
+  .panel__content {
+    display: grid;
+    grid-template-columns: var(--grid-4);
+    flex: 1;
+    width: 100%;
+    place-items: center;
+    text-align: center;
+  }
+
+  .panel__content-section {
+    grid-column: 1 / -1;
+    overflow: hidden;
+  }
+
+  .panel__content-section:first-child {
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .panel__content-section:last-child {
+    grid-row: 3;
+    align-self: end;
+  }
+
+  .panel__content-section p {
+    font-size: clamp(0.625rem, 2vw, 0.825rem);
+    text-transform: uppercase;
+    text-align: center;
   }
 }
