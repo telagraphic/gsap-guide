@@ -27,11 +27,15 @@
   --type-section-title: clamp(1rem, 2vw, 3rem);
 
   /* Typography — leading */
-  --leading-tight: 0.75;
+  --leading-tight: 0.8;
+  --leading-tight-mobile: .85;
   --leading-body: 1.3;
   --leading-body-panel: 1.1;
   --leading-body-relaxed: 1.4;
   --leading-section: 1.2;
+
+
+  --letter-space-tight: -.3rem;
 
   /* Typography — weight / tracking */
   --weight-display: 700;

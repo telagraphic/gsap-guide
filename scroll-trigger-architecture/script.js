@@ -102,7 +102,7 @@ document.fonts.ready.then(() => {
   const headerLines = new SplitText(heroHeaders, {
     type: "lines",
     mask: "lines",
-    linesClass: "lines++",
+    linesClass: "page-header-lines",
   });
 
   headerLines.lines.forEach((line, i) => {
@@ -113,17 +113,17 @@ document.fonts.ready.then(() => {
     // console.log(lineCount);
 
     gsap.set(line, {
-      opacity: 0,
+      // opacity: 0,
       yPercent: lineCount ? -100 : 100,
     });
 
     // console.log(lineCount);
     gsap.to(line, {
-      opacity: 1,
+      // opacity: 1,
       yPercent: 0,
       duration: 1,
       stagger: 0.02,
-      ease: lineCount ? "easeOutQuad" : "easeOutQuart",
+      ease: "easeOutQuad", // "easeOutQuart",
     });
   });
 

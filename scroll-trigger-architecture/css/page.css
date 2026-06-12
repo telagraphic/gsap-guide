@@ -17,6 +17,11 @@ h1 {
   font-size: var(--type-heading);
   line-height: var(--leading-tight);
   text-transform: uppercase;
+  letter-spacing: var(--letter-space-tight);
+
+  @media (max-width: 768px) {
+    line-height: var(--leading-tight-mobile);
+  }
 }
 
 p {
@@ -83,9 +88,31 @@ body {
     grid-column: 2 / 4;
     grid-row: 2 / 4;
     display: grid;
+    gap: 0;
     place-content: center;
     text-align: center;
     text-transform: uppercase;
+  }
+
+  .page-header__title + .page-header__title {
+    margin-top: -0.25rem;
+  }
+
+  .page-header-lines {
+    overflow: hidden;
+    line-height: var(--leading-tight);
+    @media (max-width: 768px) {
+      line-height: var(--leading-tight-mobile);
+    }
+  }
+
+
+  .page-mask-header-mask-lines-mask {
+    overflow: hidden;
+    line-height: var(--leading-tight);
+    @media (max-width: 768px) {
+      line-height: var(--leading-tight-mobile);
+    }
   }
 
   .page-header__hint {

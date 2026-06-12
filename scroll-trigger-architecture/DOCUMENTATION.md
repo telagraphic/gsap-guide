@@ -31,6 +31,10 @@ https://madewithgsap.com/effects/tutorial027
 - re-order the html and css to be in sync, make sure each data-panel proceeds ASC
 - review refactoring approaches
 
+
+- add more types of split text
+- character slide ins, etc...
+- map out some variations
 - create just a hide class versus a autoAlpha and opacity?
 - create functions for removing anim-hide
 
