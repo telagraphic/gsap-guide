@@ -47,11 +47,11 @@ document.fonts.ready.then(() => {
   */
 
 
-  const hero = document.querySelector(".hero");
-  const heroIcon = hero.querySelector(".hero__circle");
-  const heroTag = hero.querySelector(".hero__scroll-tag");
-  const heroHint = hero.querySelector(".hero__scroll-hint");
-  const heroHeaders = hero.querySelectorAll("h1");
+  const hero = document.querySelector(".page-header");
+  const heroIcon = hero.querySelector(".page-header__icon");
+  const heroTag = hero.querySelector(".page-header__tag");
+  const heroHint = hero.querySelector(".page-header__hint");
+  const heroHeaders = hero.querySelectorAll(".page-header__titles h1");
 
   const heroTimeline = gsap.timeline();
 
@@ -71,7 +71,7 @@ document.fonts.ready.then(() => {
     {
       autoAlpha: 1,
       duration: 0.5,
-      ease: "power2.inOut",
+      ease: "easeOutQuad",
     },
   );
 
@@ -83,7 +83,7 @@ document.fonts.ready.then(() => {
     {
       autoAlpha: 1,
       duration: 0.5,
-      ease: "power2.inOut",
+      ease: "easeOutQuad",
     },
   );
 
@@ -95,7 +95,7 @@ document.fonts.ready.then(() => {
     {
       autoAlpha: 1,
       duration: 0.5,
-      ease: "power2.inOut",
+      ease: "easeOutQuad",
     },
   );
 
@@ -106,7 +106,8 @@ document.fonts.ready.then(() => {
   });
 
   headerLines.lines.forEach((line, i) => {
-    const position = i;
+    const position = i + 1;
+    console.log(position);
 
     const lineCount = position % 2 === 0 ? position : 0;
     // console.log(lineCount);
@@ -116,12 +117,13 @@ document.fonts.ready.then(() => {
       yPercent: lineCount ? -100 : 100,
     });
 
+    // console.log(lineCount);
     gsap.to(line, {
       opacity: 1,
       yPercent: 0,
       duration: 1,
-      stagger: 0.05,
-      ease: "power2.inOut",
+      stagger: 0.02,
+      ease: lineCount ? "easeOutQuad" : "easeOutQuart",
     });
   });
 
@@ -136,8 +138,8 @@ document.fonts.ready.then(() => {
   */
 
   const frameOne = document.querySelector("[data-panel='1']");
-  const frameOneHeader = frameOne.querySelector("h1");
-  const frameOneParagraphs = frameOne.querySelectorAll("p");
+  const frameOneHeader = frameOne.querySelector(".page-section__title");
+  const frameOneParagraphs = frameOne.querySelectorAll(".page-section__body p");
 
   const frameOneHeaderChars = new SplitText(frameOneHeader, {
     type: "chars,lines",
@@ -150,7 +152,8 @@ document.fonts.ready.then(() => {
 
   gsap.to(frameOneHeaderChars, {
     yPercent: 0,
-    stagger: 0.02,
+    stagger: 0.01,
+    ease: "easeOutQuad",
     scrollTrigger: {
       trigger: frameOne,
       start: "top 50%",
@@ -171,6 +174,7 @@ document.fonts.ready.then(() => {
         opacity: 1,
         yPercent: 0,
         stagger: 0.01,
+        ease: "easeOutQuad",
         scrollTrigger: {
           trigger: frameOne,
           start: "top 50%",
@@ -187,14 +191,12 @@ document.fonts.ready.then(() => {
   */
 
   const frameTwo = document.querySelector("[data-panel='2']");
-  const frameTwoSections = Array.from(frameTwo.querySelectorAll("section"));
-  const frameTwoHeaders = frameTwo.querySelectorAll("h1");
-  const frameTwoParagraphs = frameTwo.querySelectorAll("p");
-
-  console.log(frameTwoSections);
+  const frameTwoSections = Array.from(
+    frameTwo.querySelectorAll(".page-section__group"),
+  );
 
   frameTwoSections.forEach((section) => {
-    let header = section.querySelector("h1");
+    let header = section.querySelector(".page-section__title");
     let paragraph = section.querySelector("p");
     // This creates a new split text each loop, instead of all at once
     let paragraphLines = new SplitText(paragraph, {
@@ -234,7 +236,7 @@ document.fonts.ready.then(() => {
   */
 
   const FRAME_THREE_SPREAD = {
-    boundsSelector: ".panel__content",
+    boundsSelector: ".animation-wide-slide",
     origin: "left", // "left" | "center" | "right"
     gapMin: 8,
     gapMultiplier: 2,
@@ -243,10 +245,12 @@ document.fonts.ready.then(() => {
 
   const root = document.querySelector("[data-panel='3']");
   const container = root.querySelector(FRAME_THREE_SPREAD.boundsSelector);
-  const paragraphs = root.querySelectorAll(".panel__body p");
+  const paragraphs = root.querySelectorAll(
+    ".animation-wide-slide p.type-body",
+  );
 
   function buildLineSpread(line, config) {
-    const words = Array.from(line.querySelectorAll(".word"));
+    const words = Array.from(line.querySelectorAll(".anim-word"));
     if (!words.length) return null;
 
     const containerWidth = container.clientWidth;
@@ -302,8 +306,8 @@ document.fonts.ready.then(() => {
 
     SplitText.create(paragraph, {
       type: "lines, words",
-      linesClass: "line",
-      wordsClass: "word",
+      linesClass: "anim-line",
+      wordsClass: "anim-word",
       autoSplit: true,
       onSplit(self) {
         lineTweens.forEach((tween) => {
@@ -325,16 +329,18 @@ document.fonts.ready.then(() => {
   *
   */
 
-  document.querySelectorAll("[data-panel='4'] .word").forEach((word) => {
+  document
+    .querySelectorAll("[data-panel='4'] .animation-slot-machine-roll__track")
+    .forEach((word) => {
     gsap.fromTo(
       word.children,
       {
         yPercent: (index, target) =>
-          target.classList.contains("word-hidden") ? -100 : 0,
+          target.classList.contains("anim-char-hidden") ? -100 : 0,
       },
       {
         yPercent: (index, target) =>
-          target.classList.contains("word-hidden") ? 0 : 100,
+          target.classList.contains("anim-char-hidden") ? 0 : 100,
         ease: "easeOutCirc",
         scrollTrigger: {
           trigger: word, // Clip wrapper — listens to the position of each word row
@@ -348,66 +354,66 @@ document.fonts.ready.then(() => {
   });
 
   /*
-  *  Frame 6: Character Waterfall Cascade
+  *  Frame 5: Character Waterfall Cascade
   *
   */
 
-  const panelSixRoot = document.querySelector("[data-panel='6']");
-  const panelSixHeader = panelSixRoot.querySelector(".panel__header");
-  const panelSixParagraphs = panelSixRoot.querySelectorAll("p");
+  const panelFiveRoot = document.querySelector("[data-panel='5']");
+  const panelFiveHeader = panelFiveRoot.querySelector(".page-section__title");
+  const panelFiveParagraphs = panelFiveRoot.querySelectorAll("p");
 
-  const panelSixParagraphsLines = new SplitText(panelSixParagraphs, {
+  const panelFiveParagraphsLines = new SplitText(panelFiveParagraphs, {
     type: "lines",
     mask: "lines",
     autoSplit: true,
   });
 
-  gsap.set(panelSixParagraphsLines.lines, {
+  gsap.set(panelFiveParagraphsLines.lines, {
     opacity: 0,
     yPercent: 100,
     filter: "blur(10px)",
   });
 
-  gsap.to(panelSixParagraphsLines.lines, {
+  gsap.to(panelFiveParagraphsLines.lines, {
     opacity: 1,
     yPercent: 0,
     ease: "easeOutQuart",
     filter: "blur(0px)",
     stagger: 0.01,
     scrollTrigger: {
-      trigger: panelSixRoot,
+      trigger: panelFiveRoot,
       start: "top 70%",
       end: "bottom 20%",
       scrub: 1,
     },
   });
 
-  SplitText.create(panelSixHeader, {
+  SplitText.create(panelFiveHeader, {
     type: "chars",
-    charsClass: "panel-six__char",
+    charsClass: "anim-char-parent",
     tag: "span",
     autoSplit: true,
     onSplit(self) {
-      gsap.set(panelSixHeader, { visibility: "visible" });
+      panelFiveHeader.classList.remove("anim-prehide");
 
       self.chars.forEach((charEl) => {
         const text = charEl.textContent;
         charEl.textContent = "";
-        charEl.innerHTML = `<span class="panel-six__char-visible">${text}</span><span class="panel-six__char-hidden">${text}</span>`;
+        charEl.innerHTML = `<span class="anim-char-visible">${text}</span><span class="anim-char-hidden">${text}</span>`;
       });
 
       self.chars.forEach((charEl) => {
-        gsap.set(charEl.querySelector(".panel-six__char-visible"), {
+        gsap.set(charEl.querySelector(".anim-char-visible"), {
           yPercent: 0,
         });
-        gsap.set(charEl.querySelector(".panel-six__char-hidden"), {
+        gsap.set(charEl.querySelector(".anim-char-hidden"), {
           yPercent: -100,
         });
       });
 
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: panelSixHeader,
+          trigger: panelFiveHeader,
           start: "center 80%",
           end: "top center",
           scrub: 1,
@@ -417,19 +423,19 @@ document.fonts.ready.then(() => {
 
       gsap.utils.shuffle([...self.chars]).forEach((charEl, index) => {
         const layers = [
-          charEl.querySelector(".panel-six__char-hidden"),
-          charEl.querySelector(".panel-six__char-visible"),
+          charEl.querySelector(".anim-char-hidden"),
+          charEl.querySelector(".anim-char-visible"),
         ];
 
         tl.fromTo(
           layers,
           {
             yPercent: (i, target) =>
-              target.classList.contains("panel-six__char-hidden") ? -100 : 0,
+              target.classList.contains("anim-char-hidden") ? -100 : 0,
           },
           {
             yPercent: (i, target) =>
-              target.classList.contains("panel-six__char-hidden") ? 0 : 100,
+              target.classList.contains("anim-char-hidden") ? 0 : 100,
             ease: "easeInOutQuart",
             duration: 1,
           },
@@ -442,48 +448,48 @@ document.fonts.ready.then(() => {
   });
 
   /*
-  *  Frame 8: Horizontal Scroll
+  *  Frame 6: Horizontal Scroll
   *
   */
 
-  const panelEight = document.querySelector("[data-panel='8']");
-  const panelEightTrack = panelEight.querySelector(".panel__content");
-  const panelEightSections = panelEight.querySelectorAll(
-    ".panel__content-section",
-  );
+  const panelSix = document.querySelector("[data-panel='6']");
+  const panelSixTrack = panelSix.querySelector(".page-section__track");
+  const panelSixSections = panelSix.querySelectorAll(".page-section__slide");
 
-  function getPanelEightScrollDistance() {
-    return panelEightTrack.scrollWidth - window.innerWidth;
+  function getPanelSixScrollDistance() {
+    return panelSixTrack.scrollWidth - window.innerWidth;
   }
 
-  const panelEightTween = gsap.to(panelEightTrack, {
-    x: () => -getPanelEightScrollDistance(),
+  const panelSixTween = gsap.to(panelSixTrack, {
+    x: () => -getPanelSixScrollDistance(),
     ease: "none",
     scrollTrigger: {
-      trigger: panelEight,
+      trigger: panelSix,
       pin: true,
       scrub: 1,
       start: "top top",
-      end: () => "+=" + getPanelEightScrollDistance(),
+      end: () => "+=" + getPanelSixScrollDistance(),
       invalidateOnRefresh: true,
       anticipatePin: 1,
     },
   });
 
-  panelEightSections.forEach((section) => {
-    const heading = section.querySelector("h1");
+  panelSixSections.forEach((section) => {
+    const heading = section.querySelector(".page-section__title");
     const paragraph = section.querySelector("p");
 
     const headingSplit = SplitText.create(heading, {
       type: "lines",
       mask: "lines",
-      linesClass: "panel-eight__line",
+      linesClass: "anim-line",
     });
+
+
 
     const paragraphSplit = SplitText.create(paragraph, {
       type: "lines",
       mask: "lines",
-      linesClass: "panel-eight-paragraph__line",
+      linesClass: "anim-line",
       smartSplit: true,
       autoSplit: true,
       onSplit(self) {
@@ -492,14 +498,17 @@ document.fonts.ready.then(() => {
         // TODO: make this appear closer to the center of the scren
         gsap.to(self.lines, {
           opacity: 1,
-          stagger: 0.05,
+          stagger: 0.02,
           ease: "easeOutQuad",
           scrollTrigger: {
             trigger: section,
-            containerAnimation: panelEightTween,
-            start: "left 60%",
-            end: "left 30%",
+            containerAnimation: panelSixTween,
+            start: "left 70%",
+            end: "center center",
             scrub: true,
+            onLeave: () => {
+              gsap.to(self.lines, { opacity: 0, stagger: 0.05, ease: "easeInQuad" });
+            },
           },
         });
       },
@@ -514,41 +523,44 @@ document.fonts.ready.then(() => {
       ease: "easeOutQuint",
       scrollTrigger: {
         trigger: section,
-        containerAnimation: panelEightTween,
+        containerAnimation: panelSixTween,
         start: "left 65%",
-        end: "left 25%",
+        end: "center center",
         scrub: true,
+        onLeave: () => {
+          gsap.to(headingSplit.lines, { opacity: 0, stagger: 0.05, ease: "easeInQuad" });
+        },
       },
     });
   });
 
   /*
-  *  Frame 9: Letter Spiral List
+  *  Frame 7: Letter Spiral List
   *
   */
 
   document
-    .querySelectorAll("[data-panel='9'] .panel-nine__line")
+    .querySelectorAll("[data-panel='7'] .animation-character-waterdrop__item")
     .forEach((line) => {
       SplitText.create(line, {
         type: "chars",
-        charsClass: "panel-nine__char",
+        charsClass: "anim-char-parent",
         tag: "span",
         autoSplit: true,
         onSplit(self) {
-          gsap.set(line, { visibility: "visible" });
+          line.classList.remove("anim-prehide");
 
           self.chars.forEach((charEl) => {
             const text = charEl.textContent;
             charEl.textContent = "";
-            charEl.innerHTML = `<span class="panel-nine__char-visible">${text}</span><span class="panel-nine__char-hidden">${text}</span>`;
+            charEl.innerHTML = `<span class="anim-char-visible">${text}</span><span class="anim-char-hidden">${text}</span>`;
           });
 
           self.chars.forEach((charEl) => {
-            gsap.set(charEl.querySelector(".panel-nine__char-visible"), {
+            gsap.set(charEl.querySelector(".anim-char-visible"), {
               yPercent: 0,
             });
-            gsap.set(charEl.querySelector(".panel-nine__char-hidden"), {
+            gsap.set(charEl.querySelector(".anim-char-hidden"), {
               yPercent: -100,
             });
           });
@@ -565,21 +577,21 @@ document.fonts.ready.then(() => {
 
           gsap.utils.shuffle([...self.chars]).forEach((charEl, index) => {
             const layers = [
-              charEl.querySelector(".panel-nine__char-hidden"),
-              charEl.querySelector(".panel-nine__char-visible"),
+              charEl.querySelector(".anim-char-hidden"),
+              charEl.querySelector(".anim-char-visible"),
             ];
 
             tl.fromTo(
               layers,
               {
                 yPercent: (i, target) =>
-                  target.classList.contains("panel-nine__char-hidden")
+                  target.classList.contains("anim-char-hidden")
                     ? -100
                     : 0,
               },
               {
                 yPercent: (i, target) =>
-                  target.classList.contains("panel-nine__char-hidden")
+                  target.classList.contains("anim-char-hidden")
                     ? 0
                     : 100,
                 ease: "easeInOutQuart",
@@ -595,7 +607,7 @@ document.fonts.ready.then(() => {
     });
 
   /*
-  *  Frame 10: Staggered Waterfall Cascade
+  *  Frame 8: Staggered Waterfall Cascade
   *
   */
 
@@ -606,7 +618,7 @@ document.fonts.ready.then(() => {
       .map((char) =>
         char === " "
           ? "<span> </span>"
-          : `<span class="panel__phrase-char">${char}</span>`,
+          : `<span class="animation-character-ripple__char">${char}</span>`,
       )
       .join("");
   }
@@ -617,11 +629,13 @@ document.fonts.ready.then(() => {
     item.replaceChildren();
 
     const hidden = document.createElement("span");
-    hidden.className = "panel__phrase-hidden";
+    hidden.className =
+      "animation-character-ripple__layer animation-character-ripple__layer--hidden";
     hidden.textContent = text;
 
     const visible = document.createElement("span");
-    visible.className = "panel__phrase-visible";
+    visible.className =
+      "animation-character-ripple__layer animation-character-ripple__layer--visible";
     visible.textContent = text;
 
     item.append(hidden, visible);
@@ -633,31 +647,35 @@ document.fonts.ready.then(() => {
     return Array.from(child.parentNode.children).indexOf(child);
   }
 
-  function rebuildPanelTenPhrases() {
+  function rebuildPanelEightPhrases() {
     document
-      .querySelectorAll("[data-panel='10'] .panel__phrase-item")
+      .querySelectorAll("[data-panel='8'] .animation-character-ripple__item")
       .forEach((item) => {
         gsap.killTweensOf(item.querySelectorAll("span"));
-        item.classList.remove("panel__phrase-item--hovered");
+        item.classList.remove("animation-character-ripple__item--hovered");
         buildPhraseLayers(item);
-        gsap.set(item, { visibility: "visible" });
+        item.classList.remove("anim-prehide");
       });
   }
 
   function attachPhraseHover(item) {
     item.addEventListener("mouseover", (e) => {
-      const visibleChars = item.querySelectorAll(".panel__phrase-visible span");
-      const hiddenChars = item.querySelectorAll(".panel__phrase-hidden span");
+      const visibleChars = item.querySelectorAll(
+        ".animation-character-ripple__layer--visible span",
+      );
+      const hiddenChars = item.querySelectorAll(
+        ".animation-character-ripple__layer--hidden span",
+      );
 
       if (
         !gsap.isTweening(visibleChars) &&
-        item.classList.contains("panel__phrase-item--hovered")
+        item.classList.contains("animation-character-ripple__item--hovered")
       ) {
-        item.classList.remove("panel__phrase-item--hovered");
+        item.classList.remove("animation-character-ripple__item--hovered");
       }
 
-      if (e.target.classList.contains("panel__phrase-char")) {
-        item.classList.add("panel__phrase-item--hovered");
+      if (e.target.classList.contains("animation-character-ripple__char")) {
+        item.classList.add("animation-character-ripple__item--hovered");
         const indexHover = getPhraseCharIndex(e.target);
 
         gsap.to(visibleChars, {
@@ -688,57 +706,69 @@ document.fonts.ready.then(() => {
   }
 
   document
-    .querySelectorAll("[data-panel='10'] .panel__phrase-item")
+    .querySelectorAll("[data-panel='8'] .animation-character-ripple__item")
     .forEach((item) => {
       buildPhraseLayers(item);
-      gsap.set(item, { visibility: "visible" });
+      item.classList.remove("anim-prehide");
       attachPhraseHover(item);
     });
 
-  ScrollTrigger.addEventListener("refreshInit", rebuildPanelTenPhrases);
+  ScrollTrigger.addEventListener("refreshInit", rebuildPanelEightPhrases);
 
   /*
-  *  Frame 11: Nested Timeline
+  *  Footer
   *
   */
 
-  const panelEleven = document.querySelector("[data-panel='11']");
-  const panelElevenHeader = panelEleven.querySelector("h1");
-  const panelElevenParagraphs = panelEleven.querySelectorAll("p");
-  const panelElevenTimeline = gsap.timeline({ paused: true });
+  const footer = document.querySelector(".page-footer");
+  const footerTag = footer.querySelectorAll(".page-footer__tag");
+  const footerHint = footer.querySelectorAll(".page-footer__hint");
+  const footerTitle = footer.querySelector(".page-footer__title");
+  const footerTargets = [...footerTag, ...footerHint, footerTitle];
 
-  gsap.set(panelElevenHeader, { opacity: 0 });
-  gsap.set(panelElevenParagraphs, { yPercent: 100 });
+  function hideFooter() {
+    footerTargets.forEach((el) => el.classList.add("anim-prehide"));
+  }
 
-  const panelElevenHeaderTimeline = gsap.timeline();
+  function showFooterForTween() {
+    footerTargets.forEach((el) => el.classList.remove("anim-prehide"));
+    gsap.set(footerTargets, { autoAlpha: 0 });
+  }
 
-  panelElevenHeaderTimeline.fromTo(
-    panelElevenHeader,
-    { opacity: 0 },
-    { opacity: 1, duration: 0.6, ease: "easeOutExpo" },
-  );
-
-  const panelElevenParagraphsTimeline = gsap.timeline();
-
-  panelElevenParagraphsTimeline.to(panelElevenParagraphs, {
-    yPercent: 0,
-    duration: 1,
-    stagger: 0.05,
-    ease: "easeOutQuad",
+  const footerTimeline = gsap.timeline({
+    paused: true,
+    onReverseComplete: hideFooter,
   });
 
-  panelElevenTimeline
-    .add(panelElevenHeaderTimeline)
-    .add(panelElevenParagraphsTimeline, ">+.25");
+  footerTimeline
+    .call(showFooterForTween)
+    .fromTo(
+      footerTitle,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 0.5, ease: "easeOutQuad" },
+    )
+    .fromTo(
+      footerHint,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 0.5, ease: "easeOutQuad" },
+      "+=0.25",
+    )
+    .fromTo(
+      footerTag,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 0.5, ease: "easeOutQuad" },
+      ">",
+    );
 
   ScrollTrigger.create({
-    trigger: panelEleven,
+    trigger: footer,
     start: "top center-=300",
     end: "bottom 20%",
-    scrub: 2,
-    onEnter: () => panelElevenTimeline.play(),
-    onLeave: () => panelElevenTimeline.reverse(),
-    onEnterBack: () => panelElevenTimeline.play(),
-    onLeaveBack: () => panelElevenTimeline.reverse(),
+    onEnter: () => footerTimeline.play(),
+    onLeave: () => footerTimeline.reverse(),
+    onEnterBack: () => footerTimeline.play(),
+    onLeaveBack: () => footerTimeline.reverse(),
   });
+
+  ScrollTrigger.refresh();
 });

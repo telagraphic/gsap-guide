@@ -1,0 +1,36 @@
+/* Motion-structure utilities — animation concerns only */
+
+.anim-prehide {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.anim-mask {
+  overflow: hidden;
+}
+
+.anim-char-parent {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.anim-char-visible {
+  display: inline-block;
+}
+
+.anim-char-hidden {
+  display: inline-block;
+  position: absolute;
+  inset: 0;
+}
+
+.anim-clip-slot {
+  display: inline-block;
+  position: relative;
+  clip-path: polygon(0 2%, 0 98%, 100% 98%, 100% 2%);
+}
+
+.anim-line {
+  width: max-content;
+}
