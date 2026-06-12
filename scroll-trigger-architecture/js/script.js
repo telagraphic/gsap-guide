@@ -21,16 +21,35 @@ document.fonts.ready.then(() => {
    *
    */
 
-  const hero = document.querySelector(".page-header");
-  const heroIcon = hero.querySelector(".page-header__icon");
-  const heroTag = hero.querySelector(".page-header__tag");
-  const heroHint = hero.querySelector(".page-header__hint");
-  const heroHeaders = hero.querySelectorAll(".page-header__titles h1");
+
+  const HERO_CONFIG = {
+    SELECTORS: {
+      HEADER: ".page-header",
+      ICON: ".page-header__icon",
+      TAG: ".page-header__tag",
+      HINT: ".page-header__hint",
+      HEADERS: ".page-header__titles",
+    },
+    HERO: {
+      TIMELINE: {
+        OPACITY: 0,
+        DURATION: 0.5,
+        EASE: EASEOUTQUAD,
+      }
+    }
+  };
+
+  const hero = document.querySelector(HERO_CONFIG.SELECTORS.HEADER);
+  const heroIcon = hero.querySelector(HERO_CONFIG.SELECTORS.ICON);
+  const heroTag = hero.querySelector(HERO_CONFIG.SELECTORS.TAG);
+  const heroHint = hero.querySelector(HERO_CONFIG.SELECTORS.HINT);
+  const heroHeaders = hero.querySelector(HERO_CONFIG.SELECTORS.HEADERS);
 
   const heroTimeline = gsap.timeline();
   const iconTimeline = gsap.timeline();
   const tagTimeline = gsap.timeline();
   const hintTimeline = gsap.timeline();
+  const linesTimeline = gsap.timeline();
 
   function removePrehideClasses(...elements) {
     elements.forEach((el) => el.classList.remove("anim-prehide"));
@@ -54,36 +73,33 @@ document.fonts.ready.then(() => {
     ease: EASEOUTQUAD,
   });
 
-  const headerLines = new SplitText(heroHeaders, {
+  const headerLines = new SplitText(heroHeaders.querySelectorAll("h1") , {
     type: "lines",
     mask: "lines",
     linesClass: "page-header-lines",
   });
 
-  hero.querySelector(".page-header__titles").classList.remove("anim-prehide");
 
   headerLines.lines.forEach((line, i) => {
     const position = i + 1;
-
-    const lineCount = position % 2 === 0 ? position : 0;
-
-    gsap.set(line, {
-      yPercent: lineCount ? -100 : 100,
-    });
-
-    gsap.to(line, {
-      yPercent: 0,
-      duration: 1,
-      stagger: 0.02,
-      ease: EASEOUTQUAD,
-    });
+    const fromY = position % 2 === 0 ? position * -100 : 100; // your logic
+    gsap.set(line, { yPercent: fromY });
+  });
+  
+  linesTimeline.to(headerLines.lines, {
+    yPercent: 0,
+    duration: 1,
+    stagger: 0.02,
+    ease: EASEOUTQUAD,
   });
 
   heroTimeline
-    .call(removePrehideClasses, [heroIcon, heroTag, heroHint])
+    .call(removePrehideClasses, [heroHeaders])
+    .add(linesTimeline, "+=0.5")
     .add(tagTimeline, "+=.5")
     .add(hintTimeline, ">-.25")
     .add(iconTimeline, ">-.5")
+    .call(removePrehideClasses, [heroIcon, heroTag, heroHint])
     .play();
 
   /*
