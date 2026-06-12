@@ -1,51 +1,25 @@
 import gsap from "https://esm.sh/gsap@3.13.0";
-import { CustomEase } from "https://esm.sh/gsap@3.13.0/CustomEase";
 import { ScrollTrigger } from "https://esm.sh/gsap@3.13.0/ScrollTrigger";
 import { SplitText } from "https://esm.sh/gsap@3.13.0/SplitText";
+import {
+  EASEOUTQUAD,
+  EASEOUTCIRC,
+  EASEOUTQUART,
+  EASEINQUAD,
+  EASEOUTQUINT,
+  EASEINOUTQUART,
+  EASEINOUTQUINT,
+} from "./easings.js";
 
-gsap.registerPlugin(CustomEase, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 // CSS cubic-bezier → CustomEase (M0,0 C{x1},{y1},{x2},{y2},1,1)
-CustomEase.create("easeInQuad", "M0,0 C0.55,0.085,0.68,0.53,1,1");
-CustomEase.create("easeInCubic", "M0,0 C0.55,0.055,0.675,0.19,1,1");
-CustomEase.create("easeInQuart", "M0,0 C0.895,0.03,0.685,0.22,1,1");
-CustomEase.create("easeInQuint", "M0,0 C0.755,0.05,0.855,0.06,1,1");
-CustomEase.create("easeInExpo", "M0,0 C0.95,0.05,0.795,0.035,1,1");
-CustomEase.create("easeInCirc", "M0,0 C0.6,0.04,0.98,0.335,1,1");
-
-CustomEase.create("easeOutQuad", "M0,0 C0.25,0.46,0.45,0.94,1,1");
-CustomEase.create("easeOutCubic", "M0,0 C0.215,0.61,0.355,1,1,1");
-CustomEase.create("easeOutQuart", "M0,0 C0.165,0.84,0.44,1,1,1");
-CustomEase.create("easeOutQuint", "M0,0 C0.23,1,0.32,1,1,1");
-CustomEase.create("easeOutExpo", "M0,0 C0.19,1,0.22,1,1,1");
-CustomEase.create("easeOutCirc", "M0,0 C0.075,0.82,0.165,1,1,1");
-
-CustomEase.create("easeInOutQuad", "M0,0 C0.455,0.03,0.515,0.955,1,1");
-CustomEase.create("easeInOutCubic", "M0,0 C0.645,0.045,0.355,1,1,1");
-CustomEase.create("easeInOutQuart", "M0,0 C0.77,0,0.175,1,1,1");
-CustomEase.create("easeInOutQuint", "M0,0 C0.86,0,0.07,1,1,1");
-CustomEase.create("easeInOutExpo", "M0,0 C1,0,0,1,1,1");
-CustomEase.create("easeInOutCirc", "M0,0 C0.785,0.135,0.15,0.86,1,1");
-
-/**
- *
- * fonts are ready event
- * animation configurations
- * animation factory
- * create and initialize animations
- * create and initialize animations per panel
- *
- */
 
 document.fonts.ready.then(() => {
-  
-
-  
   /*
-  *  Header Hero — First Frame
-  *
-  */
-
+   *  Header Hero — First Frame
+   *
+   */
 
   const hero = document.querySelector(".page-header");
   const heroIcon = hero.querySelector(".page-header__icon");
@@ -54,50 +28,31 @@ document.fonts.ready.then(() => {
   const heroHeaders = hero.querySelectorAll(".page-header__titles h1");
 
   const heroTimeline = gsap.timeline();
-
   const iconTimeline = gsap.timeline();
   const tagTimeline = gsap.timeline();
   const hintTimeline = gsap.timeline();
 
-  gsap.set(heroIcon, {
-    autoAlpha: 0,
+  function removePrehideClasses(...elements) {
+    elements.forEach((el) => el.classList.remove("anim-prehide"));
+  }
+
+  iconTimeline.to(heroIcon, {
+    opacity: 1,
+    duration: 0.5,
+    ease: EASEOUTQUAD,
   });
 
-  iconTimeline.fromTo(
-    heroIcon,
-    {
-      autoAlpha: 0,
-    },
-    {
-      autoAlpha: 1,
-      duration: 0.5,
-      ease: "easeOutQuad",
-    },
-  );
+  tagTimeline.to(heroTag, {
+    opacity: 1,
+    duration: 0.5,
+    ease: EASEOUTQUAD,
+  });
 
-  tagTimeline.fromTo(
-    heroTag,
-    {
-      autoAlpha: 0,
-    },
-    {
-      autoAlpha: 1,
-      duration: 0.5,
-      ease: "easeOutQuad",
-    },
-  );
-
-  hintTimeline.fromTo(
-    heroHint,
-    {
-      autoAlpha: 0,
-    },
-    {
-      autoAlpha: 1,
-      duration: 0.5,
-      ease: "easeOutQuad",
-    },
-  );
+  hintTimeline.to(heroHint, {
+    opacity: 1,
+    duration: 0.5,
+    ease: EASEOUTQUAD,
+  });
 
   const headerLines = new SplitText(heroHeaders, {
     type: "lines",
@@ -105,37 +60,36 @@ document.fonts.ready.then(() => {
     linesClass: "page-header-lines",
   });
 
+  hero.querySelector(".page-header__titles").classList.remove("anim-prehide");
+
   headerLines.lines.forEach((line, i) => {
     const position = i + 1;
-    console.log(position);
 
     const lineCount = position % 2 === 0 ? position : 0;
-    // console.log(lineCount);
 
     gsap.set(line, {
-      // opacity: 0,
       yPercent: lineCount ? -100 : 100,
     });
 
-    // console.log(lineCount);
     gsap.to(line, {
-      // opacity: 1,
       yPercent: 0,
       duration: 1,
       stagger: 0.02,
-      ease: "easeOutQuad", // "easeOutQuart",
+      ease: EASEOUTQUAD,
     });
   });
 
   heroTimeline
+    .call(removePrehideClasses, [heroIcon, heroTag, heroHint])
     .add(tagTimeline, "+=.5")
     .add(hintTimeline, ">-.25")
-    .add(iconTimeline, ">-.5");
+    .add(iconTimeline, ">-.5")
+    .play();
 
   /*
-  *  Frame 1: Basic Split Text
-  *
-  */
+   *  Frame 1: Basic Split Text
+   *
+   */
 
   const frameOne = document.querySelector("[data-panel='1']");
   const frameOneHeader = frameOne.querySelector(".page-section__title");
@@ -153,7 +107,7 @@ document.fonts.ready.then(() => {
   gsap.to(frameOneHeaderChars, {
     yPercent: 0,
     stagger: 0.01,
-    ease: "easeOutQuad",
+    ease: EASEOUTQUAD,
     scrollTrigger: {
       trigger: frameOne,
       start: "top 50%",
@@ -174,7 +128,7 @@ document.fonts.ready.then(() => {
         opacity: 1,
         yPercent: 0,
         stagger: 0.01,
-        ease: "easeOutQuad",
+        ease: EASEOUTQUAD,
         scrollTrigger: {
           trigger: frameOne,
           start: "top 50%",
@@ -186,9 +140,9 @@ document.fonts.ready.then(() => {
   });
 
   /*
-  *  Frame 2: Header and Paragraphs
-  *
-  */
+   *  Frame 2: Header and Paragraphs
+   *
+   */
 
   const frameTwo = document.querySelector("[data-panel='2']");
   const frameTwoSections = Array.from(
@@ -231,12 +185,12 @@ document.fonts.ready.then(() => {
   });
 
   /*
-  *  Frame 3: Star Wars Stretch Effect
-  *
-  */
+   *  Frame 3: Star Wars Stretch Effect
+   *
+   */
 
   const FRAME_THREE_SPREAD = {
-    boundsSelector: ".animation-wide-slide",
+    boundsSelector: ".page-section__content",
     origin: "left", // "left" | "center" | "right"
     gapMin: 8,
     gapMultiplier: 2,
@@ -245,9 +199,7 @@ document.fonts.ready.then(() => {
 
   const root = document.querySelector("[data-panel='3']");
   const container = root.querySelector(FRAME_THREE_SPREAD.boundsSelector);
-  const paragraphs = root.querySelectorAll(
-    ".animation-wide-slide p.type-body",
-  );
+  const paragraphs = root.querySelectorAll(".animation-wide-slide p.type-body");
 
   function buildLineSpread(line, config) {
     const words = Array.from(line.querySelectorAll(".anim-word"));
@@ -290,7 +242,7 @@ document.fonts.ready.then(() => {
 
     return gsap.to(words, {
       x: 0,
-      ease: "easeOutQuad",
+      ease: EASEOUTQUAD,
       scrollTrigger: {
         trigger: line,
         start: "top bottom",
@@ -325,38 +277,38 @@ document.fonts.ready.then(() => {
   });
 
   /*
-  *  Frame 4: Slot Machine Rolling Effect
-  *
-  */
+   *  Frame 4: Slot Machine Rolling Effect
+   *
+   */
 
   document
     .querySelectorAll("[data-panel='4'] .animation-slot-machine-roll__track")
     .forEach((word) => {
-    gsap.fromTo(
-      word.children,
-      {
-        yPercent: (index, target) =>
-          target.classList.contains("anim-char-hidden") ? -100 : 0,
-      },
-      {
-        yPercent: (index, target) =>
-          target.classList.contains("anim-char-hidden") ? 0 : 100,
-        ease: "easeOutCirc",
-        scrollTrigger: {
-          trigger: word, // Clip wrapper — listens to the position of each word row
-          start: "center 60%",
-          end: "top top",
-          scrub: 0.4,
-          invalidateOnRefresh: true,
+      gsap.fromTo(
+        word.children,
+        {
+          yPercent: (index, target) =>
+            target.classList.contains("anim-char-hidden") ? -100 : 0,
         },
-      },
-    );
-  });
+        {
+          yPercent: (index, target) =>
+            target.classList.contains("anim-char-hidden") ? 0 : 100,
+          ease: EASEOUTCIRC,
+          scrollTrigger: {
+            trigger: word, // Clip wrapper — listens to the position of each word row
+            start: "center 60%",
+            end: "top top",
+            scrub: 0.4,
+            invalidateOnRefresh: true,
+          },
+        },
+      );
+    });
 
   /*
-  *  Frame 5: Character Waterfall Cascade
-  *
-  */
+   *  Frame 5: Character Waterfall Cascade
+   *
+   */
 
   const panelFiveRoot = document.querySelector("[data-panel='5']");
   const panelFiveHeader = panelFiveRoot.querySelector(".page-section__title");
@@ -377,7 +329,7 @@ document.fonts.ready.then(() => {
   gsap.to(panelFiveParagraphsLines.lines, {
     opacity: 1,
     yPercent: 0,
-    ease: "easeOutQuart",
+    ease: EASEOUTQUART,
     filter: "blur(0px)",
     stagger: 0.01,
     scrollTrigger: {
@@ -436,7 +388,7 @@ document.fonts.ready.then(() => {
           {
             yPercent: (i, target) =>
               target.classList.contains("anim-char-hidden") ? 0 : 100,
-            ease: "easeInOutQuart",
+            ease: EASEINOUTQUART,
             duration: 1,
           },
           index * 0.05,
@@ -448,16 +400,21 @@ document.fonts.ready.then(() => {
   });
 
   /*
-  *  Frame 6: Horizontal Scroll
-  *
-  */
+   *  Frame 6: Horizontal Scroll
+   *
+   */
 
   const panelSix = document.querySelector("[data-panel='6']");
   const panelSixTrack = panelSix.querySelector(".page-section__track");
   const panelSixSections = panelSix.querySelectorAll(".page-section__slide");
 
   function getPanelSixScrollDistance() {
-    return panelSixTrack.scrollWidth - window.innerWidth;
+    const slides = panelSixSections;
+    const lastSlide = slides[slides.length - 1];
+
+    // Last slide's right edge aligned to the pinned panel — avoids scrollWidth /
+    // window.innerWidth drift with 100vw slides and scrollbar width.
+    return lastSlide.offsetLeft + lastSlide.offsetWidth - panelSix.clientWidth;
   }
 
   const panelSixTween = gsap.to(panelSixTrack, {
@@ -474,9 +431,15 @@ document.fonts.ready.then(() => {
     },
   });
 
-  panelSixSections.forEach((section) => {
+  panelSixSections.forEach((section, index) => {
+    const isFirstSlide = index === 0;
+    const isLastSlide = index === panelSixSections.length - 1;
     const heading = section.querySelector(".page-section__title");
     const paragraph = section.querySelector("p");
+
+    // Slides 2+ enter from the right; restored pre-refactor end values.
+    const headingRange = { start: "left 65%", end: "left 25%" };
+    const paragraphRange = { start: "left 70%", end: "left 30%" };
 
     const headingSplit = SplitText.create(heading, {
       type: "lines",
@@ -484,35 +447,75 @@ document.fonts.ready.then(() => {
       linesClass: "anim-line",
     });
 
-
-
-    const paragraphSplit = SplitText.create(paragraph, {
+    SplitText.create(paragraph, {
       type: "lines",
       mask: "lines",
       linesClass: "anim-line",
       smartSplit: true,
       autoSplit: true,
       onSplit(self) {
+        if (isFirstSlide) {
+          gsap.set(self.lines, { opacity: 1 });
+
+          gsap.to(self.lines, {
+            opacity: 0,
+            stagger: 0.05,
+            ease: EASEINQUAD,
+            scrollTrigger: {
+              trigger: section,
+              containerAnimation: panelSixTween,
+              start: "right center",
+              end: "left left",
+              scrub: true,
+            },
+          });
+          return;
+        }
+
         gsap.set(self.lines, { opacity: 0 });
 
-        // TODO: make this appear closer to the center of the scren
         gsap.to(self.lines, {
           opacity: 1,
           stagger: 0.02,
-          ease: "easeOutQuad",
+          ease: EASEOUTQUAD,
           scrollTrigger: {
             trigger: section,
             containerAnimation: panelSixTween,
-            start: "left 70%",
-            end: "center center",
+            ...paragraphRange,
             scrub: true,
-            onLeave: () => {
-              gsap.to(self.lines, { opacity: 0, stagger: 0.05, ease: "easeInQuad" });
-            },
+            ...(isLastSlide
+              ? {}
+              : {
+                  onLeave: () => {
+                    gsap.to(self.lines, {
+                      opacity: 0,
+                      stagger: 0.05,
+                      ease: EASEINQUAD,
+                    });
+                  },
+                }),
           },
         });
       },
     });
+
+    if (isFirstSlide) {
+      gsap.set(headingSplit.lines, { opacity: 1, yPercent: 0 });
+
+      gsap.to(headingSplit.lines, {
+        opacity: 0,
+        stagger: 0.05,
+        ease: EASEINQUAD,
+        scrollTrigger: {
+          trigger: section,
+          containerAnimation: panelSixTween,
+          start: "right center",
+          end: "left left",
+          scrub: true,
+        },
+      });
+      return;
+    }
 
     gsap.set(headingSplit.lines, { opacity: 0, yPercent: 100 });
 
@@ -520,24 +523,31 @@ document.fonts.ready.then(() => {
       opacity: 1,
       yPercent: 0,
       stagger: 0.03,
-      ease: "easeOutQuint",
+      ease: EASEOUTQUINT,
       scrollTrigger: {
         trigger: section,
         containerAnimation: panelSixTween,
-        start: "left 65%",
-        end: "center center",
+        ...headingRange,
         scrub: true,
-        onLeave: () => {
-          gsap.to(headingSplit.lines, { opacity: 0, stagger: 0.05, ease: "easeInQuad" });
-        },
+        ...(isLastSlide
+          ? {}
+          : {
+              onLeave: () => {
+                gsap.to(headingSplit.lines, {
+                  opacity: 0,
+                  stagger: 0.05,
+                  ease: EASEINQUAD,
+                });
+              },
+            }),
       },
     });
   });
 
   /*
-  *  Frame 7: Letter Spiral List
-  *
-  */
+   *  Frame 7: Letter Spiral List
+   *
+   */
 
   document
     .querySelectorAll("[data-panel='7'] .animation-character-waterdrop__item")
@@ -585,16 +595,12 @@ document.fonts.ready.then(() => {
               layers,
               {
                 yPercent: (i, target) =>
-                  target.classList.contains("anim-char-hidden")
-                    ? -100
-                    : 0,
+                  target.classList.contains("anim-char-hidden") ? -100 : 0,
               },
               {
                 yPercent: (i, target) =>
-                  target.classList.contains("anim-char-hidden")
-                    ? 0
-                    : 100,
-                ease: "easeInOutQuart",
+                  target.classList.contains("anim-char-hidden") ? 0 : 100,
+                ease: EASEINOUTQUART,
                 duration: 1,
               },
               index * 0.05,
@@ -607,9 +613,9 @@ document.fonts.ready.then(() => {
     });
 
   /*
-  *  Frame 8: Staggered Waterfall Cascade
-  *
-  */
+   *  Frame 8: Staggered Waterfall Cascade
+   *
+   */
 
   function wrapPhraseChars(element) {
     const text = element.textContent;
@@ -716,9 +722,9 @@ document.fonts.ready.then(() => {
   ScrollTrigger.addEventListener("refreshInit", rebuildPanelEightPhrases);
 
   /*
-  *  Footer
-  *
-  */
+   *  Footer
+   *
+   */
 
   const footer = document.querySelector(".page-footer");
   const footerTag = footer.querySelectorAll(".page-footer__tag");
@@ -745,19 +751,19 @@ document.fonts.ready.then(() => {
     .fromTo(
       footerTitle,
       { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 0.5, ease: "easeOutQuad" },
+      { autoAlpha: 1, duration: 0.5, ease: EASEOUTQUAD },
     )
     .fromTo(
       footerHint,
       { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 0.5, ease: "easeOutQuad" },
+      { autoAlpha: 1, duration: 0.5, ease: EASEOUTQUAD },
       "+=0.25",
     )
     .fromTo(
       footerTag,
       { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 0.5, ease: "easeOutQuad" },
-      ">",
+      { autoAlpha: 1, duration: 0.5, ease: EASEOUTQUAD },
+      "<",
     );
 
   ScrollTrigger.create({

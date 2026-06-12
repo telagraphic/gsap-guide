@@ -3,8 +3,8 @@ import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const FONTS_DIR = join(__dirname, "fonts");
-const OUTPUT = join(__dirname, "fonts.css");
+const FONTS_DIR = __dirname;
+const OUTPUT = join(__dirname, "../css/fonts.css");
 
 const EXTENSIONS = new Set([".woff2", ".woff", ".otf", ".ttf"]);
 
@@ -106,7 +106,11 @@ async function main() {
   const faceBlocks = [];
 
   for (const filePath of fontFiles) {
-    const relFromOutput = join("fonts", relative(FONTS_DIR, filePath)).replace(/\\/g, "/");
+    // css/fonts.css → ../fonts/{family}/{file}
+    const relFromOutput = join("..", "fonts", relative(FONTS_DIR, filePath)).replace(
+      /\\/g,
+      "/",
+    );
     const parts = relFromOutput.split("/");
     const slug = parts[parts.indexOf("fonts") + 1];
     const filename = parts[parts.length - 1];

@@ -3,7 +3,7 @@
 
 @font-face {
   font-family: "Basier Circle";
-  src: url("fonts/basier-circle/BasierCircle-Bold.woff2") format("woff2");
+  src: url("../fonts/basier-circle/BasierCircle-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -11,7 +11,7 @@
 
 @font-face {
   font-family: "Basier Circle";
-  src: url("fonts/basier-circle/BasierCircle-Italic.woff2") format("woff2");
+  src: url("../fonts/basier-circle/BasierCircle-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -19,7 +19,7 @@
 
 @font-face {
   font-family: "Basier Circle";
-  src: url("fonts/basier-circle/BasierCircle-Medium.woff2") format("woff2");
+  src: url("../fonts/basier-circle/BasierCircle-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -27,7 +27,7 @@
 
 @font-face {
   font-family: "Basier Circle";
-  src: url("fonts/basier-circle/BasierCircle-Regular.woff2") format("woff2");
+  src: url("../fonts/basier-circle/BasierCircle-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -35,7 +35,7 @@
 
 @font-face {
   font-family: "Basier Circle";
-  src: url("fonts/basier-circle/BasierCircle-SemiBold.woff2") format("woff2");
+  src: url("../fonts/basier-circle/BasierCircle-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -43,7 +43,7 @@
 
 @font-face {
   font-family: "Editorial New";
-  src: url("fonts/editorial-new/PPEditorialNew-Italic.otf") format("opentype");
+  src: url("../fonts/editorial-new/PPEditorialNew-Italic.otf") format("opentype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -51,7 +51,7 @@
 
 @font-face {
   font-family: "Editorial New";
-  src: url("fonts/editorial-new/PPEditorialNew-Regular.otf") format("opentype");
+  src: url("../fonts/editorial-new/PPEditorialNew-Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -59,7 +59,7 @@
 
 @font-face {
   font-family: "Editorial New";
-  src: url("fonts/editorial-new/PPEditorialNew-Ultrabold.otf") format("opentype");
+  src: url("../fonts/editorial-new/PPEditorialNew-Ultrabold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -67,7 +67,7 @@
 
 @font-face {
   font-family: "Editorial New";
-  src: url("fonts/editorial-new/PPEditorialNew-UltraboldItalic.otf") format("opentype");
+  src: url("../fonts/editorial-new/PPEditorialNew-UltraboldItalic.otf") format("opentype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -75,7 +75,7 @@
 
 @font-face {
   font-family: "Editorial New";
-  src: url("fonts/editorial-new/PPEditorialNew-Ultralight.otf") format("opentype");
+  src: url("../fonts/editorial-new/PPEditorialNew-Ultralight.otf") format("opentype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -83,7 +83,7 @@
 
 @font-face {
   font-family: "Editorial New";
-  src: url("fonts/editorial-new/PPEditorialNew-UltralightItalic.otf") format("opentype");
+  src: url("../fonts/editorial-new/PPEditorialNew-UltralightItalic.otf") format("opentype");
   font-weight: 200;
   font-style: italic;
   font-display: swap;
@@ -91,7 +91,7 @@
 
 @font-face {
   font-family: "FH 1089";
-  src: url("fonts/fh-1089/FH1089-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-1089/FH1089-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -99,7 +99,7 @@
 
 @font-face {
   font-family: "FH 1089";
-  src: url("fonts/fh-1089/FH1089Test-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-1089/FH1089Test-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -107,7 +107,7 @@
 
 @font-face {
   font-family: "FH Alpha";
-  src: url("fonts/fh-alpha/FHAlphaTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-alpha/FHAlphaTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -115,7 +115,7 @@
 
 @font-face {
   font-family: "FH Alpha";
-  src: url("fonts/fh-alpha/FHAlphaTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-alpha/FHAlphaTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -123,7 +123,7 @@
 
 @font-face {
   font-family: "FH Alpha";
-  src: url("fonts/fh-alpha/FHAlphaTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-alpha/FHAlphaTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -131,7 +131,7 @@
 
 @font-face {
   font-family: "FH Anorma";
-  src: url("fonts/fh-anorma/FHAnormaTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-anorma/FHAnormaTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -139,7 +139,7 @@
 
 @font-face {
   font-family: "FH Anorma";
-  src: url("fonts/fh-anorma/FHAnormaTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-anorma/FHAnormaTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -147,7 +147,7 @@
 
 @font-face {
   font-family: "FH Anorma";
-  src: url("fonts/fh-anorma/FHAnormaTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-anorma/FHAnormaTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -155,7 +155,7 @@
 
 @font-face {
   font-family: "FH Anorma";
-  src: url("fonts/fh-anorma/FHAnormaTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-anorma/FHAnormaTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -163,7 +163,7 @@
 
 @font-face {
   font-family: "FH Cordelia";
-  src: url("fonts/fh-cordelia/FHCordeliaTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-cordelia/FHCordeliaTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -171,7 +171,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -179,7 +179,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -187,7 +187,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -195,7 +195,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -203,7 +203,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -211,7 +211,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -219,7 +219,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -227,7 +227,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -235,7 +235,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -243,7 +243,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -251,7 +251,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -259,7 +259,7 @@
 
 @font-face {
   font-family: "FH Dfaalt";
-  src: url("fonts/fh-dfaalt/FHDfaaltTest-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-dfaalt/FHDfaaltTest-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -267,7 +267,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -275,7 +275,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -283,7 +283,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -291,7 +291,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -299,7 +299,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -307,7 +307,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -315,7 +315,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -323,7 +323,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -331,7 +331,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -339,7 +339,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -347,7 +347,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -355,7 +355,7 @@
 
 @font-face {
   font-family: "FH Duo Display";
-  src: url("fonts/fh-duo-display/FHDuoDisplayTest-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo-display/FHDuoDisplayTest-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -363,7 +363,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -371,7 +371,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -379,7 +379,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -387,7 +387,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -395,7 +395,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -403,7 +403,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -411,7 +411,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -419,7 +419,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -427,7 +427,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -435,7 +435,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -443,7 +443,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -451,7 +451,7 @@
 
 @font-face {
   font-family: "FH Duo";
-  src: url("fonts/fh-duo/FHDuoTest-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-duo/FHDuoTest-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -459,7 +459,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -467,7 +467,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -475,7 +475,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -483,7 +483,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -491,7 +491,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -499,7 +499,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -507,7 +507,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -515,7 +515,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -523,7 +523,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -531,7 +531,7 @@
 
 @font-face {
   font-family: "FH Enso";
-  src: url("fonts/fh-enso/FHEnsoTest-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-enso/FHEnsoTest-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -539,7 +539,7 @@
 
 @font-face {
   font-family: "FH Giselle";
-  src: url("fonts/fh-giselle/FHGiselleTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-giselle/FHGiselleTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -547,7 +547,7 @@
 
 @font-face {
   font-family: "FH Giselle";
-  src: url("fonts/fh-giselle/FHGiselleTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-giselle/FHGiselleTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -555,7 +555,7 @@
 
 @font-face {
   font-family: "FH Giselle";
-  src: url("fonts/fh-giselle/FHGiselleTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-giselle/FHGiselleTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -563,7 +563,7 @@
 
 @font-face {
   font-family: "FH Giselle";
-  src: url("fonts/fh-giselle/FHGiselleTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-giselle/FHGiselleTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -571,7 +571,7 @@
 
 @font-face {
   font-family: "FH Giselle";
-  src: url("fonts/fh-giselle/FHGiselleTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-giselle/FHGiselleTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -579,7 +579,7 @@
 
 @font-face {
   font-family: "FH Giselle";
-  src: url("fonts/fh-giselle/FHGiselleTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-giselle/FHGiselleTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -587,7 +587,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisPlayTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisPlayTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -595,7 +595,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisPlayTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisPlayTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -603,7 +603,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisPlayTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisPlayTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -611,7 +611,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisRoundedTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisRoundedTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -619,7 +619,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisRoundedTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisRoundedTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -627,7 +627,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisRoundedTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisRoundedTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -635,7 +635,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -643,7 +643,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -651,7 +651,7 @@
 
 @font-face {
   font-family: "FH Lecturis";
-  src: url("fonts/fh-lecturis/FHLecturisTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-lecturis/FHLecturisTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -659,7 +659,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-Black.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -667,7 +667,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -675,7 +675,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -683,7 +683,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -691,7 +691,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-Light.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -699,7 +699,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -707,7 +707,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -715,7 +715,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -723,7 +723,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -731,7 +731,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -739,7 +739,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -747,7 +747,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -755,7 +755,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-Thin.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -763,7 +763,7 @@
 
 @font-face {
   font-family: "FH Noetica Display";
-  src: url("fonts/fh-noetica-display/FHNoeticaDisplay-ThinItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica-display/FHNoeticaDisplay-ThinItalic.woff2") format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -771,7 +771,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-Black.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -779,7 +779,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -787,7 +787,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -795,7 +795,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -803,7 +803,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-Light.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -811,7 +811,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -819,7 +819,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -827,7 +827,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -835,7 +835,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -843,7 +843,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -851,7 +851,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -859,7 +859,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -867,7 +867,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-Thin.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -875,7 +875,7 @@
 
 @font-face {
   font-family: "FH Noetica";
-  src: url("fonts/fh-noetica/FHNoetica-ThinItalic.woff2") format("woff2");
+  src: url("../fonts/fh-noetica/FHNoetica-ThinItalic.woff2") format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -883,7 +883,7 @@
 
 @font-face {
   font-family: "FH Oscar Condensed";
-  src: url("fonts/fh-oscar-condensed/FHOscarProCondensedTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-condensed/FHOscarProCondensedTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -891,7 +891,7 @@
 
 @font-face {
   font-family: "FH Oscar Condensed";
-  src: url("fonts/fh-oscar-condensed/FHOscarProCondensedTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-condensed/FHOscarProCondensedTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -899,7 +899,7 @@
 
 @font-face {
   font-family: "FH Oscar Condensed";
-  src: url("fonts/fh-oscar-condensed/FHOscarProCondensedTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-condensed/FHOscarProCondensedTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -907,7 +907,7 @@
 
 @font-face {
   font-family: "FH Oscar Condensed";
-  src: url("fonts/fh-oscar-condensed/FHOscarProCondensedTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-condensed/FHOscarProCondensedTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -915,7 +915,7 @@
 
 @font-face {
   font-family: "FH Oscar Condensed";
-  src: url("fonts/fh-oscar-condensed/FHOscarProCondensedTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-condensed/FHOscarProCondensedTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -923,7 +923,7 @@
 
 @font-face {
   font-family: "FH Oscar Condensed";
-  src: url("fonts/fh-oscar-condensed/FHOscarProCondensedTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-condensed/FHOscarProCondensedTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -931,7 +931,7 @@
 
 @font-face {
   font-family: "FH Oscar Condensed";
-  src: url("fonts/fh-oscar-condensed/FHOscarProCondensedTest-Thin.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-condensed/FHOscarProCondensedTest-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -939,7 +939,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -947,7 +947,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -955,7 +955,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -963,7 +963,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -971,7 +971,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -979,7 +979,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -987,7 +987,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -995,7 +995,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -1003,7 +1003,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1011,7 +1011,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1019,7 +1019,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1027,7 +1027,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -1035,7 +1035,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-Thin.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -1043,7 +1043,7 @@
 
 @font-face {
   font-family: "FH Oscar Pro";
-  src: url("fonts/fh-oscar-pro/FHOscarProTest-ThinItalic.woff2") format("woff2");
+  src: url("../fonts/fh-oscar-pro/FHOscarProTest-ThinItalic.woff2") format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -1051,7 +1051,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -1059,7 +1059,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -1067,7 +1067,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1075,7 +1075,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1083,7 +1083,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1091,7 +1091,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -1099,7 +1099,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -1107,7 +1107,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -1115,7 +1115,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1123,7 +1123,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1131,7 +1131,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1139,7 +1139,7 @@
 
 @font-face {
   font-family: "FH Premier";
-  src: url("fonts/fh-premier/FHPremierTest-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-premier/FHPremierTest-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -1147,7 +1147,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -1155,7 +1155,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -1163,7 +1163,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1171,7 +1171,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1179,7 +1179,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1187,7 +1187,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -1195,7 +1195,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -1203,7 +1203,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -1211,7 +1211,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1219,7 +1219,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1227,7 +1227,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1235,7 +1235,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -1243,7 +1243,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-Thin.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -1251,7 +1251,7 @@
 
 @font-face {
   font-family: "FH Total Display";
-  src: url("fonts/fh-total-display/FHTotalDisplayTest-ThinItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-display/FHTotalDisplayTest-ThinItalic.woff2") format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -1259,7 +1259,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-Black.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -1267,7 +1267,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -1275,7 +1275,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-Bold.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1283,7 +1283,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1291,7 +1291,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-Light.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1299,7 +1299,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-LightItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -1307,7 +1307,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-Medium.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -1315,7 +1315,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -1323,7 +1323,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-Regular.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1331,7 +1331,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1339,7 +1339,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-SemiBold.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1347,7 +1347,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -1355,7 +1355,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-Thin.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -1363,7 +1363,7 @@
 
 @font-face {
   font-family: "FH Total Fine";
-  src: url("fonts/fh-total-fine/FHTotalFineTest-ThinItalic.woff2") format("woff2");
+  src: url("../fonts/fh-total-fine/FHTotalFineTest-ThinItalic.woff2") format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -1371,7 +1371,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-Black.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -1379,7 +1379,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -1387,7 +1387,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-Bold.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1395,7 +1395,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1403,7 +1403,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-ExtraBold.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-ExtraBold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1411,7 +1411,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-ExtraBoldItalic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-ExtraBoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1419,7 +1419,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-ExtraLight.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-ExtraLight.woff2") format("woff2");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -1427,7 +1427,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-ExtraLightItalic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-ExtraLightItalic.woff2") format("woff2");
   font-weight: 200;
   font-style: italic;
   font-display: swap;
@@ -1435,7 +1435,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-Italic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1443,7 +1443,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-Light.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1451,7 +1451,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-LightItalic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -1459,7 +1459,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-Medium.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -1467,7 +1467,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -1475,7 +1475,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-Regular.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1483,7 +1483,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-SemiBold.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1491,7 +1491,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -1499,7 +1499,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-Thin.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -1507,7 +1507,7 @@
 
 @font-face {
   font-family: "Giest Mono";
-  src: url("fonts/giest-mono/GeistMono-ThinItalic.woff2") format("woff2");
+  src: url("../fonts/giest-mono/GeistMono-ThinItalic.woff2") format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -1515,7 +1515,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-Black.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -1523,7 +1523,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -1531,7 +1531,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-Bold.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1539,7 +1539,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1547,7 +1547,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-ExtraBold.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-ExtraBold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1555,7 +1555,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-ExtraBoldItalic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-ExtraBoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1563,7 +1563,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-ExtraLight.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-ExtraLight.woff2") format("woff2");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -1571,7 +1571,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-ExtraLightItalic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-ExtraLightItalic.woff2") format("woff2");
   font-weight: 200;
   font-style: italic;
   font-display: swap;
@@ -1579,7 +1579,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-Italic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1587,7 +1587,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-Light.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1595,7 +1595,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-LightItalic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -1603,7 +1603,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-Medium.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -1611,7 +1611,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -1619,7 +1619,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-Regular.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1627,7 +1627,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-SemiBold.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1635,7 +1635,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-SemiBoldItalic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-SemiBoldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -1643,7 +1643,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-Thin.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -1651,7 +1651,7 @@
 
 @font-face {
   font-family: "Giest";
-  src: url("fonts/giest/Geist-ThinItalic.woff2") format("woff2");
+  src: url("../fonts/giest/Geist-ThinItalic.woff2") format("woff2");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -1659,7 +1659,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-Black.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -1667,7 +1667,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -1675,7 +1675,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-Bold.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1683,7 +1683,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1691,7 +1691,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-Book.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-Book.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1699,7 +1699,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-BookItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-BookItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1707,7 +1707,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-Light.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1715,7 +1715,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-LightItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -1723,7 +1723,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-Medium.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -1731,7 +1731,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -1739,7 +1739,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-Regular.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1747,7 +1747,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1755,7 +1755,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-Semibold.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-Semibold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1763,7 +1763,7 @@
 
 @font-face {
   font-family: "KH Hekto Lut";
-  src: url("fonts/kh-hekto-lut/KHHektoLutTRIAL-SemiboldItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-lut/KHHektoLutTRIAL-SemiboldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -1771,7 +1771,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-Black.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -1779,7 +1779,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-BlackItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
@@ -1787,7 +1787,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-Bold.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1795,7 +1795,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-BoldItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1803,7 +1803,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-Book.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-Book.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1811,7 +1811,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-BookItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-BookItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1819,7 +1819,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-Light.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1827,7 +1827,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-LightItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -1835,7 +1835,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-Medium.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -1843,7 +1843,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-MediumItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -1851,7 +1851,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-Regular.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1859,7 +1859,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1867,7 +1867,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-Semibold.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-Semibold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1875,7 +1875,7 @@
 
 @font-face {
   font-family: "KH Hekto Plan";
-  src: url("fonts/kh-hekto-plan/KHHektoPlanTRIAL-SemiboldItalic.woff2") format("woff2");
+  src: url("../fonts/kh-hekto-plan/KHHektoPlanTRIAL-SemiboldItalic.woff2") format("woff2");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -1883,7 +1883,7 @@
 
 @font-face {
   font-family: "Lock Serif";
-  src: url("fonts/lock-serif/LockSerifTRIAL-Black.otf") format("opentype");
+  src: url("../fonts/lock-serif/LockSerifTRIAL-Black.otf") format("opentype");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -1891,7 +1891,7 @@
 
 @font-face {
   font-family: "Lock Serif";
-  src: url("fonts/lock-serif/LockSerifTRIAL-Bold.otf") format("opentype");
+  src: url("../fonts/lock-serif/LockSerifTRIAL-Bold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1899,7 +1899,7 @@
 
 @font-face {
   font-family: "Lock Serif";
-  src: url("fonts/lock-serif/LockSerifTRIAL-ExtraLight.otf") format("opentype");
+  src: url("../fonts/lock-serif/LockSerifTRIAL-ExtraLight.otf") format("opentype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -1907,7 +1907,7 @@
 
 @font-face {
   font-family: "Lock Serif";
-  src: url("fonts/lock-serif/LockSerifTRIAL-Light.otf") format("opentype");
+  src: url("../fonts/lock-serif/LockSerifTRIAL-Light.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1915,7 +1915,7 @@
 
 @font-face {
   font-family: "Lock Serif";
-  src: url("fonts/lock-serif/LockSerifTRIAL-Medium.otf") format("opentype");
+  src: url("../fonts/lock-serif/LockSerifTRIAL-Medium.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -1923,7 +1923,7 @@
 
 @font-face {
   font-family: "Lock Serif";
-  src: url("fonts/lock-serif/LockSerifTRIAL-Regular.otf") format("opentype");
+  src: url("../fonts/lock-serif/LockSerifTRIAL-Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -1931,7 +1931,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-Bold.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1939,7 +1939,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-BoldItalic.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-BoldItalic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1947,7 +1947,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-ExtraBold.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-ExtraBold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -1955,7 +1955,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-ExtraBoldItalic.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-ExtraBoldItalic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -1963,7 +1963,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-ExtraLight.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-ExtraLight.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -1971,7 +1971,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-ExtraLightItalic.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-ExtraLightItalic.ttf") format("truetype");
   font-weight: 200;
   font-style: italic;
   font-display: swap;
@@ -1979,7 +1979,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-Italic.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -1987,7 +1987,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-Light.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -1995,7 +1995,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-LightItalic.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-LightItalic.ttf") format("truetype");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -2003,7 +2003,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-Medium.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -2011,7 +2011,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-MediumItalic.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-MediumItalic.ttf") format("truetype");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -2019,7 +2019,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-Regular.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -2027,7 +2027,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-SemiBold.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -2035,7 +2035,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-SemiBoldItalic.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-SemiBoldItalic.ttf") format("truetype");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -2043,7 +2043,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-Thin.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-Thin.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -2051,7 +2051,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("fonts/maple-mono/MapleMono-ThinItalic.ttf") format("truetype");
+  src: url("../fonts/maple-mono/MapleMono-ThinItalic.ttf") format("truetype");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -2083,12 +2083,4 @@
   --font-kh-hekto-plan: "KH Hekto Plan", sans-serif;
   --font-lock-serif: "Lock Serif", sans-serif;
   --font-maple-mono: "Maple Mono", sans-serif;
-  --line-spacing-tightest: 0.8;
-  --line-spacing-tighter: 1;
-  --line-spacing-tight: 1.1;
-  --line-spacing-snug: 1.2;
-  --line-spacing-normal: 1.5;
-  --line-spacing-relaxed: 1.625;
-  --line-spacing-loose: 1.75;
-  --line-spacing: var(--line-spacing-snug);
 }

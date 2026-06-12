@@ -80,3 +80,48 @@ animation-character-ripple
 
 
 data-panel-5 header is broken
+
+
+## Split Text Fine Tuning
+
+Glyph, lines, mask and styles that control the stacking tightness and vertical rhythm.
+
+How to test with your split text playground?
+
+- add clip-path control
+- yPercent control
+- add gsap related css props
+-
+
+
+
+# Architecture & Patterns
+
+## Short
+
+- storyboard and config at top
+- helper methods
+- frame by frame functions/sections
+- spaghetti over specific pattern
+
+## Medium
+
+- break out to separate files
+- central timeline orchestrator
+- import helpers
+- half spaghetti, more pattern
+
+
+## Longer
+
+- Implement registry, factory pattern per each file
+- central timeline orchestrator
+- more helpers, primitives
+- gsap components with lifecycle methods
+- animation classes
+
+
+## Styles: GSAP and Classes
+
+GSAP targets the elements inline styles so it beats classes.
+But watch out for this.

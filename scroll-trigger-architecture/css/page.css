@@ -95,24 +95,7 @@ body {
   }
 
   .page-header__title + .page-header__title {
-    margin-top: -0.25rem;
-  }
-
-  .page-header-lines {
-    overflow: hidden;
-    line-height: var(--leading-tight);
-    @media (max-width: 768px) {
-      line-height: var(--leading-tight-mobile);
-    }
-  }
-
-
-  .page-mask-header-mask-lines-mask {
-    overflow: hidden;
-    line-height: var(--leading-tight);
-    @media (max-width: 768px) {
-      line-height: var(--leading-tight-mobile);
-    }
+    /* margin-top: -0.25rem; */
   }
 
   .page-header__hint {

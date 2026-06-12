@@ -1,7 +1,6 @@
 /* Motion-structure utilities — animation concerns only */
 
 .anim-prehide {
-  visibility: hidden;
   opacity: 0;
 }
 
