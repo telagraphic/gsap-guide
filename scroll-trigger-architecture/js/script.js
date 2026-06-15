@@ -10,17 +10,37 @@ import {
   EASEINOUTQUART,
   EASEINOUTQUINT,
 } from "./easings.js";
-
+import { removePrehideClasses } from "./utils.js";
 gsap.registerPlugin(ScrollTrigger);
 
-// CSS cubic-bezier → CustomEase (M0,0 C{x1},{y1},{x2},{y2},1,1)
-
 document.fonts.ready.then(() => {
-  /*
-   *  Header Hero — First Frame
-   *
-   */
 
+
+  const TIMELINE = [
+    sectionOneTimeline(),
+    sectionTwoTimeline(),
+    sectionThreeTimeline(),
+  ]
+
+
+
+
+  /* ─────────────────────────────────────────────────────────
+   * HERO STORYBOARD
+   *
+   *    0ms   titles cleared to play
+   *  500ms   headline lines slide in, alternating (cascade)
+   * +500ms   tagline fades in
+   * −250ms   hint overlaps tag
+   * −500ms   icon overlaps hint
+   *    end   full header on stage
+   * 
+   * ─────────────────────────────────────────────────────────
+   * 
+   * PATTERN: MASTER TIMELINE drives 4 nested timeline animations
+   * 
+   * 
+   * ───────────────────────────────────────────────────────── */
 
   const HERO_CONFIG = {
     SELECTORS: {
@@ -28,22 +48,50 @@ document.fonts.ready.then(() => {
       ICON: ".page-header__icon",
       TAG: ".page-header__tag",
       HINT: ".page-header__hint",
-      HEADERS: ".page-header__titles",
+      HEADER_TITLES: ".page-header__titles",
+      HEADER_TITLE: ".page-header__titles h1",
     },
     HERO: {
       TIMELINE: {
-        OPACITY: 0,
-        DURATION: 0.5,
-        EASE: EASEOUTQUAD,
-      }
-    }
+        opacity: 1,
+        duration: 0.5,
+        ease: EASEOUTQUAD,
+      },
+    },
+    TAG: {
+      TIMELINE: {
+        opacity: 1,
+        duration: 0.5,
+        ease: EASEOUTQUAD,
+      },
+    },
+    HINT: {
+      TIMELINE: {
+        opacity: 1,
+        duration: 0.5,
+        ease: EASEOUTQUAD,
+      },
+    },
+    HEADER_TITLE: {
+      SPLIT_TEXT: {
+        TYPE: "lines",
+        MASK: "lines",
+        LINES_CLASS: "page-header-lines",
+      },
+      TIMELINE: {
+        yPercent: 0,
+        duration: 1,
+        ease: EASEOUTQUAD,
+        stagger: 0.02,
+      },
+    },
   };
 
   const hero = document.querySelector(HERO_CONFIG.SELECTORS.HEADER);
   const heroIcon = hero.querySelector(HERO_CONFIG.SELECTORS.ICON);
   const heroTag = hero.querySelector(HERO_CONFIG.SELECTORS.TAG);
   const heroHint = hero.querySelector(HERO_CONFIG.SELECTORS.HINT);
-  const heroHeaders = hero.querySelector(HERO_CONFIG.SELECTORS.HEADERS);
+  const heroHeaders = hero.querySelector(HERO_CONFIG.SELECTORS.HEADER_TITLES);
 
   const heroTimeline = gsap.timeline();
   const iconTimeline = gsap.timeline();
@@ -51,47 +99,31 @@ document.fonts.ready.then(() => {
   const hintTimeline = gsap.timeline();
   const linesTimeline = gsap.timeline();
 
-  function removePrehideClasses(...elements) {
-    elements.forEach((el) => el.classList.remove("anim-prehide"));
-  }
+  iconTimeline.to(heroIcon, HERO_CONFIG.HERO.TIMELINE);
+  tagTimeline.to(heroTag, HERO_CONFIG.TAG.TIMELINE);
+  hintTimeline.to(heroHint, HERO_CONFIG.HINT.TIMELINE);
 
-  iconTimeline.to(heroIcon, {
-    opacity: 1,
-    duration: 0.5,
-    ease: EASEOUTQUAD,
-  });
-
-  tagTimeline.to(heroTag, {
-    opacity: 1,
-    duration: 0.5,
-    ease: EASEOUTQUAD,
-  });
-
-  hintTimeline.to(heroHint, {
-    opacity: 1,
-    duration: 0.5,
-    ease: EASEOUTQUAD,
-  });
-
-  const headerLines = new SplitText(heroHeaders.querySelectorAll("h1") , {
-    type: "lines",
-    mask: "lines",
-    linesClass: "page-header-lines",
-  });
-
+  const headerLines = new SplitText(
+    heroHeaders.querySelectorAll(HERO_CONFIG.SELECTORS.HEADER_TITLE),
+    {
+      type: "lines",
+      mask: "lines",
+      linesClass: "page-header-lines",
+    },
+  );
 
   headerLines.lines.forEach((line, i) => {
     const position = i + 1;
     const fromY = position % 2 === 0 ? position * -100 : 100; // your logic
     gsap.set(line, { yPercent: fromY });
   });
-  
-  linesTimeline.to(headerLines.lines, {
-    yPercent: 0,
-    duration: 1,
-    stagger: 0.02,
-    ease: EASEOUTQUAD,
-  });
+
+  linesTimeline.to(headerLines.lines, HERO_CONFIG.HEADER_TITLE.TIMELINE);
+
+  /**
+   * Master Timeline Orchestrator
+   *
+   **/
 
   heroTimeline
     .call(removePrehideClasses, [heroHeaders])
@@ -102,87 +134,193 @@ document.fonts.ready.then(() => {
     .call(removePrehideClasses, [heroIcon, heroTag, heroHint])
     .play();
 
-  /*
-   *  Frame 1: Basic Split Text
+  /* ─────────────────────────────────────────────────────────
+   * SECTION 1 STORYBOARD
    *
-   */
+   *     before   copy waiting below frame
+   *    top 50%   title characters rise in, cascading
+   * 50%→center   body lines rise and fade in, tied to scroll
+   * 
+   * ─────────────────────────────────────────────────────────
+   * 
+   * PATTERN: ScrollTrigger dives 2 animations
+   * 
+   * ───────────────────────────────────────────────────────── */
 
-  const frameOne = document.querySelector("[data-panel='1']");
-  const frameOneHeader = frameOne.querySelector(".page-section__title");
-  const frameOneParagraphs = frameOne.querySelectorAll(".page-section__body p");
+  const SECTION_ONE_CONFIG = {
+    SELECTORS: {
+      SECTION: "[data-panel='1']",
+      HEADER: ".page-section__title",
+      PARAGRAPHS: ".page-section__body p",
+    },
+    HEADER: {
+      SPLIT_TEXT: {
+        TYPE: "chars,lines",
+        MASK: "chars",
+      },
+      TIMELINE: {
+        FROM: {
+          yPercent: 100,
+        },
+        TO: {
+          yPercent: 0,
+          duration: 1,
+          ease: EASEOUTQUAD,
+          stagger: 0.01,
+        },
+      },
+      SCROLL_TRIGGER: {
+        start: "top 50%",
+      },
+    },
+    PARAGRAPHS: {
+      SPLIT_TEXT: {
+        type: "lines",
+        mask: "lines",
+      },
+      TIMELINE: {
+        FROM: {
+          yPercent: 100,
+          opacity: 0,
+        },
+        TO: {
+          yPercent: 0,
+          opacity: 1,
+          duration: 1,
+          ease: EASEOUTQUAD,
+          stagger: 0.01,
+        },
+      },
+      SCROLL_TRIGGER: {
+        start: "top 50%",
+      },
+    },
+  };
 
-  const frameOneHeaderChars = new SplitText(frameOneHeader, {
-    type: "chars,lines",
-    mask: "chars",
+  const sectionOne = document.querySelector(SECTION_ONE_CONFIG.SELECTORS.SECTION);
+  const sectionOneHeader = sectionOne.querySelector(SECTION_ONE_CONFIG.SELECTORS.HEADER);
+  const sectionOneParagraphs = sectionOne.querySelectorAll(SECTION_ONE_CONFIG.SELECTORS.PARAGRAPHS);
+
+  const sectionOneHeaderChars = new SplitText(sectionOneHeader, {
+    type: SECTION_ONE_CONFIG.HEADER.SPLIT_TEXT.TYPE,
+    mask: SECTION_ONE_CONFIG.HEADER.SPLIT_TEXT.MASK,
   }).chars;
 
-  gsap.set(frameOneHeaderChars, {
-    yPercent: 100,
+  gsap.set(sectionOneHeaderChars, {
+    yPercent: SECTION_ONE_CONFIG.HEADER.TIMELINE.FROM.yPercent,
   });
 
-  gsap.to(frameOneHeaderChars, {
-    yPercent: 0,
-    stagger: 0.01,
-    ease: EASEOUTQUAD,
+  gsap.to(sectionOneHeaderChars, {
+    yPercent: SECTION_ONE_CONFIG.HEADER.TIMELINE.TO.yPercent,
+    stagger: SECTION_ONE_CONFIG.HEADER.TIMELINE.stagger,
+    ease: SECTION_ONE_CONFIG.HEADER.TIMELINE.ease,
     scrollTrigger: {
-      trigger: frameOne,
-      start: "top 50%",
+      trigger: sectionOne,
+      start: SECTION_ONE_CONFIG.HEADER.SCROLL_TRIGGER.start,
     },
   });
 
-  const frameOneParagraphsLines = new SplitText(frameOneParagraphs, {
-    type: "lines",
-    mask: "lines",
+  const sectionOneParagraphsLines = new SplitText(sectionOneParagraphs, {
+    type: SECTION_ONE_CONFIG.PARAGRAPHS.SPLIT_TEXT.type,
+    mask: SECTION_ONE_CONFIG.PARAGRAPHS.SPLIT_TEXT.mask,
     autoSplit: true,
     onSplit(self) {
       gsap.set(self.lines, {
-        opacity: 0,
-        yPercent: 100,
+        opacity: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.FROM.opacity,
+        yPercent: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.FROM.yPercent,
       });
 
       return gsap.to(self.lines, {
-        opacity: 1,
-        yPercent: 0,
-        stagger: 0.01,
-        ease: EASEOUTQUAD,
+        opacity: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.TO.opacity,
+        yPercent: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.TO.yPercent,
+        stagger: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.stagger,
+        ease: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.ease,
         scrollTrigger: {
-          trigger: frameOne,
-          start: "top 50%",
-          end: "center center",
-          scrub: true,
+          trigger: sectionOne,
+          start: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.start,
+          end: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.end,
+          scrub: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.scrub,
         },
       });
     },
   });
 
-  /*
-   *  Frame 2: Header and Paragraphs
+  /* ─────────────────────────────────────────────────────────
+   * SECTION 2 STORYBOARD  (×3 groups)
    *
-   */
+   *     before   copy held back, nothing on stage
+   * center−120   body lines fade in, cascading
+   *     center   headline fades in
+   * ─────────────────────────────────────────────────────────
+   * 
+   * PATTERN: ScrollTrigger drives 2 animations
+   * 
+   * ───────────────────────────────────────────────────────── */
 
-  const frameTwo = document.querySelector("[data-panel='2']");
-  const frameTwoSections = Array.from(
-    frameTwo.querySelectorAll(".page-section__group"),
+  
+
+  const SECTION_TWO_CONFIG = {
+    SELECTORS: {
+      SECTION: "[data-panel='2']",
+      HEADER: ".page-section__title",
+      GROUPS: ".page-section__group",
+      PARAGRAPH: "p",
+    },
+    HEADER: {
+      SPLIT_TEXT: {
+        type: "chars",
+        mask: "chars",
+      },
+    },
+    PARAGRAPH: {
+      SPLIT_TEXT: {
+        type: "lines",
+        mask: "lines",
+      },
+      TIMELINE: {
+        FROM: {
+          opacity: 0,
+          yPercent: 100,
+        },
+        TO: {
+          opacity: 1,
+          yPercent: 0,
+          duration: 1,
+          ease: EASEOUTQUAD,
+          stagger: 0.01,
+        },
+      },
+    },
+  }
+
+
+
+  const sectionTwo = document.querySelector(SECTION_TWO_CONFIG.SELECTORS.SECTION);
+  const sectionTwoGroups = Array.from(
+    sectionTwo.querySelectorAll(SECTION_TWO_CONFIG.SELECTORS.GROUPS),
   );
 
-  frameTwoSections.forEach((section) => {
-    let header = section.querySelector(".page-section__title");
-    let paragraph = section.querySelector("p");
-    // This creates a new split text each loop, instead of all at once
+  sectionTwoGroups.forEach((group) => {
+    let header = group.querySelector(SECTION_TWO_CONFIG.SELECTORS.HEADER);
+    let paragraph = group.querySelector(SECTION_TWO_CONFIG.SELECTORS.PARAGRAPH);
     let paragraphLines = new SplitText(paragraph, {
-      type: "lines",
-      smartSplit: true,
-      linesClass: "paragraph",
+      type: SECTION_TWO_CONFIG.PARAGRAPH.SPLIT_TEXT.type,
+      mask: SECTION_TWO_CONFIG.PARAGRAPH.SPLIT_TEXT.mask,
+      autoSplit: true,
+      revert: true,
     }).lines;
 
-    gsap.set([header, paragraphLines], {
-      autoAlpha: 0,
+    gsap.set(paragraphLines, {
+      opacity: 0,
     });
 
     gsap.to(header, {
-      autoAlpha: 1,
+      onStart: () => {
+        removePrehideClasses(header, paragraph);
+      },
+      opacity: 1,
       scrollTrigger: {
-        trigger: section,
+        trigger: group,
         start: "top center",
         end: "center center",
         once: true,
@@ -190,22 +328,24 @@ document.fonts.ready.then(() => {
     });
 
     gsap.to(paragraphLines, {
-      autoAlpha: 1,
+      opacity: 1,
       stagger: 0.1,
       scrollTrigger: {
-        trigger: section,
+        trigger: group,
         start: "top center-=120",
         once: true,
       },
     });
   });
 
-  /*
-   *  Frame 3: Star Wars Stretch Effect
+  /* ─────────────────────────────────────────────────────────
+   * SECTION 3 STORYBOARD  (per line)
    *
-   */
+   *     before   words sitting wide across the frame
+   * bottom→60%   words draw together, tied to scroll
+   * ───────────────────────────────────────────────────────── */
 
-  const FRAME_THREE_SPREAD = {
+  const SECTION_3_CONFIG = {
     boundsSelector: ".page-section__content",
     origin: "left", // "left" | "center" | "right"
     gapMin: 8,
@@ -214,7 +354,7 @@ document.fonts.ready.then(() => {
   };
 
   const root = document.querySelector("[data-panel='3']");
-  const container = root.querySelector(FRAME_THREE_SPREAD.boundsSelector);
+  const container = root.querySelector(SECTION_3_CONFIG.boundsSelector);
   const paragraphs = root.querySelectorAll(".animation-wide-slide p.type-body");
 
   function buildLineSpread(line, config) {
@@ -285,7 +425,7 @@ document.fonts.ready.then(() => {
         lineTweens.length = 0;
 
         self.lines.forEach((line) => {
-          const tween = buildLineSpread(line, FRAME_THREE_SPREAD);
+          const tween = buildLineSpread(line, SECTION_3_CONFIG);
           if (tween) lineTweens.push(tween);
         });
       },

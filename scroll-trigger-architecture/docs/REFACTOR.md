@@ -188,4 +188,16 @@ GSAP animates SplitText children?
 
 ---
 
+
 **Bottom line:** Class = pre-JS hide. GSAP = post-JS motion. For splits, **unlock the container once**, animate **lines with transforms only**. That’s the lean sync — same idea as icon/tag/hint, but the “reveal target” for SplitText is the wrapper, not each line.
+
+
+
+## Module System
+
+Looking at @scroll-trigger-architecture/docs/DOCUMENTATION.md I have a several patterns to implement for each section: return a module that contains a bundled registry, a factory function or a lifecycle component that is both a bundled reigstry and factory. Either way, there needs to be a module or component that is returned that have has dom refs, tween coupling and lifecycle methods for controlling each section via the main @scroll-trigger-architecture/js/script.js TIMELINE registry.
+
+Secondly, there are 3 patterns each section can be: a gsap timeline animation that is returned, an object that returns the tweens that are driven by scroll trigger, and a gsap component module that returns lifecycle methods for trigger before, after events if needed and a settings configuration for animated properties specific to it.
+
+It would be ideal to have a starting out API for each pattern that can be extended with predictable naming and methods when needed.
+

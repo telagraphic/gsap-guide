@@ -125,3 +125,139 @@ How to test with your split text playground?
 
 GSAP targets the elements inline styles so it beats classes.
 But watch out for this.
+
+
+
+
+
+## Storyboard, Config, One Timeline
+
+
+### Spaghetti Code
+
+
+
+
+```javascript
+
+
+```
+
+
+```javascript
+
+  /* ─────────────────────────────────────────────────────────
+   * HERO ANIMATION STORYBOARD
+   *
+   * Time-based intro (fires on fonts.ready). CSS `.anim-prehide`
+   * sets opacity: 0 before JS runs; GSAP removes it per phase.
+   *
+   *    0ms   reveal titles container (remove anim-prehide)
+   *  500ms   header lines slide in — odd lines from yPercent 100,
+   *          even lines from yPercent -(position × 100) → 0
+   *          (1s each, stagger 20ms, masked via SplitText)
+   *  +500ms   tag caption fades in, opacity 0 → 1 (500ms)
+   *  −250ms   hint caption overlaps tag fade-in (500ms)
+   *  −500ms   icon overlaps hint fade-in (500ms)
+   *   end    remove anim-prehide from icon, tag, hint
+   *
+   * Child timelines (icon, tag, hint, lines) are built first,
+   * then sequenced on heroTimeline with relative positions.
+   * ───────────────────────────────────────────────────────── */
+
+  /**
+   * Hero Configuration
+   */
+  const HERO_CONFIG = {
+    SELECTORS: {
+      HEADER: ".page-header",
+      ICON: ".page-header__icon",
+      TAG: ".page-header__tag",
+      HINT: ".page-header__hint",
+      HEADER_TITLES: ".page-header__titles",
+      HEADER_TITLE: ".page-header__titles h1",
+    },
+    HERO: {
+      TIMELINE: {
+        opacity: 1,
+        duration: 0.5,
+        ease: EASEOUTQUAD,
+      }
+    },
+    TAG: {
+      TIMELINE: {
+        opacity: 1,
+        duration: 0.5,
+        ease: EASEOUTQUAD,
+      }
+    },
+    HINT: {
+      TIMELINE: {
+        opacity: 1,
+        duration: 0.5,
+        ease: EASEOUTQUAD,
+      }
+    },
+    HEADER_TITLE: {
+      SPLIT_TEXT: {
+        TYPE: "lines",
+        MASK: "lines",
+        LINES_CLASS: "page-header-lines",
+      },
+      TIMELINE: {
+        yPercent: 0,
+        duration: 1,
+        ease: EASEOUTQUAD,
+        stagger: 0.02,
+      }
+    }
+  };
+
+
+  const hero = document.querySelector(HERO_CONFIG.SELECTORS.HEADER);
+  const heroIcon = hero.querySelector(HERO_CONFIG.SELECTORS.ICON);
+  const heroTag = hero.querySelector(HERO_CONFIG.SELECTORS.TAG);
+  const heroHint = hero.querySelector(HERO_CONFIG.SELECTORS.HINT);
+  const heroHeaders = hero.querySelector(HERO_CONFIG.SELECTORS.HEADER_TITLES);
+
+  const heroTimeline = gsap.timeline();
+  const iconTimeline = gsap.timeline();
+  const tagTimeline = gsap.timeline();
+  const hintTimeline = gsap.timeline();
+  const linesTimeline = gsap.timeline();
+
+
+  iconTimeline.to(heroIcon, HERO_CONFIG.HERO.TIMELINE);
+  tagTimeline.to(heroTag, HERO_CONFIG.TAG.TIMELINE);
+  hintTimeline.to(heroHint, HERO_CONFIG.HINT.TIMELINE);
+
+  const headerLines = new SplitText(heroHeaders.querySelectorAll(HERO_CONFIG.SELECTORS.HEADER_TITLE) , {
+    type: "lines",
+    mask: "lines",
+    linesClass: "page-header-lines",
+  });
+
+  headerLines.lines.forEach((line, i) => {
+    const position = i + 1;
+    const fromY = position % 2 === 0 ? position * -100 : 100; // your logic
+    gsap.set(line, { yPercent: fromY });
+  });
+  
+  linesTimeline.to(headerLines.lines, HERO_CONFIG.HEADER_TITLE.TIMELINE);
+
+
+  /**
+   * Master Timeline Orchestrator
+   *
+   **/
+
+  heroTimeline
+    .call(removePrehideClasses, [heroHeaders])
+    .add(linesTimeline, "+=0.5")
+    .add(tagTimeline, "+=.5")
+    .add(hintTimeline, ">-.25")
+    .add(iconTimeline, ">-.5")
+    .call(removePrehideClasses, [heroIcon, heroTag, heroHint])
+    .play();
+
+```
