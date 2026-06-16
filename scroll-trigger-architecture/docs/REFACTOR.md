@@ -50,10 +50,15 @@ https://madewithgsap.com/effects/tutorial027
 5. Refactor each frame to a registry, factory pattern
 6. Refactor to gsap component lifecycle and
 7. Refine splittext and scrolltrigger creaetion to primitives
+8. Sections 5 and 8 use the same gsap effect under the hood, extract to component then include into section module
 
 
 
-# GSAP Animations
+
+
+
+# Learnings
+
 
 You're seeing two different inheritance cases, not a GSAP bug.
 
@@ -165,16 +170,89 @@ Why this is lean:
 
 ---
 
+### Pattern C — staggered timeline (footer)
+
+Multiple siblings fade in on a **sequential** timeline. Each element has its own tween start time. **Do not** bulk-remove `anim-prehide` on the first tween’s `onStart`.
+
+#### Anti-pattern — bulk class removal on first tween
+
+```js
+// ❌ Removes hide from hint + tag before their tweens start
+.to(footerTitle, {
+  opacity: 1,
+  onStart: () => removePrehideClasses(...footerTargets),
+})
+.to(footerHint, { opacity: 1 }, "+=0.25")
+```
+
+When `anim-prehide` is removed from hint/tag, they have no class hide and no GSAP inline yet → default `opacity: 1` → **flash**. Re-enter/leave breaks because class, CSS, and inline opacity fight on different cycles.
+
+#### Preferred — component CSS + per-element tweens + lifecycle sync
+
+**HTML:** no `anim-prehide` on footer nodes (optional elsewhere).
+
+**CSS:** hide on the component rule — one owner for first paint and reset:
+
+```css
+.page-footer__tag,
+.page-footer__title,
+.page-footer__hint {
+  opacity: 0;
+}
+```
+
+**JS:**
+
+```js
+function resetFooter() {
+  gsap.set(footerTargets, { clearProps: "opacity" });
+}
+
+const footerTimeline = gsap.timeline({
+  paused: true,
+  onComplete: () => removePrehideClasses(...footerTargets), // no-op if class absent; safe sync
+  onReverseComplete: resetFooter,
+});
+
+footerTimeline
+  .to(footerTitle, { opacity: 1, duration: 0.5, ease: EASEOUTQUAD })
+  .to(footerHint, { opacity: 1, duration: 0.5, ease: EASEOUTQUAD }, "+=0.25")
+  .to(footerTag, { opacity: 1, duration: 0.5, ease: EASEOUTQUAD }, "<");
+```
+
+| Phase | Who owns hidden |
+|--------|------------------|
+| First paint | CSS `opacity: 0` on `.page-footer__*` |
+| During stagger | GSAP inline `opacity` per element (overrides CSS while tween runs) |
+| Forward complete | `removePrehideClasses` if class present — DOM matches visible state |
+| Reverse complete | `clearProps: "opacity"` — CSS owns hidden again for next `play()` |
+
+Why this is smoother than `anim-prehide` on footer:
+
+- GSAP and CSS both target **opacity on the same node** — no class removal race.
+- Hint/tag stay at CSS `0` until their tween starts — no early unhide.
+- `clearProps` on reverse gives a clean baseline for `onEnterBack` / `play()`.
+
+**Rule:** For staggered timelines, remove hide class **onComplete** (all revealed) or **per-tween `onStart` on that target only** — never bulk-remove on an unrelated sibling’s `onStart`.
+
+---
+
 ## Decision cheat sheet
 
 ```text
 GSAP animates the same element that has anim-prehide?
   → reveal() helper: remove class onStart + autoAlpha
+  → single element, single tween — OK
 
 GSAP animates SplitText children?
   → anim-prehide on a wrapper (or nowhere on splittable nodes)
   → remove wrapper class once after split
   → hide/show with transform (yPercent) inside masks, not parent opacity
+
+Staggered timeline — multiple siblings, different start times?
+  → CSS opacity: 0 on component rules OR anim-prehide left on until each tween
+  → never bulk removePrehideClasses on first tween's onStart
+  → onComplete: sync classes; onReverseComplete: clearProps("opacity")
 ```
 
 ---
@@ -185,19 +263,152 @@ GSAP animates SplitText children?
 - Leaving `anim-prehide` and relying on inline override (works for icon, confusing in DevTools)
 - `classList.remove` on SplitText nodes that never had the class
 - Animating both wrapper and lines for opacity
+- **`removePrehideClasses(...allTargets)` on the first tween of a stagger** — unhides siblings before their tweens run
 
 ---
 
 
-**Bottom line:** Class = pre-JS hide. GSAP = post-JS motion. For splits, **unlock the container once**, animate **lines with transforms only**. That’s the lean sync — same idea as icon/tag/hint, but the “reveal target” for SplitText is the wrapper, not each line.
+**Bottom line:** Class = pre-JS hide. GSAP = post-JS motion. For splits, **unlock the container once**, animate **lines with transforms only**. For staggered opacity timelines (footer), use **component CSS `opacity: 0`** + per-element tweens + **`clearProps` on reverse** — not bulk class removal on the first tween.
 
 
 
 ## Module System
 
-Looking at @scroll-trigger-architecture/docs/DOCUMENTATION.md I have a several patterns to implement for each section: return a module that contains a bundled registry, a factory function or a lifecycle component that is both a bundled reigstry and factory. Either way, there needs to be a module or component that is returned that have has dom refs, tween coupling and lifecycle methods for controlling each section via the main @scroll-trigger-architecture/js/script.js TIMELINE registry.
 
-Secondly, there are 3 patterns each section can be: a gsap timeline animation that is returned, an object that returns the tweens that are driven by scroll trigger, and a gsap component module that returns lifecycle methods for trigger before, after events if needed and a settings configuration for animated properties specific to it.
 
-It would be ideal to have a starting out API for each pattern that can be extended with predictable naming and methods when needed.
+Looking at @scroll-trigger-architecture/docs/DOCUMENTATION.md I have several modules to implement:
+
+1. Return a timeline based gsap animation
+2. Return a scroll trigger based animations
+3. Return a gsap effect component
+
+The end goal is to include each module into an array called TIMELINE and initialize each module corresponding to each section.
+
+There should be a consistent API between all methods, using extension for adding method names that apply for specific use cases in module pattern.
+
+
+Each of these modules should have a consistent api for lifecycle methods.
+For these lifecycle methods, we'll need a cleanup as you suggested for killing tweens, and scroll triggers.
+We could create a utility function that does the clean up work and either use it in each module, allowing for plug and play for those that require it versus calling a universally in one master timeline.
+
+We should include features like referenced tweens and scroll triggers for cleanup.
+
+Each separate timeline section will contain:
+
+1. storyboard description and module pattern explanation
+2. configuration object for selectors, splittext, scroll trigger, to and from timeline properties
+3. a returned module patterm with methods for calling in @scripts.js TIMELINE
+4. each pattern implements a tween, scroll trigger and timelines registry that bundles references to the actual gsap object for proper cleanup: kill, revert on animations or stop for timelines
+5. each module pattern accounts for responsize resize for scroll trigger animations if applicable
+
+@scroll-trigger-architecture/js/timeline/sectionOne.js
+
+
+
+
+
+Store tweens in a tweens map per each module instead of named entries
+
+SplitText and autoSplit field
+
+- wrap tweens in a callback for autoSplit setup?
+
+```javascript
+function initSectionItem(section, splitConfig, scrollConfig) {
+  const header = section.querySelector("h1");
+  const item = { section, header, split: null, headerTween: null, linesTween: null };
+
+  const buildTweens = (lines) => {
+    item.headerTween?.scrollTrigger?.kill();
+    item.linesTween?.scrollTrigger?.kill();
+    item.headerTween?.kill();
+    item.linesTween?.kill();
+
+    gsap.set([item.header, lines], { autoAlpha: 0 });
+
+    item.headerTween = gsap.to(item.header, { autoAlpha: 1, scrollTrigger: { ... } });
+    item.linesTween = gsap.to(lines, { autoAlpha: 1, stagger: scrollConfig.lineStagger, scrollTrigger: { ... } });
+  };
+
+  if (splitConfig.autoSplit) {
+    item.split = new SplitText(section.querySelector("p"), {
+      ...splitConfig,
+      onSplit(self) { buildTweens(self.lines); },
+    });
+  } else {
+    item.split = new SplitText(section.querySelector("p"), splitConfig);
+    buildTweens(item.split.lines);
+  }
+
+  return item;
+}
+```
+
+
+
+
+```javascript
+
+
+// create dom refs from selectors
+const elements = createElements(CONFIG.SELECTORS);
+
+// create tweens registry for lifecycle mgmt
+const tweens = new Map();
+
+
+// callback for autoSplit if an option
+const buildTweens = () {
+  tweens.forEach(tween) {
+    tween.scrollTrigger?.kill();
+    tween.kill();
+  }
+
+  const headerTween = gsap.to(CONFIG.HEADER, CONFIG.TWEEN);
+  tweens.set(headerTween);
+}
+
+
+
+```
+
+
+
+```javascript
+/**
+ * Returns a page object of elements for Page.js class
+ * @param {Object} selectorChildren - An object of selector strings or DOM elements
+ * @returns {Object} A page object of elements
+ */
+
+export const createPageObjectFromSelectors = (selectorChildren) => {
+  const elements = {};
+
+  for (const [key, selector] of Object.entries(selectorChildren)) {
+    // Handle pre-selected elements (HTMLElement, NodeList, or Array)
+    if (
+      selector instanceof window.HTMLElement ||
+      selector instanceof window.NodeList ||
+      Array.isArray(selector)
+    ) {
+      elements[key] = selector;
+      return;
+    }
+
+    // Handle selector strings
+    const selectedElements = $$(selector);
+    if (selectedElements.length === 0) {
+      elements[key] = null;
+    } else if (selectedElements.length === 1) {
+      elements[key] = $(selector);
+    } else {
+      elements[key] = Array.from(selectedElements);
+    }
+  }
+
+  return elements;
+};
+```
+
+
 

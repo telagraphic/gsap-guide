@@ -244,11 +244,7 @@ body {
     padding: 1.5rem 0 0.5rem;
     font-weight: 500;
     font-size: var(--type-section-title);
-  }
-
-  .anim-word {
-    will-change: transform;
-  }
+  } 
 }
 
 /* Frame 4 */
@@ -428,6 +424,7 @@ body {
     grid-row: 1;
     align-self: start;
     justify-self: center;
+    opacity: 0;
   }
 
   .page-footer__title {
@@ -437,6 +434,7 @@ body {
     place-content: center;
     text-align: center;
     text-transform: uppercase;
+    opacity: 0;
   }
 
   .page-footer__hint {
@@ -444,6 +442,7 @@ body {
     grid-row: 4;
     align-self: end;
     justify-self: center;
+    opacity: 0;
   }
 }
 

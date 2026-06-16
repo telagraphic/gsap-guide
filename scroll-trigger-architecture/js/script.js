@@ -14,16 +14,11 @@ import { removePrehideClasses } from "./utils.js";
 gsap.registerPlugin(ScrollTrigger);
 
 document.fonts.ready.then(() => {
-
-
-  const TIMELINE = [
-    sectionOneTimeline(),
-    sectionTwoTimeline(),
-    sectionThreeTimeline(),
-  ]
-
-
-
+  // const TIMELINE = [
+  //   sectionOneTimeline(),
+  //   sectionTwoTimeline(),
+  //   sectionThreeTimeline(),
+  // ]
 
   /* ─────────────────────────────────────────────────────────
    * HERO STORYBOARD
@@ -34,12 +29,12 @@ document.fonts.ready.then(() => {
    * −250ms   hint overlaps tag
    * −500ms   icon overlaps hint
    *    end   full header on stage
-   * 
+   *
    * ─────────────────────────────────────────────────────────
-   * 
+   *
    * PATTERN: MASTER TIMELINE drives 4 nested timeline animations
-   * 
-   * 
+   *
+   *
    * ───────────────────────────────────────────────────────── */
 
   const HERO_CONFIG = {
@@ -74,9 +69,9 @@ document.fonts.ready.then(() => {
     },
     HEADER_TITLE: {
       SPLIT_TEXT: {
-        TYPE: "lines",
-        MASK: "lines",
-        LINES_CLASS: "page-header-lines",
+        type: "lines",
+        mask: "lines",
+        linesClass: "page-header-lines",
       },
       TIMELINE: {
         yPercent: 0,
@@ -105,11 +100,7 @@ document.fonts.ready.then(() => {
 
   const headerLines = new SplitText(
     heroHeaders.querySelectorAll(HERO_CONFIG.SELECTORS.HEADER_TITLE),
-    {
-      type: "lines",
-      mask: "lines",
-      linesClass: "page-header-lines",
-    },
+    HERO_CONFIG.HEADER_TITLE.SPLIT_TEXT,
   );
 
   headerLines.lines.forEach((line, i) => {
@@ -140,11 +131,11 @@ document.fonts.ready.then(() => {
    *     before   copy waiting below frame
    *    top 50%   title characters rise in, cascading
    * 50%→center   body lines rise and fade in, tied to scroll
-   * 
+   *
    * ─────────────────────────────────────────────────────────
-   * 
+   *
    * PATTERN: ScrollTrigger dives 2 animations
-   * 
+   *
    * ───────────────────────────────────────────────────────── */
 
   const SECTION_ONE_CONFIG = {
@@ -197,9 +188,15 @@ document.fonts.ready.then(() => {
     },
   };
 
-  const sectionOne = document.querySelector(SECTION_ONE_CONFIG.SELECTORS.SECTION);
-  const sectionOneHeader = sectionOne.querySelector(SECTION_ONE_CONFIG.SELECTORS.HEADER);
-  const sectionOneParagraphs = sectionOne.querySelectorAll(SECTION_ONE_CONFIG.SELECTORS.PARAGRAPHS);
+  const sectionOne = document.querySelector(
+    SECTION_ONE_CONFIG.SELECTORS.SECTION,
+  );
+  const sectionOneHeader = sectionOne.querySelector(
+    SECTION_ONE_CONFIG.SELECTORS.HEADER,
+  );
+  const sectionOneParagraphs = sectionOne.querySelectorAll(
+    SECTION_ONE_CONFIG.SELECTORS.PARAGRAPHS,
+  );
 
   const sectionOneHeaderChars = new SplitText(sectionOneHeader, {
     type: SECTION_ONE_CONFIG.HEADER.SPLIT_TEXT.TYPE,
@@ -252,12 +249,10 @@ document.fonts.ready.then(() => {
    * center−120   body lines fade in, cascading
    *     center   headline fades in
    * ─────────────────────────────────────────────────────────
-   * 
+   *
    * PATTERN: ScrollTrigger drives 2 animations
-   * 
+   *
    * ───────────────────────────────────────────────────────── */
-
-  
 
   const SECTION_TWO_CONFIG = {
     SELECTORS: {
@@ -291,11 +286,11 @@ document.fonts.ready.then(() => {
         },
       },
     },
-  }
+  };
 
-
-
-  const sectionTwo = document.querySelector(SECTION_TWO_CONFIG.SELECTORS.SECTION);
+  const sectionTwo = document.querySelector(
+    SECTION_TWO_CONFIG.SELECTORS.SECTION,
+  );
   const sectionTwoGroups = Array.from(
     sectionTwo.querySelectorAll(SECTION_TWO_CONFIG.SELECTORS.GROUPS),
   );
@@ -343,19 +338,50 @@ document.fonts.ready.then(() => {
    *
    *     before   words sitting wide across the frame
    * bottom→60%   words draw together, tied to scroll
+   *
+   * CONFIG  (WIDE_SLIDE_CONFIG)
+   *   boundsSelector    wider container → more free space → wider gaps
+   *   origin            left | center | right — spread anchor before settle
+   *   gapMultiplier   + wider word gaps at start    − tighter spread
+   *   gapMin          + higher floor gap (short lines)  − gaps can shrink
+   *   spreadOvershoot + stronger x offset (0–1)     − subtler (0 = off)
+   *
+   * ─────────────────────────────────────────────────────────
+   *
+   * PATTERN: ScrollTrigger drives wide slide text effect
+   * CSS: .anim-line max-content — lines don't reflow; GSAP scrubs x on .anim-word
+   *
    * ───────────────────────────────────────────────────────── */
 
-  const SECTION_3_CONFIG = {
+  const WIDE_SLIDE_CONFIG = {
     boundsSelector: ".page-section__content",
-    origin: "left", // "left" | "center" | "right"
+    origin: "left",
     gapMin: 8,
     gapMultiplier: 2,
     spreadOvershoot: 0.1,
   };
 
-  const root = document.querySelector("[data-panel='3']");
-  const container = root.querySelector(SECTION_3_CONFIG.boundsSelector);
-  const paragraphs = root.querySelectorAll(".animation-wide-slide p.type-body");
+  const SECTION_THREE_CONFIG = {
+    SELECTORS: {
+      SECTION: "[data-panel='3']",
+      CONTENTS: ".page-section__content",
+      PARAGRAPHS: ".animation-wide-slide p.type-body",
+    },
+    WORDS: {
+      SCROLL_TRIGGER: {
+        start: "top bottom",
+        end: "top 60%",
+        scrub: 0.2,
+        invalidateOnRefresh: true,
+      },
+    },
+  };
+
+  const root = document.querySelector(SECTION_THREE_CONFIG.SELECTORS.SECTION);
+  const container = root.querySelector(SECTION_THREE_CONFIG.SELECTORS.CONTENTS);
+  const paragraphs = root.querySelectorAll(
+    SECTION_THREE_CONFIG.SELECTORS.PARAGRAPHS,
+  );
 
   function buildLineSpread(line, config) {
     const words = Array.from(line.querySelectorAll(".anim-word"));
@@ -401,183 +427,302 @@ document.fonts.ready.then(() => {
       ease: EASEOUTQUAD,
       scrollTrigger: {
         trigger: line,
-        start: "top bottom",
-        end: "top 60%",
-        scrub: 0.2,
-        invalidateOnRefresh: true,
+        start: SECTION_THREE_CONFIG.WORDS.SCROLL_TRIGGER.start,
+        end: SECTION_THREE_CONFIG.WORDS.SCROLL_TRIGGER.end,
+        scrub: SECTION_THREE_CONFIG.WORDS.SCROLL_TRIGGER.scrub,
+        invalidateOnRefresh:
+          SECTION_THREE_CONFIG.WORDS.SCROLL_TRIGGER.invalidateOnRefresh,
       },
     });
   }
 
-  paragraphs.forEach((paragraph) => {
-    const lineTweens = [];
+  function buildParagraphLines() {
+    paragraphs.forEach((paragraph) => {
+      const lineTweens = [];
 
-    SplitText.create(paragraph, {
-      type: "lines, words",
-      linesClass: "anim-line",
-      wordsClass: "anim-word",
-      autoSplit: true,
-      onSplit(self) {
-        lineTweens.forEach((tween) => {
-          tween.scrollTrigger?.kill();
-          tween.kill();
-        });
-        lineTweens.length = 0;
+      SplitText.create(paragraph, {
+        type: "lines, words",
+        linesClass: "anim-line",
+        wordsClass: "anim-word",
+        autoSplit: true,
+        onSplit(self) {
+          lineTweens.forEach((tween) => {
+            tween.scrollTrigger?.kill();
+            tween.kill();
+          });
+          lineTweens.length = 0;
 
-        self.lines.forEach((line) => {
-          const tween = buildLineSpread(line, SECTION_3_CONFIG);
-          if (tween) lineTweens.push(tween);
-        });
+          self.lines.forEach((line) => {
+            const tween = buildLineSpread(line, WIDE_SLIDE_CONFIG);
+            if (tween) lineTweens.push(tween);
+          });
+        },
+      });
+    });
+  }
+
+  buildParagraphLines();
+
+  /* ─────────────────────────────────────────────────────────
+   * SECTION 4 STORYBOARD  (per row)
+   *
+   *     before   visible label sitting in clip window
+   * 60%→top top   hidden rolls in, visible rolls out — slot shuffle
+   *
+   * ─────────────────────────────────────────────────────────
+   *
+   * PATTERN: ScrollTrigger scrubs dual-span yPercent per track
+   * CSS: .anim-clip-slot masks window; .anim-char-hidden stacked above visible
+   *
+   * ───────────────────────────────────────────────────────── */
+
+  const SECTION_FOUR_CONFIG = {
+    SELECTORS: {
+      SECTION: "[data-panel='4']",
+      TRACKS: ".animation-slot-machine-roll__track",
+    },
+    SCROLL_TRIGGER: {
+      start: "center 60%",
+      end: "top top",
+      scrub: 0.4,
+      invalidateOnRefresh: true,
+    },
+  };
+
+  const sectionFour = document.querySelector(
+    SECTION_FOUR_CONFIG.SELECTORS.SECTION,
+  );
+  const sectionFourTracks = sectionFour.querySelectorAll(
+    SECTION_FOUR_CONFIG.SELECTORS.TRACKS,
+  );
+
+  const { start, end, scrub, invalidateOnRefresh } =
+    SECTION_FOUR_CONFIG.SCROLL_TRIGGER;
+
+  sectionFourTracks.forEach((word) => {
+    gsap.fromTo(
+      word.children,
+      {
+        yPercent: (index, target) =>
+          target.classList.contains("anim-char-hidden") ? -100 : 0,
       },
-    });
-  });
-
-  /*
-   *  Frame 4: Slot Machine Rolling Effect
-   *
-   */
-
-  document
-    .querySelectorAll("[data-panel='4'] .animation-slot-machine-roll__track")
-    .forEach((word) => {
-      gsap.fromTo(
-        word.children,
-        {
-          yPercent: (index, target) =>
-            target.classList.contains("anim-char-hidden") ? -100 : 0,
+      {
+        yPercent: (index, target) =>
+          target.classList.contains("anim-char-hidden") ? 0 : 100,
+        ease: EASEOUTCIRC,
+        scrollTrigger: {
+          trigger: word,
+          start,
+          end,
+          scrub,
+          invalidateOnRefresh,
         },
-        {
-          yPercent: (index, target) =>
-            target.classList.contains("anim-char-hidden") ? 0 : 100,
-          ease: EASEOUTCIRC,
-          scrollTrigger: {
-            trigger: word, // Clip wrapper — listens to the position of each word row
-            start: "center 60%",
-            end: "top top",
-            scrub: 0.4,
-            invalidateOnRefresh: true,
-          },
-        },
-      );
-    });
+      },
+    );
+  });
 
-  /*
-   *  Frame 5: Character Waterfall Cascade
+  /* ─────────────────────────────────────────────────────────
+   * SECTION 5 STORYBOARD
    *
-   */
+   *  top 70%→20%   body lines rise in, blur clears, staggered
+   * center→center  title chars shuffle-roll in, random order
+   *
+   * ─────────────────────────────────────────────────────────
+   *
+   * PATTERN: ScrollTrigger scrubs line waterfall + shuffled char timeline
+   * CSS: .anim-mask on title; line masks via SplitText; dual-span yPercent per char
+   *
+   * ───────────────────────────────────────────────────────── */
 
-  const panelFiveRoot = document.querySelector("[data-panel='5']");
-  const panelFiveHeader = panelFiveRoot.querySelector(".page-section__title");
-  const panelFiveParagraphs = panelFiveRoot.querySelectorAll("p");
+  const SECTION_FIVE_CONFIG = {
+    SELECTORS: {
+      SECTION: "[data-panel='5']",
+      TITLE: ".page-section__title",
+      PARAGRAPHS: "p",
+    },
+    PARAGRAPHS: {
+      SPLIT_TEXT: {
+        type: "lines",
+        mask: "lines",
+        autoSplit: true,
+      },
+      TIMELINE: {
+        FROM: {
+          opacity: 0,
+          yPercent: 100,
+          filter: "blur(10px)",
+        },
+        TO: {
+          opacity: 1,
+          yPercent: 0,
+          filter: "blur(0px)",
+          stagger: 0.01,
+          ease: EASEOUTQUART,
+        },
+      },
+      SCROLL_TRIGGER: {
+        start: "top 70%",
+        end: "bottom 20%",
+        scrub: 1,
+      },
+    }
+  };
 
-  const panelFiveParagraphsLines = new SplitText(panelFiveParagraphs, {
-    type: "lines",
-    mask: "lines",
-    autoSplit: true,
+  const sectionFive = document.querySelector(SECTION_FIVE_CONFIG.SELECTORS.SECTION);
+  const sectionFiveHeader = sectionFive.querySelector(SECTION_FIVE_CONFIG.SELECTORS.TITLE);
+  const sectionFiveParagraphs = sectionFive.querySelectorAll(SECTION_FIVE_CONFIG.SELECTORS.PARAGRAPHS);
+
+  const { FROM, TO } = SECTION_FIVE_CONFIG.PARAGRAPHS.TIMELINE;
+
+  // Body line waterfall
+
+  const sectionFiveParagraphsLines = new SplitText(sectionFiveParagraphs, {
+    ...SECTION_FIVE_CONFIG.PARAGRAPHS.SPLIT_TEXT,
   });
 
-  gsap.set(panelFiveParagraphsLines.lines, {
-    opacity: 0,
-    yPercent: 100,
-    filter: "blur(10px)",
-  });
+  gsap.set(sectionFiveParagraphsLines.lines, FROM);
 
-  gsap.to(panelFiveParagraphsLines.lines, {
-    opacity: 1,
-    yPercent: 0,
-    ease: EASEOUTQUART,
-    filter: "blur(0px)",
-    stagger: 0.01,
+  gsap.to(sectionFiveParagraphsLines.lines, {
+    ...TO,
     scrollTrigger: {
-      trigger: panelFiveRoot,
-      start: "top 70%",
-      end: "bottom 20%",
-      scrub: 1,
+      trigger: sectionFive,
+      ...SECTION_FIVE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER,
     },
   });
 
-  SplitText.create(panelFiveHeader, {
+  // Title char slot roll
+
+  const SLOT_ROLL_FROM = {
+    yPercent: (_, target) =>
+      target.classList.contains("anim-char-hidden") ? -100 : 0,
+  };
+
+  const SLOT_ROLL_TO = {
+    yPercent: (_, target) =>
+      target.classList.contains("anim-char-hidden") ? 0 : 100,
+  };
+
+  function wrapCharsWithDualSpans(chars) {
+    chars.forEach((charEl) => {
+      const text = charEl.textContent;
+      charEl.textContent = "";
+      charEl.innerHTML = `<span class="anim-char-visible">${text}</span><span class="anim-char-hidden">${text}</span>`;
+    });
+  }
+
+  // Set in css?
+  function setSlotRollInitial(chars) {
+    chars.forEach((charEl) => {
+      gsap.set(charEl.querySelector(".anim-char-visible"), { yPercent: 0 });
+      gsap.set(charEl.querySelector(".anim-char-hidden"), { yPercent: -100 });
+    });
+  }
+
+  function appendSlotRollsToTimeline(timeline, chars, options = {}) {
+    const { stagger = 0.05, ease, duration = 1, shuffle = false } = options;
+    const ordered = shuffle ? gsap.utils.shuffle([...chars]) : [...chars];
+
+    ordered.forEach((charEl, index) => {
+      timeline.fromTo(
+        [
+          charEl.querySelector(".anim-char-hidden"),
+          charEl.querySelector(".anim-char-visible"),
+        ],
+        SLOT_ROLL_FROM,
+        { ...SLOT_ROLL_TO, ease, duration },
+        index * stagger,
+      );
+    });
+  }
+
+  SplitText.create(sectionFiveHeader, {
     type: "chars",
     charsClass: "anim-char-parent",
     tag: "span",
     autoSplit: true,
     onSplit(self) {
-      panelFiveHeader.classList.remove("anim-prehide");
-
-      self.chars.forEach((charEl) => {
-        const text = charEl.textContent;
-        charEl.textContent = "";
-        charEl.innerHTML = `<span class="anim-char-visible">${text}</span><span class="anim-char-hidden">${text}</span>`;
-      });
-
-      self.chars.forEach((charEl) => {
-        gsap.set(charEl.querySelector(".anim-char-visible"), {
-          yPercent: 0,
-        });
-        gsap.set(charEl.querySelector(".anim-char-hidden"), {
-          yPercent: -100,
-        });
-      });
+      removePrehideClasses(sectionFiveHeader);
+      wrapCharsWithDualSpans(self.chars);
+      setSlotRollInitial(self.chars);
 
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: panelFiveHeader,
+          trigger: sectionFiveHeader,
           start: "center 80%",
-          end: "top center",
+          end: "top 20%",
+          ease: EASEINOUTQUART,
           scrub: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      gsap.utils.shuffle([...self.chars]).forEach((charEl, index) => {
-        const layers = [
-          charEl.querySelector(".anim-char-hidden"),
-          charEl.querySelector(".anim-char-visible"),
-        ];
-
-        tl.fromTo(
-          layers,
-          {
-            yPercent: (i, target) =>
-              target.classList.contains("anim-char-hidden") ? -100 : 0,
-          },
-          {
-            yPercent: (i, target) =>
-              target.classList.contains("anim-char-hidden") ? 0 : 100,
-            ease: EASEINOUTQUART,
-            duration: 1,
-          },
-          index * 0.05,
-        );
-      });
+      appendSlotRollsToTimeline(tl, self.chars, { ease: EASEINOUTQUART });
 
       return tl;
     },
   });
 
-  /*
-   *  Frame 6: Horizontal Scroll
+  /* ─────────────────────────────────────────────────────────
+   * SECTION 6 STORYBOARD  (pinned horizontal)
    *
-   */
+   *    top top   panel pins, track scrubs x across slides
+   *   slide 1   heading + body fade out as slide exits left
+   *  slides 2+  heading rises in, body lines fade in from right
+   *  on leave   non-final slides stagger fade out
+   *
+   * ─────────────────────────────────────────────────────────
+   *
+   * PATTERN: pinned track tween + containerAnimation per slide
+   * CSS: .page-section__track flex row; GSAP scrubs x, line opacity, yPercent
+   *
+   * ───────────────────────────────────────────────────────── */
 
-  const panelSix = document.querySelector("[data-panel='6']");
-  const panelSixTrack = panelSix.querySelector(".page-section__track");
-  const panelSixSections = panelSix.querySelectorAll(".page-section__slide");
+  const SECTION_SIX_CONFIG = {
+    SELECTORS: {
+      SECTION: "[data-panel='6']",
+      TRACK: ".page-section__track",
+      SLIDES: ".page-section__slide",
+    },
+    SPLIT_TEXT: {
+      LINES: { type: "lines", mask: "lines", linesClass: "anim-line" },
+      PARAGRAPH: { smartSplit: true, autoSplit: true },
+    },
+    EXIT: {
+      range: { start: "right center", end: "left left" },
+      set: { opacity: 1 },
+      vars: { opacity: 0, stagger: 0.05, ease: EASEINQUAD },
+    },
+    HEADING_ENTER: {
+      range: { start: "left 65%", end: "left 25%" },
+      set: { opacity: 0, yPercent: 100 },
+      vars: { opacity: 1, yPercent: 0, stagger: 0.03, ease: EASEOUTQUINT },
+    },
+    PARAGRAPH_ENTER: {
+      range: { start: "left 70%", end: "left 30%" },
+      set: { opacity: 0 },
+      vars: { opacity: 1, stagger: 0.02, ease: EASEOUTQUAD },
+    },
+    LEAVE: { opacity: 0, stagger: 0.05, ease: EASEINQUAD },
+  };
+
+  const sectionSix = document.querySelector(SECTION_SIX_CONFIG.SELECTORS.SECTION);
+  const sectionSixTrack = sectionSix.querySelector(SECTION_SIX_CONFIG.SELECTORS.TRACK);
+  const sectionSixSections = sectionSix.querySelectorAll(SECTION_SIX_CONFIG.SELECTORS.SLIDES);
 
   function getPanelSixScrollDistance() {
-    const slides = panelSixSections;
+    const slides = sectionSixSections;
     const lastSlide = slides[slides.length - 1];
 
     // Last slide's right edge aligned to the pinned panel — avoids scrollWidth /
     // window.innerWidth drift with 100vw slides and scrollbar width.
-    return lastSlide.offsetLeft + lastSlide.offsetWidth - panelSix.clientWidth;
+    return lastSlide.offsetLeft + lastSlide.offsetWidth - sectionSix.clientWidth;
   }
 
-  const panelSixTween = gsap.to(panelSixTrack, {
+  const sectionSixTween = gsap.to(sectionSixTrack, {
     x: () => -getPanelSixScrollDistance(),
     ease: "none",
     scrollTrigger: {
-      trigger: panelSix,
+      trigger: sectionSix,
       pin: true,
       scrub: 1,
       start: "top top",
@@ -587,127 +732,115 @@ document.fonts.ready.then(() => {
     },
   });
 
-  panelSixSections.forEach((section, index) => {
+  function createSectionSixScrollTrigger(section, range) {
+    return {
+      trigger: section,
+      containerAnimation: sectionSixTween,
+      scrub: true,
+      ...range,
+    };
+  }
+
+  function fadeOutOnLeave(lines) {
+    const { opacity, stagger, ease } = SECTION_SIX_CONFIG.LEAVE;
+    gsap.to(lines, { opacity, stagger, ease });
+  }
+
+  function withLeaveOnLast(scrollTrigger, lines, isLastSlide) {
+    if (isLastSlide) return scrollTrigger;
+    return { ...scrollTrigger, onLeave: () => fadeOutOnLeave(lines) };
+  }
+
+  function exitSlideLines(lines, section, initialSet = {}) {
+    const { range, set, vars } = SECTION_SIX_CONFIG.EXIT;
+    gsap.set(lines, { ...set, ...initialSet });
+    gsap.to(lines, {
+      ...vars,
+      scrollTrigger: createSectionSixScrollTrigger(section, range),
+    });
+  }
+
+  function enterSlideLines(lines, section, enterConfig, isLastSlide) {
+    gsap.set(lines, enterConfig.set);
+    gsap.to(lines, {
+      ...enterConfig.vars,
+      scrollTrigger: withLeaveOnLast(
+        createSectionSixScrollTrigger(section, enterConfig.range),
+        lines,
+        isLastSlide,
+      ),
+    });
+  }
+
+  sectionSixSections.forEach((section, index) => {
     const isFirstSlide = index === 0;
-    const isLastSlide = index === panelSixSections.length - 1;
+    const isLastSlide = index === sectionSixSections.length - 1;
     const heading = section.querySelector(".page-section__title");
     const paragraph = section.querySelector("p");
 
-    // Slides 2+ enter from the right; restored pre-refactor end values.
-    const headingRange = { start: "left 65%", end: "left 25%" };
-    const paragraphRange = { start: "left 70%", end: "left 30%" };
-
     const headingSplit = SplitText.create(heading, {
-      type: "lines",
-      mask: "lines",
-      linesClass: "anim-line",
+      ...SECTION_SIX_CONFIG.SPLIT_TEXT.LINES,
     });
 
     SplitText.create(paragraph, {
-      type: "lines",
-      mask: "lines",
-      linesClass: "anim-line",
-      smartSplit: true,
-      autoSplit: true,
+      ...SECTION_SIX_CONFIG.SPLIT_TEXT.LINES,
+      ...SECTION_SIX_CONFIG.SPLIT_TEXT.PARAGRAPH,
       onSplit(self) {
         if (isFirstSlide) {
-          gsap.set(self.lines, { opacity: 1 });
-
-          gsap.to(self.lines, {
-            opacity: 0,
-            stagger: 0.05,
-            ease: EASEINQUAD,
-            scrollTrigger: {
-              trigger: section,
-              containerAnimation: panelSixTween,
-              start: "right center",
-              end: "left left",
-              scrub: true,
-            },
-          });
+          exitSlideLines(self.lines, section);
           return;
         }
 
-        gsap.set(self.lines, { opacity: 0 });
-
-        gsap.to(self.lines, {
-          opacity: 1,
-          stagger: 0.02,
-          ease: EASEOUTQUAD,
-          scrollTrigger: {
-            trigger: section,
-            containerAnimation: panelSixTween,
-            ...paragraphRange,
-            scrub: true,
-            ...(isLastSlide
-              ? {}
-              : {
-                  onLeave: () => {
-                    gsap.to(self.lines, {
-                      opacity: 0,
-                      stagger: 0.05,
-                      ease: EASEINQUAD,
-                    });
-                  },
-                }),
-          },
-        });
+        enterSlideLines(
+          self.lines,
+          section,
+          SECTION_SIX_CONFIG.PARAGRAPH_ENTER,
+          isLastSlide,
+        );
       },
     });
 
     if (isFirstSlide) {
-      gsap.set(headingSplit.lines, { opacity: 1, yPercent: 0 });
-
-      gsap.to(headingSplit.lines, {
-        opacity: 0,
-        stagger: 0.05,
-        ease: EASEINQUAD,
-        scrollTrigger: {
-          trigger: section,
-          containerAnimation: panelSixTween,
-          start: "right center",
-          end: "left left",
-          scrub: true,
-        },
-      });
+      exitSlideLines(headingSplit.lines, section, { yPercent: 0 });
       return;
     }
 
-    gsap.set(headingSplit.lines, { opacity: 0, yPercent: 100 });
-
-    gsap.to(headingSplit.lines, {
-      opacity: 1,
-      yPercent: 0,
-      stagger: 0.03,
-      ease: EASEOUTQUINT,
-      scrollTrigger: {
-        trigger: section,
-        containerAnimation: panelSixTween,
-        ...headingRange,
-        scrub: true,
-        ...(isLastSlide
-          ? {}
-          : {
-              onLeave: () => {
-                gsap.to(headingSplit.lines, {
-                  opacity: 0,
-                  stagger: 0.05,
-                  ease: EASEINQUAD,
-                });
-              },
-            }),
-      },
-    });
+    enterSlideLines(
+      headingSplit.lines,
+      section,
+      SECTION_SIX_CONFIG.HEADING_ENTER,
+      isLastSlide,
+    );
   });
 
-  /*
-   *  Frame 7: Letter Spiral List
+  /* ─────────────────────────────────────────────────────────
+   * SECTION 7 STORYBOARD  (per list item)
    *
-   */
+   *     before   list labels waiting in mask
+   * center→center  chars shuffle-roll in, random order per line
+   *
+   * ─────────────────────────────────────────────────────────
+   *
+   * PATTERN: ScrollTrigger scrubs shuffled char timeline per item
+   * CSS: .anim-mask on items; dual-span yPercent per char
+   *
+   * ───────────────────────────────────────────────────────── */
 
-  document
-    .querySelectorAll("[data-panel='7'] .animation-character-waterdrop__item")
-    .forEach((line) => {
+  const SECTION_SEVEN_CONFIG = {
+    SELECTORS: {
+      SECTION: "[data-panel='7']",
+      ITEMS: ".animation-character-waterdrop__item",
+    },
+  };
+
+  const sectionSeven = document.querySelector(
+    SECTION_SEVEN_CONFIG.SELECTORS.SECTION,
+  );
+  const sectionSevenItems = sectionSeven.querySelectorAll(
+    SECTION_SEVEN_CONFIG.SELECTORS.ITEMS,
+  );
+
+  sectionSevenItems.forEach((line) => {
       SplitText.create(line, {
         type: "chars",
         charsClass: "anim-char-parent",
@@ -768,19 +901,53 @@ document.fonts.ready.then(() => {
       });
     });
 
-  /*
-   *  Frame 8: Staggered Waterfall Cascade
+  /* ─────────────────────────────────────────────────────────
+   * SECTION 8 STORYBOARD  (per phrase item)
    *
-   */
+   *     before   method labels built as dual char layers
+   *   on hover   chars ripple down from hovered index
+   *  on complete  transforms cleared, ready to hover again
+   *  on refresh   layers rebuilt from data-phrase
+   *
+   * ─────────────────────────────────────────────────────────
+   *
+   * PATTERN: hover-driven stagger from index — no ScrollTrigger
+   * CSS: hidden layer stacked above item; .anim-mask clips overflow
+   *
+   * ───────────────────────────────────────────────────────── */
+
+  const SECTION_EIGHT_CONFIG = {
+    SELECTORS: {
+      SECTION: "[data-panel='8']",
+      ITEMS: ".animation-character-ripple__item",
+      VISIBLE_CHARS: ".animation-character-ripple__layer--visible span",
+      HIDDEN_CHARS: ".animation-character-ripple__layer--hidden span",
+      CHAR: ".animation-character-ripple__char",
+    },
+    CLASSES: {
+      HOVERED: "animation-character-ripple__item--hovered",
+      LAYER_HIDDEN:
+        "animation-character-ripple__layer animation-character-ripple__layer--hidden",
+      LAYER_VISIBLE:
+        "animation-character-ripple__layer animation-character-ripple__layer--visible",
+      CHAR: "animation-character-ripple__char",
+    },
+  };
+
+  const sectionEight = document.querySelector(
+    SECTION_EIGHT_CONFIG.SELECTORS.SECTION,
+  );
+  const sectionEightItems = sectionEight.querySelectorAll(
+    SECTION_EIGHT_CONFIG.SELECTORS.ITEMS,
+  );
 
   function wrapPhraseChars(element) {
     const text = element.textContent;
+    const { CHAR } = SECTION_EIGHT_CONFIG.CLASSES;
     element.innerHTML = text
       .split("")
       .map((char) =>
-        char === " "
-          ? "<span> </span>"
-          : `<span class="animation-character-ripple__char">${char}</span>`,
+        char === " " ? "<span> </span>" : `<span class="${CHAR}">${char}</span>`,
       )
       .join("");
   }
@@ -790,14 +957,14 @@ document.fonts.ready.then(() => {
     item.dataset.phrase = text;
     item.replaceChildren();
 
+    const { LAYER_HIDDEN, LAYER_VISIBLE } = SECTION_EIGHT_CONFIG.CLASSES;
+
     const hidden = document.createElement("span");
-    hidden.className =
-      "animation-character-ripple__layer animation-character-ripple__layer--hidden";
+    hidden.className = LAYER_HIDDEN;
     hidden.textContent = text;
 
     const visible = document.createElement("span");
-    visible.className =
-      "animation-character-ripple__layer animation-character-ripple__layer--visible";
+    visible.className = LAYER_VISIBLE;
     visible.textContent = text;
 
     item.append(hidden, visible);
@@ -810,34 +977,32 @@ document.fonts.ready.then(() => {
   }
 
   function rebuildPanelEightPhrases() {
-    document
-      .querySelectorAll("[data-panel='8'] .animation-character-ripple__item")
+    sectionEight
+      .querySelectorAll(SECTION_EIGHT_CONFIG.SELECTORS.ITEMS)
       .forEach((item) => {
         gsap.killTweensOf(item.querySelectorAll("span"));
-        item.classList.remove("animation-character-ripple__item--hovered");
+        item.classList.remove(SECTION_EIGHT_CONFIG.CLASSES.HOVERED);
         buildPhraseLayers(item);
         item.classList.remove("anim-prehide");
       });
   }
 
   function attachPhraseHover(item) {
+    const { SELECTORS, CLASSES } = SECTION_EIGHT_CONFIG;
+
     item.addEventListener("mouseover", (e) => {
-      const visibleChars = item.querySelectorAll(
-        ".animation-character-ripple__layer--visible span",
-      );
-      const hiddenChars = item.querySelectorAll(
-        ".animation-character-ripple__layer--hidden span",
-      );
+      const visibleChars = item.querySelectorAll(SELECTORS.VISIBLE_CHARS);
+      const hiddenChars = item.querySelectorAll(SELECTORS.HIDDEN_CHARS);
 
       if (
         !gsap.isTweening(visibleChars) &&
-        item.classList.contains("animation-character-ripple__item--hovered")
+        item.classList.contains(CLASSES.HOVERED)
       ) {
-        item.classList.remove("animation-character-ripple__item--hovered");
+        item.classList.remove(CLASSES.HOVERED);
       }
 
-      if (e.target.classList.contains("animation-character-ripple__char")) {
-        item.classList.add("animation-character-ripple__item--hovered");
+      if (e.target.classList.contains(CLASSES.CHAR)) {
+        item.classList.add(CLASSES.HOVERED);
         const indexHover = getPhraseCharIndex(e.target);
 
         gsap.to(visibleChars, {
@@ -867,20 +1032,27 @@ document.fonts.ready.then(() => {
     });
   }
 
-  document
-    .querySelectorAll("[data-panel='8'] .animation-character-ripple__item")
-    .forEach((item) => {
-      buildPhraseLayers(item);
-      item.classList.remove("anim-prehide");
-      attachPhraseHover(item);
-    });
+  sectionEightItems.forEach((item) => {
+    buildPhraseLayers(item);
+    item.classList.remove("anim-prehide");
+    attachPhraseHover(item);
+  });
 
   ScrollTrigger.addEventListener("refreshInit", rebuildPanelEightPhrases);
 
-  /*
-   *  Footer
+  /* ─────────────────────────────────────────────────────────
+   * FOOTER STORYBOARD
    *
-   */
+   *     before   tag, title, hint at opacity 0 (page.css)
+   *  on enter   title fades in, then hint + tag stagger
+   *  on leave   timeline reverses, clearProps restores CSS hide
+   *
+   * ─────────────────────────────────────────────────────────
+   *
+   * PATTERN: staggered opacity timeline + ScrollTrigger play/reverse
+   * PREHIDE: component CSS opacity — not anim-prehide (see REFACTOR.md Pattern C)
+   *
+   * ───────────────────────────────────────────────────────── */
 
   const footer = document.querySelector(".page-footer");
   const footerTag = footer.querySelectorAll(".page-footer__tag");
@@ -888,37 +1060,30 @@ document.fonts.ready.then(() => {
   const footerTitle = footer.querySelector(".page-footer__title");
   const footerTargets = [...footerTag, ...footerHint, footerTitle];
 
-  function hideFooter() {
-    footerTargets.forEach((el) => el.classList.add("anim-prehide"));
-  }
-
-  function showFooterForTween() {
-    footerTargets.forEach((el) => el.classList.remove("anim-prehide"));
-    gsap.set(footerTargets, { autoAlpha: 0 });
+  function resetFooter() {
+    gsap.set(footerTargets, { clearProps: "opacity" });
   }
 
   const footerTimeline = gsap.timeline({
     paused: true,
-    onReverseComplete: hideFooter,
+    onComplete: () => removePrehideClasses(...footerTargets),
+    onReverseComplete: resetFooter,
   });
 
   footerTimeline
-    .call(showFooterForTween)
-    .fromTo(
-      footerTitle,
-      { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 0.5, ease: EASEOUTQUAD },
-    )
-    .fromTo(
+    .to(footerTitle, {
+      opacity: 1,
+      duration: 0.5,
+      ease: EASEOUTQUAD,
+    })
+    .to(
       footerHint,
-      { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 0.5, ease: EASEOUTQUAD },
+      { opacity: 1, duration: 0.5, ease: EASEOUTQUAD },
       "+=0.25",
     )
-    .fromTo(
+    .to(
       footerTag,
-      { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 0.5, ease: EASEOUTQUAD },
+      { opacity: 1, duration: 0.5, ease: EASEOUTQUAD },
       "<",
     );
 

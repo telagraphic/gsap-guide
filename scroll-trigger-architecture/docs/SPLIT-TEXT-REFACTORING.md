@@ -1083,8 +1083,11 @@ Fully owned layers. SplitText skipped because hover needs stable char indexing a
 | Aspect | Detail |
 |---|---|
 | **SplitText** | None |
-| **Motion** | `autoAlpha` timeline; play/reverse via ScrollTrigger callbacks |
-| **Prehide** | `anim-prehide` toggled in timeline callbacks |
+| **Motion** | Staggered `opacity` timeline; `play()` / `reverse()` via ScrollTrigger |
+| **Prehide** | CSS `opacity: 0` on `.page-footer__*` in `page.css` — not `anim-prehide` |
+| **Lifecycle** | `onComplete` → `removePrehideClasses`; `onReverseComplete` → `clearProps: "opacity"` |
+
+See **Pattern C** in [REFACTOR.md](./REFACTOR.md) for the bulk-`removePrehideClasses` anti-pattern and why component CSS beats `anim-prehide` here.
 
 ### Pattern tier: **0**
 

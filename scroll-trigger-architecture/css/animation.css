@@ -33,3 +33,7 @@
 .anim-line {
   width: max-content;
 }
+
+.anim-word {
+  will-change: transform;
+}
