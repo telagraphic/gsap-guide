@@ -73,7 +73,7 @@ const HEADER_CONFIG = {
   },
 };
 
-export function createSectionOne() {
+export function createSection() {
   const registry = createRegistry();
 
   // const elements = createElements();

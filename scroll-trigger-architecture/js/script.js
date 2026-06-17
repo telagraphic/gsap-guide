@@ -11,9 +11,23 @@ import {
   EASEINOUTQUINT,
 } from "./easings.js";
 import { removePrehideClasses } from "./utils.js";
+
+
+
+
+import { createSectionOne } from "./timeline/sectionOne.js";
+
 gsap.registerPlugin(ScrollTrigger);
 
 document.fonts.ready.then(() => {
+
+
+  const sections = [];
+  sections.push(createSectionOne());
+  sections.forEach(section => section.create());
+
+
+
   // const TIMELINE = [
   //   sectionOneTimeline(),
   //   sectionTwoTimeline(),
@@ -37,93 +51,93 @@ document.fonts.ready.then(() => {
    *
    * ───────────────────────────────────────────────────────── */
 
-  const HERO_CONFIG = {
-    SELECTORS: {
-      HEADER: ".page-header",
-      ICON: ".page-header__icon",
-      TAG: ".page-header__tag",
-      HINT: ".page-header__hint",
-      HEADER_TITLES: ".page-header__titles",
-      HEADER_TITLE: ".page-header__titles h1",
-    },
-    HERO: {
-      TIMELINE: {
-        opacity: 1,
-        duration: 0.5,
-        ease: EASEOUTQUAD,
-      },
-    },
-    TAG: {
-      TIMELINE: {
-        opacity: 1,
-        duration: 0.5,
-        ease: EASEOUTQUAD,
-      },
-    },
-    HINT: {
-      TIMELINE: {
-        opacity: 1,
-        duration: 0.5,
-        ease: EASEOUTQUAD,
-      },
-    },
-    HEADER_TITLE: {
-      SPLIT_TEXT: {
-        type: "lines",
-        mask: "lines",
-        linesClass: "page-header-lines",
-      },
-      TIMELINE: {
-        yPercent: 0,
-        duration: 1,
-        ease: EASEOUTQUAD,
-        stagger: 0.02,
-      },
-    },
-  };
+  // const HERO_CONFIG = {
+  //   SELECTORS: {
+  //     HEADER: ".page-header",
+  //     ICON: ".page-header__icon",
+  //     TAG: ".page-header__tag",
+  //     HINT: ".page-header__hint",
+  //     HEADER_TITLES: ".page-header__titles",
+  //     HEADER_TITLE: ".page-header__titles h1",
+  //   },
+  //   HERO: {
+  //     TIMELINE: {
+  //       opacity: 1,
+  //       duration: 0.5,
+  //       ease: EASEOUTQUAD,
+  //     },
+  //   },
+  //   TAG: {
+  //     TIMELINE: {
+  //       opacity: 1,
+  //       duration: 0.5,
+  //       ease: EASEOUTQUAD,
+  //     },
+  //   },
+  //   HINT: {
+  //     TIMELINE: {
+  //       opacity: 1,
+  //       duration: 0.5,
+  //       ease: EASEOUTQUAD,
+  //     },
+  //   },
+  //   HEADER_TITLE: {
+  //     SPLIT_TEXT: {
+  //       type: "lines",
+  //       mask: "lines",
+  //       linesClass: "page-header-lines",
+  //     },
+  //     TIMELINE: {
+  //       yPercent: 0,
+  //       duration: 1,
+  //       ease: EASEOUTQUAD,
+  //       stagger: 0.02,
+  //     },
+  //   },
+  // };
 
-  const hero = document.querySelector(HERO_CONFIG.SELECTORS.HEADER);
-  const heroIcon = hero.querySelector(HERO_CONFIG.SELECTORS.ICON);
-  const heroTag = hero.querySelector(HERO_CONFIG.SELECTORS.TAG);
-  const heroHint = hero.querySelector(HERO_CONFIG.SELECTORS.HINT);
-  const heroHeaders = hero.querySelector(HERO_CONFIG.SELECTORS.HEADER_TITLES);
+  // const hero = document.querySelector(HERO_CONFIG.SELECTORS.HEADER);
+  // const heroIcon = hero.querySelector(HERO_CONFIG.SELECTORS.ICON);
+  // const heroTag = hero.querySelector(HERO_CONFIG.SELECTORS.TAG);
+  // const heroHint = hero.querySelector(HERO_CONFIG.SELECTORS.HINT);
+  // const heroHeaders = hero.querySelector(HERO_CONFIG.SELECTORS.HEADER_TITLES);
 
-  const heroTimeline = gsap.timeline();
-  const iconTimeline = gsap.timeline();
-  const tagTimeline = gsap.timeline();
-  const hintTimeline = gsap.timeline();
-  const linesTimeline = gsap.timeline();
+  // const heroTimeline = gsap.timeline();
+  // const iconTimeline = gsap.timeline();
+  // const tagTimeline = gsap.timeline();
+  // const hintTimeline = gsap.timeline();
+  // const linesTimeline = gsap.timeline();
 
-  iconTimeline.to(heroIcon, HERO_CONFIG.HERO.TIMELINE);
-  tagTimeline.to(heroTag, HERO_CONFIG.TAG.TIMELINE);
-  hintTimeline.to(heroHint, HERO_CONFIG.HINT.TIMELINE);
+  // iconTimeline.to(heroIcon, HERO_CONFIG.HERO.TIMELINE);
+  // tagTimeline.to(heroTag, HERO_CONFIG.TAG.TIMELINE);
+  // hintTimeline.to(heroHint, HERO_CONFIG.HINT.TIMELINE);
 
-  const headerLines = new SplitText(
-    heroHeaders.querySelectorAll(HERO_CONFIG.SELECTORS.HEADER_TITLE),
-    HERO_CONFIG.HEADER_TITLE.SPLIT_TEXT,
-  );
+  // const headerLines = new SplitText(
+  //   heroHeaders.querySelectorAll(HERO_CONFIG.SELECTORS.HEADER_TITLE),
+  //   HERO_CONFIG.HEADER_TITLE.SPLIT_TEXT,
+  // );
 
-  headerLines.lines.forEach((line, i) => {
-    const position = i + 1;
-    const fromY = position % 2 === 0 ? position * -100 : 100; // your logic
-    gsap.set(line, { yPercent: fromY });
-  });
+  // headerLines.lines.forEach((line, i) => {
+  //   const position = i + 1;
+  //   const fromY = position % 2 === 0 ? position * -100 : 100; // your logic
+  //   gsap.set(line, { yPercent: fromY });
+  // });
 
-  linesTimeline.to(headerLines.lines, HERO_CONFIG.HEADER_TITLE.TIMELINE);
+  // linesTimeline.to(headerLines.lines, HERO_CONFIG.HEADER_TITLE.TIMELINE);
 
-  /**
-   * Master Timeline Orchestrator
-   *
-   **/
+  // /**
+  //  * Master Timeline Orchestrator
+  //  *
+  //  **/
 
-  heroTimeline
-    .call(removePrehideClasses, [heroHeaders])
-    .add(linesTimeline, "+=0.5")
-    .add(tagTimeline, "+=.5")
-    .add(hintTimeline, ">-.25")
-    .add(iconTimeline, ">-.5")
-    .call(removePrehideClasses, [heroIcon, heroTag, heroHint])
-    .play();
+  // heroTimeline
+  //   .call(removePrehideClasses, [heroHeaders])
+  //   .add(linesTimeline, "+=0.5")
+  //   .add(tagTimeline, "+=.5")
+  //   .add(hintTimeline, ">-.25")
+  //   .add(iconTimeline, ">-.5")
+  //   .call(removePrehideClasses, [heroIcon, heroTag, heroHint])
+  //   .play();
 
   /* ─────────────────────────────────────────────────────────
    * SECTION 1 STORYBOARD
