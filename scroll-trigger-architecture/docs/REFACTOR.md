@@ -272,36 +272,103 @@ Staggered timeline — multiple siblings, different start times?
 
 
 
-## Module System
-
-
+## Module Interface Patterns
 
 Looking at @scroll-trigger-architecture/docs/DOCUMENTATION.md I have several modules to implement:
 
-1. Return a timeline based gsap animation
-2. Return a scroll trigger based animations
-3. Return a gsap effect component
-
-The end goal is to include each module into an array called TIMELINE and initialize each module corresponding to each section.
-
-There should be a consistent API between all methods, using extension for adding method names that apply for specific use cases in module pattern.
+The end goal is to include each module into an one Orchestrator array TIMELINE and initialize each module corresponding to each section. Every module will use ScrollTrigger for scroll based animations.  
 
 
-Each of these modules should have a consistent api for lifecycle methods.
+
+| module-type        | function                                                                                |
+| ------------------ | --------------------------------------------------------------------------------------- |
+| gsap timeline      | returns a gsap animation driven by a master timeline                                    |
+| gsap scrolltrigger | returns a gsap animation driven by scroll trigger(s) for one or more elements           |
+| gsap effect        | returns a gsap effect that accepts an element and configuration setting for customizing |
+
+
+Here is how each section maps to these modules:
+
+
+| section   | module-type         |
+| --------- | ------------------- |
+| hero      | gsap animation      |
+| section-1 | gsap scrolltrigger  |
+| section-2 | gsap scrolltrigger  |
+| section-3 | gsap effect         |
+| section-4 | gsap scrolltrigger  |
+| section-5 | gsap effect         |
+| section-6 | gsap effect         |
+| section-7 | gsap scroll trigger |
+| section-8 | gsap effect         |
+| footer    | gsap-animation      |
+
+
+
+## Module Interface
+
+There should be a consistent API between all methods, using extension for adding method names that apply for specific use cases in module pattern. We need an interface that covers all the lifecycle methods for all 3 module types.
+
 For these lifecycle methods, we'll need a cleanup as you suggested for killing tweens, and scroll triggers.
 We could create a utility function that does the clean up work and either use it in each module, allowing for plug and play for those that require it versus calling a universally in one master timeline.
 
-We should include features like referenced tweens and scroll triggers for cleanup.
 
-Each separate timeline section will contain:
+Ideas for a universal interface for animation module/component lifecycle:
+
+
+| methods     | function                                                                                                    | public/private                                                                                                                                                    |
+| ----------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| init        | configuration settings, use a default to prevent error                                                      | private? called by create for initalizing                                                                                                                         |
+| setup       | configuration settings, use a default to prevent error                                                      | private? called by create for initalizing                                                                                                                         |
+| create      | read dom and create dom refs                                                                                | public, ensures the module scroll trigger is on, has refs and is ready for scroll based animations, for timeline based animation it ensures the timeline is ready |
+| play/start  | scroll trigger is live and ready to respond                                                                 | for gsap animations, we                                                                                                                                           |
+| reset/clear | remove tweens/scrolltriggers                                                                                | public                                                                                                                                                            |
+| destroy     | not sure???                                                                                                 | public                                                                                                                                                            |
+| revert      | if module uses splittext autoSplit, we can revert the splittext after the trigger and animation is complete | public                                                                                                                                                            |
+| on          | timeline based animations are ready to execute                                                              | public                                                                                                                                                            |
+| off         |                                                                                                             |                                                                                                                                                                   |
+
+
+
+## Module Structure
+
+We should keep the current storyboard, configuration and then animation code structure for each module.
+
+Each separate module covers a section of the index.html and will contain:
 
 1. storyboard description and module pattern explanation
 2. configuration object for selectors, splittext, scroll trigger, to and from timeline properties
-3. a returned module patterm with methods for calling in @scripts.js TIMELINE
+3. a returned module pattern with methods for calling in @scripts.js TIMELINE
 4. each pattern implements a tween, scroll trigger and timelines registry that bundles references to the actual gsap object for proper cleanup: kill, revert on animations or stop for timelines
 5. each module pattern accounts for responsize resize for scroll trigger animations if applicable
 
-@scroll-trigger-architecture/js/timeline/sectionOne.js
+
+
+## Considerations
+
+First, we should determine who will be responsible for killing tweens and scrolltriggers? Each module can store the tweens in an tween map/array and then import a utility function for killing tweens/scrolltriggers if the module uses tweens. This let's use re-use if for a responsive resize if the module uses autoSplit or if we need to kill tweens/triggers before running the animation again. It's is more composable.
+
+In the parent Orchestrator, on a page navigation or page refresh, we can call these teardown or cleanup methods in super loop for each section when needed.
+
+## Refactor Phases
+
+Order of refactoring steps:
+
+1. Identify a universal interface for all 3 module types
+2. Provide some psuedo-code for the 3 module types, what will it look like
+3. Move long code from @scroll-trigger-architecture/scripts.js into separate files /timeline/section{N}.js
+4. Import each section into @scroll-trigger-architecture/scripts.js
+5. Create an orchestrator array where each section can be added for creation/initiation
+6. Go one by hand through each section and apply a fitting module pattern based on what the code is doing
+7. Further refactor code into generic utils, primitives and gsap effect components
+
+
+### Order of Operations
+
+Once each section code is moved to it's respective file, we will go through each section and refactor it to a module pattern, then include it in the orchestrator timeline to ensure each one is working in a step by step fashion. No bulk code updates, this will cause complexity and testing issues.
+
+
+
 
 
 
