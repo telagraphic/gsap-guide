@@ -136,11 +136,101 @@ But watch out for this.
 ### Spaghetti Code
 
 
+See https://github.com/telagraphic/gsap-guide/blob/1b0e80f85d2799115ffa3b68564d52ce4050a36f/scroll-trigger-architecture/script.js for before code.
 
 
+Before;
 ```javascript
+ /*
+  *  Header Hero — First Frame
+  *
+  */
 
 
+  const hero = document.querySelector(".page-header");
+  const heroIcon = hero.querySelector(".page-header__icon");
+  const heroTag = hero.querySelector(".page-header__tag");
+  const heroHint = hero.querySelector(".page-header__hint");
+  const heroHeaders = hero.querySelectorAll(".page-header__titles h1");
+
+  const heroTimeline = gsap.timeline();
+
+  const iconTimeline = gsap.timeline();
+  const tagTimeline = gsap.timeline();
+  const hintTimeline = gsap.timeline();
+
+  gsap.set(heroIcon, {
+    autoAlpha: 0,
+  });
+
+  iconTimeline.fromTo(
+    heroIcon,
+    {
+      autoAlpha: 0,
+    },
+    {
+      autoAlpha: 1,
+      duration: 0.5,
+      ease: "easeOutQuad",
+    },
+  );
+
+  tagTimeline.fromTo(
+    heroTag,
+    {
+      autoAlpha: 0,
+    },
+    {
+      autoAlpha: 1,
+      duration: 0.5,
+      ease: "easeOutQuad",
+    },
+  );
+
+  hintTimeline.fromTo(
+    heroHint,
+    {
+      autoAlpha: 0,
+    },
+    {
+      autoAlpha: 1,
+      duration: 0.5,
+      ease: "easeOutQuad",
+    },
+  );
+
+  const headerLines = new SplitText(heroHeaders, {
+    type: "lines",
+    mask: "lines",
+    linesClass: "lines++",
+  });
+
+  headerLines.lines.forEach((line, i) => {
+    const position = i + 1;
+    console.log(position);
+
+    const lineCount = position % 2 === 0 ? position : 0;
+    // console.log(lineCount);
+
+    gsap.set(line, {
+      opacity: 0,
+      yPercent: lineCount ? -100 : 100,
+    });
+
+    // console.log(lineCount);
+    gsap.to(line, {
+      opacity: 1,
+      yPercent: 0,
+      duration: 1,
+      stagger: 0.02,
+      ease: lineCount ? "easeOutQuad" : "easeOutQuart",
+    });
+  });
+
+  heroTimeline
+    .add(tagTimeline, "+=.5")
+    .add(hintTimeline, ">-.25")
+    .add(iconTimeline, ">-.5");
 ```
 
 

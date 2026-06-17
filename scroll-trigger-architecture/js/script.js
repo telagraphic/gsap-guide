@@ -140,7 +140,7 @@ document.fonts.ready.then(() => {
 
   const SECTION_ONE_CONFIG = {
     SELECTORS: {
-      SECTION: "[data-panel='1']",
+      SECTION: "[data-section='1']",
       HEADER: ".page-section__title",
       PARAGRAPHS: ".page-section__body p",
     },
@@ -256,7 +256,7 @@ document.fonts.ready.then(() => {
 
   const SECTION_TWO_CONFIG = {
     SELECTORS: {
-      SECTION: "[data-panel='2']",
+      SECTION: "[data-section='2']",
       HEADER: ".page-section__title",
       GROUPS: ".page-section__group",
       PARAGRAPH: "p",
@@ -363,7 +363,7 @@ document.fonts.ready.then(() => {
 
   const SECTION_THREE_CONFIG = {
     SELECTORS: {
-      SECTION: "[data-panel='3']",
+      SECTION: "[data-section='3']",
       CONTENTS: ".page-section__content",
       PARAGRAPHS: ".animation-wide-slide p.type-body",
     },
@@ -478,7 +478,7 @@ document.fonts.ready.then(() => {
 
   const SECTION_FOUR_CONFIG = {
     SELECTORS: {
-      SECTION: "[data-panel='4']",
+      SECTION: "[data-section='4']",
       TRACKS: ".animation-slot-machine-roll__track",
     },
     SCROLL_TRIGGER: {
@@ -536,7 +536,7 @@ document.fonts.ready.then(() => {
 
   const SECTION_FIVE_CONFIG = {
     SELECTORS: {
-      SECTION: "[data-panel='5']",
+      SECTION: "[data-section='5']",
       TITLE: ".page-section__title",
       PARAGRAPHS: "p",
     },
@@ -679,7 +679,7 @@ document.fonts.ready.then(() => {
 
   const SECTION_SIX_CONFIG = {
     SELECTORS: {
-      SECTION: "[data-panel='6']",
+      SECTION: "[data-section='6']",
       TRACK: ".page-section__track",
       SLIDES: ".page-section__slide",
     },
@@ -828,7 +828,7 @@ document.fonts.ready.then(() => {
 
   const SECTION_SEVEN_CONFIG = {
     SELECTORS: {
-      SECTION: "[data-panel='7']",
+      SECTION: "[data-section='7']",
       ITEMS: ".animation-character-waterdrop__item",
     },
   };
@@ -918,7 +918,7 @@ document.fonts.ready.then(() => {
 
   const SECTION_EIGHT_CONFIG = {
     SELECTORS: {
-      SECTION: "[data-panel='8']",
+      SECTION: "[data-section='8']",
       ITEMS: ".animation-character-ripple__item",
       VISIBLE_CHARS: ".animation-character-ripple__layer--visible span",
       HIDDEN_CHARS: ".animation-character-ripple__layer--hidden span",

@@ -118,13 +118,13 @@ body {
 }
 
 /* Full-viewport shell */
-.page-section[data-panel="1"],
-.page-section[data-panel="4"],
-.page-section[data-panel="5"],
-.page-section[data-panel="6"],
-.page-section[data-panel="7"],
-.page-section[data-panel="8"],
-.page-section[data-panel="9"] {
+.page-section[data-section="1"],
+.page-section[data-section="4"],
+.page-section[data-section="5"],
+.page-section[data-section="6"],
+.page-section[data-section="7"],
+.page-section[data-section="8"],
+.page-section[data-section="9"] {
   min-height: var(--panel-viewport);
   width: var(--panel-viewport-width);
   background: var(--black);
@@ -133,7 +133,7 @@ body {
 }
 
 /* Frame 1 */
-.page-section[data-panel="1"] {
+.page-section[data-section="1"] {
   .page-section__content {
     display: grid;
     width: 100%;
@@ -167,7 +167,7 @@ body {
 }
 
 /* Frame 2 */
-.page-section[data-panel="2"] {
+.page-section[data-section="2"] {
   background: var(--black);
   border-bottom: var(--panel-border);
 
@@ -216,7 +216,7 @@ body {
 }
 
 /* Frame 3 */
-.page-section[data-panel="3"] {
+.page-section[data-section="3"] {
   background: var(--black);
   border-bottom: var(--panel-border);
 
@@ -248,7 +248,7 @@ body {
 }
 
 /* Frame 4 */
-.page-section[data-panel="4"] {
+.page-section[data-section="4"] {
   .page-section__content {
     min-height: var(--panel-full-height);
   }
@@ -272,7 +272,7 @@ body {
 }
 
 /* Frame 5 — character waterfall cascade */
-.page-section[data-panel="5"] {
+.page-section[data-section="5"] {
   .page-section__content {
     display: grid;
     width: 100%;
@@ -294,7 +294,7 @@ body {
 }
 
 /* Frame 6 — horizontal cascade */
-.page-section[data-panel="6"] {
+.page-section[data-section="6"] {
   padding: 0;
 
   .page-section__track {
@@ -330,7 +330,7 @@ body {
 }
 
 /* Frame 7 — letter spiral */
-.page-section[data-panel="7"] {
+.page-section[data-section="7"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -354,7 +354,7 @@ body {
 }
 
 /* Frame 8 — methods list */
-.page-section[data-panel="8"] {
+.page-section[data-section="8"] {
   .page-section__content {
     display: grid;
     width: 100%;

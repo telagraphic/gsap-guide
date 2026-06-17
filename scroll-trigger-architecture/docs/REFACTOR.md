@@ -369,7 +369,14 @@ Once each section code is moved to it's respective file, we will go through each
 
 
 
+## Steps
 
+- refactor data-panel to data-section, update styles and scripts to reference these selectors
+- update listeners to triggers for consistent gsap context in registry
+- write registry module from scratch
+- write first module from scratch
+- write orchestrator and setup hero section
+- 
 
 
 
