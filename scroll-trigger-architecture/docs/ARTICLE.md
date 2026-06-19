@@ -351,3 +351,13 @@ Before;
     .play();
 
 ```
+
+
+## Mix and Match
+
+It might be overkill to add a registry for gsap objects.
+Or it be overkill to create factories but still use a registry for killing and reverting animation.
+
+The best balance is separating the files, use a storyboard and config pattern and write classic gsap spaghetti code.
+
+The whole idea is show how we can compose larger abstractions via a basic set of patterns.
