@@ -47,7 +47,7 @@ export function createSectionThree() {
   let effect = null;
 
   return {
-    id: "section-3",
+    id: "section-three",
     type: "effect",
     get registry() {
       return effect?.registry ?? null;
@@ -74,6 +74,9 @@ export function createSectionThree() {
     destroy() {
       effect?.destroy();
       effect = null;
+    },
+    revert() {
+      effect?.revert();
     },
   };
 }

@@ -1,5 +1,4 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { SplitText } from "https://esm.sh/gsap@3.13.0/SplitText";
+import gsap, { SplitText } from "../shared/gsap.js";
 import { createTextRoll } from "../effects/textRoll.js";
 import { createRegistry } from "../shared/registry.js";
 import { removePrehideClasses } from "../utils.js";
@@ -116,8 +115,8 @@ export function createSectionFive() {
   }
 
   return {
-    name: "section-five",
-    type: "gsap-scroll-trigger",
+    id: "section-five",
+    type: "scrollTrigger",
     registry,
     create() {
       createTweens();
@@ -126,6 +125,10 @@ export function createSectionFive() {
       registry.destroy();
       titleEffect?.destroy();
       titleEffect = null;
+    },
+    revert() {
+      registry.resetSplits();
+      titleEffect?.revert();
     },
   };
 }

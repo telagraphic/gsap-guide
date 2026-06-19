@@ -1,5 +1,4 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { SplitText } from "https://esm.sh/gsap@3.13.0/SplitText";
+import gsap, { SplitText } from "../shared/gsap.js";
 import { createRegistry } from "../shared/registry.js";
 import { removePrehideClasses } from "../utils.js";
 import { EASEOUTQUAD } from "../easings.js";
@@ -61,15 +60,14 @@ export function createSectionTwo() {
     sectionTwo.querySelectorAll(SECTION_TWO_CONFIG.SELECTORS.GROUPS),
   );
 
-  function setupSplitTween() {
-    
-  }
-
   function createTweens() {
     registry.resetAnimations();
 
-    sectionTwoGroups.forEach((group) => {
+    sectionTwoGroups.forEach((group, index) => {
       const header = group.querySelector(SECTION_TWO_CONFIG.SELECTORS.HEADER);
+      const paragraph = group.querySelector(
+        SECTION_TWO_CONFIG.SELECTORS.PARAGRAPH,
+      );
 
       const headerTween = gsap.to(header, {
         onStart: () => {
@@ -84,28 +82,21 @@ export function createSectionTwo() {
         },
       });
 
-      registry.addTween(headerTween);
+      registry.addTween(`header-${index}`, headerTween);
 
-      const paragraph = group.querySelector(
-        SECTION_TWO_CONFIG.SELECTORS.PARAGRAPH,
-      );
-
-      const paragraphLines = new SplitText(paragraph, {
+      const paragraphSplit = new SplitText(paragraph, {
         type: SECTION_TWO_CONFIG.PARAGRAPH.SPLIT_TEXT.type,
         mask: SECTION_TWO_CONFIG.PARAGRAPH.SPLIT_TEXT.mask,
         autoSplit: true,
         revert: true,
-      }).lines;
-
-      registry.addSplit(paragraphLines);
-
-      gsap.set(paragraphLines, {
-        opacity: 0,
       });
 
-      const linesTween = gsap.to(paragraphLines, {
-        opacity: 1,
-        stagger: 0.1,
+      registry.addSplit(`paragraph-${index}`, paragraphSplit);
+
+      gsap.set(paragraphSplit.lines, SECTION_TWO_CONFIG.PARAGRAPH.TIMELINE.FROM);
+
+      const linesTween = gsap.to(paragraphSplit.lines, {
+        ...SECTION_TWO_CONFIG.PARAGRAPH.TIMELINE.TO,
         scrollTrigger: {
           trigger: group,
           start: "top center-=120",
@@ -113,14 +104,14 @@ export function createSectionTwo() {
         },
       });
 
-      registry.addTween(linesTween);
+      registry.addTween(`lines-${index}`, linesTween);
     });
   }
 
   return {
-    name: "section-two",
-    type: "gsap split and scroll",
-    registry: registry,
+    id: "section-two",
+    type: "scrollTrigger",
+    registry,
     create() {
       createTweens();
     },

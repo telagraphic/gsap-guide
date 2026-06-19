@@ -1,5 +1,4 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { SplitText } from "https://esm.sh/gsap@3.13.0/SplitText";
+import gsap, { SplitText } from "../shared/gsap.js";
 import { createRegistry } from "../shared/registry.js";
 import { removePrehideClasses } from "../utils.js";
 import { EASEOUTQUAD } from "../easings.js";
@@ -76,8 +75,6 @@ const HEADER_CONFIG = {
 export function createHeader() {
   const registry = createRegistry();
 
-  // const elements = createElements();
-
   const createTimeline = () => {
     registry.resetAnimations();
 
@@ -130,9 +127,9 @@ export function createHeader() {
   };
 
   return {
-    name: "header-section",
+    id: "header-section",
     type: "timeline",
-    registry: registry,
+    registry,
     create: createTimeline,
     destroy() {
       registry.destroy();

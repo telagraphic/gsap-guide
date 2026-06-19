@@ -47,8 +47,8 @@ export function createSectionSix() {
   let effect = null;
 
   return {
-    name: "section-six",
-    type: "gsap-scroll-trigger",
+    id: "section-six",
+    type: "effect",
     get registry() {
       return effect?.registry ?? null;
     },
@@ -71,6 +71,9 @@ export function createSectionSix() {
     destroy() {
       effect?.destroy();
       effect = null;
+    },
+    revert() {
+      effect?.revert();
     },
   };
 }

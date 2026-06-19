@@ -1,9 +1,7 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { SplitText } from "https://esm.sh/gsap@3.13.0/SplitText";
-import { ScrollTrigger } from "https://esm.sh/gsap@3.13.0/ScrollTrigger";
+import gsap, { ScrollTrigger } from "../shared/gsap.js";
 import { createRegistry } from "../shared/registry.js";
 import { removePrehideClasses } from "../utils.js";
-import { EASEINQUAD, EASEOUTQUAD, EASEOUTQUINT } from "../easings.js";
+import { EASEOUTQUAD } from "../easings.js";
 
 /* ─────────────────────────────────────────────────────────
  * FOOTER STORYBOARD
@@ -68,9 +66,9 @@ export function createSectionFooter() {
   }
 
   return {
-    name: "section-footer",
-    type: "gsap timeline",
-    registry: registry,
+    id: "section-footer",
+    type: "timeline",
+    registry,
     create() {
       createTweens();
     },

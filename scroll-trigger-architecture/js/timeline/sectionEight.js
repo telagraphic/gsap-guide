@@ -1,4 +1,3 @@
-import { EASEOUTQUAD } from "../easings.js";
 import { createTextRipple } from "../effects/textRipple.js";
 
 /* ─────────────────────────────────────────────────────────
@@ -36,11 +35,6 @@ const SECTION_EIGHT_CONFIG = {
     ease: "back.out(2)",
     duration: 0.6,
     stagger: { each: 0.023 },
-    // variance: {
-    //   duration: 0.1,
-    //   stagger: 0.05,
-    //   ease: EASEOUTQUAD
-    // },
   },
 };
 
@@ -48,8 +42,8 @@ export function createSectionEight() {
   let effect = null;
 
   return {
-    name: "section-eight",
-    type: "gsap effect",
+    id: "section-eight",
+    type: "effect",
     get registry() {
       return effect?.registry ?? null;
     },
@@ -62,18 +56,6 @@ export function createSectionEight() {
       const items = section.querySelectorAll(
         SECTION_EIGHT_CONFIG.SELECTORS.ITEMS,
       );
-
-      // effect = createTextRipple({
-      //   targets: items,
-      //   layers: SECTION_EIGHT_CONFIG.LAYERS,
-      //   selectors: {
-      //     visibleChars: SECTION_EIGHT_CONFIG.SELECTORS.VISIBLE_CHARS,
-      //     hiddenChars: SECTION_EIGHT_CONFIG.SELECTORS.HIDDEN_CHARS,
-      //   },
-      //   ripple: SECTION_EIGHT_CONFIG.RIPPLE,
-      //   beforeBind: (target) => target.classList.remove("anim-prehide"),
-      // });
-
 
       effect = createTextRipple({
         targets: items,

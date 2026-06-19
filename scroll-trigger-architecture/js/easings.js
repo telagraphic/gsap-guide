@@ -1,6 +1,4 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { CustomEase } from "https://esm.sh/gsap@3.13.0/CustomEase";
-gsap.registerPlugin(CustomEase);
+import { CustomEase } from "./shared/gsap.js";
 
 export const EASEINQUAD = CustomEase.create("easeInQuad", "M0,0 C0.55,0.085,0.68,0.53,1,1");
 export const EASEINCUBIC = CustomEase.create("easeInCubic", "M0,0 C0.55,0.055,0.675,0.19,1,1");

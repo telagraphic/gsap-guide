@@ -1,5 +1,4 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { ScrollTrigger } from "https://esm.sh/gsap@3.13.0/ScrollTrigger";
+import gsap, { ScrollTrigger } from "../shared/gsap.js";
 import { createRegistry } from "../shared/registry.js";
 import { EASEOUTQUAD } from "../easings.js";
 

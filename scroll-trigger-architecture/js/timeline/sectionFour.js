@@ -1,7 +1,5 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { SplitText } from "https://esm.sh/gsap@3.13.0/SplitText";
+import gsap from "../shared/gsap.js";
 import { createRegistry } from "../shared/registry.js";
-import { removePrehideClasses } from "../utils.js";
 import { EASEOUTCIRC } from "../easings.js";
 
 /* ─────────────────────────────────────────────────────────
@@ -73,9 +71,9 @@ export function createSectionFour() {
   }
 
   return {
-    name: "section-four",
-    type: "gsap-scroll-trigger",
-    registry: registry,
+    id: "section-four",
+    type: "scrollTrigger",
+    registry,
     create() {
       createTweens();
     },

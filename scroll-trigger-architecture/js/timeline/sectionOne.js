@@ -1,7 +1,5 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { SplitText } from "https://esm.sh/gsap@3.13.0/SplitText";
+import gsap, { SplitText } from "../shared/gsap.js";
 import { createRegistry } from "../shared/registry.js";
-import { removePrehideClasses } from "../utils.js";
 import { EASEOUTQUAD } from "../easings.js";
 
 /* ─────────────────────────────────────────────────────────
@@ -63,6 +61,8 @@ const SECTION_ONE_CONFIG = {
     },
     SCROLL_TRIGGER: {
       start: "top 50%",
+      end: "top center",
+      scrub: 1,
     },
   },
 };
@@ -81,26 +81,26 @@ export function createSectionOne() {
       SECTION_ONE_CONFIG.SELECTORS.HEADER,
     );
 
-    const sectionOneHeaderChars = new SplitText(sectionOneHeader, {
+    const sectionOneHeaderSplit = new SplitText(sectionOneHeader, {
       type: SECTION_ONE_CONFIG.HEADER.SPLIT_TEXT.TYPE,
       mask: SECTION_ONE_CONFIG.HEADER.SPLIT_TEXT.MASK,
-    }).chars;
+    });
 
-    registry.addSplit(sectionOneHeaderChars);
+    registry.addSplit("header", sectionOneHeaderSplit);
 
-    gsap.set(sectionOneHeaderChars, {
+    gsap.set(sectionOneHeaderSplit.chars, {
       yPercent: SECTION_ONE_CONFIG.HEADER.TIMELINE.FROM.yPercent,
     });
 
-    gsap.to(sectionOneHeaderChars, {
-      yPercent: SECTION_ONE_CONFIG.HEADER.TIMELINE.TO.yPercent,
-      stagger: SECTION_ONE_CONFIG.HEADER.TIMELINE.stagger,
-      ease: SECTION_ONE_CONFIG.HEADER.TIMELINE.ease,
+    const headerTween = gsap.to(sectionOneHeaderSplit.chars, {
+      ...SECTION_ONE_CONFIG.HEADER.TIMELINE.TO,
       scrollTrigger: {
         trigger: sectionOne,
         start: SECTION_ONE_CONFIG.HEADER.SCROLL_TRIGGER.start,
       },
     });
+
+    registry.addTween("header", headerTween);
   };
 
   const setupSplitTween = (self) => {
@@ -110,22 +110,17 @@ export function createSectionOne() {
     });
 
     const paragraphsTween = gsap.to(self.lines, {
-      opacity: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.TO.opacity,
-      yPercent: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.TO.yPercent,
-      stagger: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.stagger,
-      ease: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.ease,
+      ...SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.TO,
       scrollTrigger: {
         trigger: sectionOne,
-        start: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.start,
-        end: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.end,
-        scrub: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.scrub,
+        ...SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER,
       },
     });
 
-    registry.addTween(paragraphsTween)
+    registry.addTween("paragraphs", paragraphsTween);
 
     return paragraphsTween;
-  }
+  };
 
   const createSplits = () => {
     const sectionOneParagraphs = sectionOne.querySelectorAll(
@@ -141,13 +136,13 @@ export function createSectionOne() {
       },
     });
 
-    registry.addSplit(sectionOneParagraphsLines);
+    registry.addSplit("paragraphs", sectionOneParagraphsLines);
   };
 
   return {
-    name: "section-one",
-    type: "gsap split and scroll",
-    registry: registry,
+    id: "section-one",
+    type: "scrollTrigger",
+    registry,
     create() {
       createTweens();
       createSplits();

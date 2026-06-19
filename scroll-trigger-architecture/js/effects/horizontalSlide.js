@@ -1,5 +1,4 @@
-import gsap from "https://esm.sh/gsap@3.13.0";
-import { SplitText } from "https://esm.sh/gsap@3.13.0/SplitText";
+import gsap, { SplitText } from "../shared/gsap.js";
 import { createRegistry } from "../shared/registry.js";
 
 /**
@@ -52,6 +51,8 @@ export function createHorizontalSlide({
         anticipatePin: 1,
       },
     });
+
+    registry.addTween("track", trackTween);
   }
 
   function slideTrigger(slide, startEnd) {
@@ -67,6 +68,7 @@ export function createHorizontalSlide({
     lines,
     slide,
     { startEnd, set, vars },
+    key,
     initialSet = {},
   ) {
     gsap.set(lines, { ...set, ...initialSet });
@@ -75,13 +77,14 @@ export function createHorizontalSlide({
       ...vars,
       scrollTrigger: slideTrigger(slide, startEnd),
     });
-    registry.addTween(tween);
+    registry.addTween(key, tween);
   }
 
   function animateExit(
     lines,
     slide,
     { startEnd, set, vars },
+    key,
     { initialSet = {}, applySet = false } = {},
   ) {
     if (applySet) {
@@ -93,39 +96,64 @@ export function createHorizontalSlide({
       immediateRender: false,
       scrollTrigger: slideTrigger(slide, startEnd),
     });
-    registry.addTween(tween);
+    registry.addTween(key, tween);
   }
 
-  function buildSlide(slide, { isFirst, isLast }) {
+  function buildSlide(slide, { slideIndex, isFirst, isLast }) {
     const heading = slide.querySelector(".page-section__title");
     const paragraph = slide.querySelector("p");
 
     const headingSplit = SplitText.create(heading, { ...splitText.lines });
+    registry.addSplit(`slide-${slideIndex}-heading`, headingSplit);
 
     if (!isFirst) {
-      animateEnter(headingSplit.lines, slide, headingEnter);
+      animateEnter(
+        headingSplit.lines,
+        slide,
+        headingEnter,
+        `slide-${slideIndex}-heading-enter`,
+      );
     }
 
     if (!isLast) {
-      animateExit(headingSplit.lines, slide, exit, {
-        applySet: isFirst,
-        initialSet: isFirst ? { yPercent: 0 } : {},
-      });
+      animateExit(
+        headingSplit.lines,
+        slide,
+        exit,
+        `slide-${slideIndex}-heading-exit`,
+        {
+          applySet: isFirst,
+          initialSet: isFirst ? { yPercent: 0 } : {},
+        },
+      );
     }
 
-    SplitText.create(paragraph, {
+    const paragraphSplit = SplitText.create(paragraph, {
       ...splitText.lines,
       ...splitText.paragraph,
       onSplit(self) {
         if (!isFirst) {
-          animateEnter(self.lines, slide, paragraphEnter);
+          animateEnter(
+            self.lines,
+            slide,
+            paragraphEnter,
+            `slide-${slideIndex}-paragraph-enter`,
+          );
         }
 
         if (!isLast) {
-          animateExit(self.lines, slide, exit, { applySet: isFirst });
+          animateExit(
+            self.lines,
+            slide,
+            exit,
+            `slide-${slideIndex}-paragraph-exit`,
+            { applySet: isFirst },
+          );
         }
       },
     });
+
+    registry.addSplit(`slide-${slideIndex}-paragraph`, paragraphSplit);
   }
 
   return {
@@ -136,6 +164,7 @@ export function createHorizontalSlide({
       createTrackTween();
       slides.forEach((slide, index) => {
         buildSlide(slide, {
+          slideIndex: index,
           isFirst: index === 0,
           isLast: index === slides.length - 1,
         });
