@@ -6,8 +6,8 @@ import { EASEINQUAD, EASEOUTQUAD, EASEOUTQUINT } from "../easings.js";
  *
  *    top top   panel pins, track scrubs x across slides
  *   slide 1   heading + body fade out as slide exits left (scrubbed EXIT)
- *  slides 2+  heading rises in, body lines fade in from right
- *  on leave   non-final slides stagger fade out
+ *  slides 2+  heading rises in as slide enters from right → left
+ *  non-final  scrubbed EXIT when slide left → right clears viewport left
  *
  * ─────────────────────────────────────────────────────────
  *
@@ -27,22 +27,20 @@ const SECTION_SIX_CONFIG = {
     paragraph: { smartSplit: true, autoSplit: true },
   },
   EXIT: {
-    // Fine tune, they are leaving too early
     startEnd: { start: "left left", end: "right left" },
     set: { opacity: 1 },
-    vars: { opacity: 0, stagger: 0.05, ease: EASEINQUAD },
+    vars: { opacity: 0, ease: EASEINQUAD },
   },
   HEADING_ENTER: {
-    startEnd: { start: "left 65%", end: "left 25%" },
+    startEnd: { start: "left 75%", end: "left left" },
     set: { opacity: 0, yPercent: 100 },
     vars: { opacity: 1, yPercent: 0, stagger: 0.03, ease: EASEOUTQUINT },
   },
   PARAGRAPH_ENTER: {
-    startEnd: { start: "left 70%", end: "left 30%" },
+    startEnd: { start: "left right", end: "left left" },
     set: { opacity: 0 },
-    vars: { opacity: 1, stagger: 0.02, ease: EASEOUTQUAD },
+    vars: { opacity: 1, stagger: 0.05, ease: EASEOUTQUAD },
   },
-  LEAVE: { opacity: 0, stagger: 0.05, ease: EASEINQUAD },
 };
 
 export function createSectionSix() {
@@ -67,7 +65,6 @@ export function createSectionSix() {
         exit: SECTION_SIX_CONFIG.EXIT,
         headingEnter: SECTION_SIX_CONFIG.HEADING_ENTER,
         paragraphEnter: SECTION_SIX_CONFIG.PARAGRAPH_ENTER,
-        leave: SECTION_SIX_CONFIG.LEAVE,
       });
       effect.create();
     },

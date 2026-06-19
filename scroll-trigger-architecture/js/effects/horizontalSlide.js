@@ -7,16 +7,14 @@ import { createRegistry } from "../shared/registry.js";
  *
  * Pinned horizontal track with per-slide containerAnimation triggers.
  *
- * exit.startEnd              slide 1 scrub-out window
- * exit.set / exit.vars       initial state + scrubbed tween vars
- * headingEnter.startEnd      heading enter window (slides 2+)
+ * exit.startEnd              scrub-out window (left edge → right edge clears viewport)
+ * headingEnter.startEnd      heading enter window (slides 2+) — slide right → left
  * paragraphEnter.startEnd    paragraph enter window (slides 2+)
- * leave.*                    time-based stagger fade on onLeave (non-final slides)
  *
  * Slide roles:
- *   first  — scrubbed exit (exit config)
- *   middle — scrubbed enter + onLeave fade
- *   last   — scrubbed enter only
+ *   first  — scrubbed exit only (set visible, then fade)
+ *   middle — enter (set hidden) then exit (opacity only, no set — avoids clobbering enter)
+ *   last   — enter only
  *
  * See docs/REFACTOR.md · nested effect module pattern
  */
@@ -29,7 +27,6 @@ export function createHorizontalSlide({
   exit,
   headingEnter,
   paragraphEnter,
-  leave,
 }) {
   const registry = createRegistry();
   let trackTween = null;
@@ -66,30 +63,36 @@ export function createHorizontalSlide({
     };
   }
 
-  function fadeOutOnLeave(lines) {
-    const { opacity, stagger, ease } = leave;
-    gsap.to(lines, { opacity, stagger, ease });
-  }
-
-  function withLeaveOnLast(scrollTriggerConfig, lines, isLastSlide) {
-    if (isLastSlide) return scrollTriggerConfig;
-    return { ...scrollTriggerConfig, onLeave: () => fadeOutOnLeave(lines) };
-  }
-
-  function animateSlide(
+  function animateEnter(
     lines,
     slide,
     { startEnd, set, vars },
-    { leaveOnExit = false, isLast = false, initialSet = {} } = {},
+    initialSet = {},
   ) {
     gsap.set(lines, { ...set, ...initialSet });
 
-    let scrollTriggerConfig = slideTrigger(slide, startEnd);
-    if (leaveOnExit) {
-      scrollTriggerConfig = withLeaveOnLast(scrollTriggerConfig, lines, isLast);
+    const tween = gsap.to(lines, {
+      ...vars,
+      scrollTrigger: slideTrigger(slide, startEnd),
+    });
+    registry.addTween(tween);
+  }
+
+  function animateExit(
+    lines,
+    slide,
+    { startEnd, set, vars },
+    { initialSet = {}, applySet = false } = {},
+  ) {
+    if (applySet) {
+      gsap.set(lines, { ...set, ...initialSet });
     }
 
-    const tween = gsap.to(lines, { ...vars, scrollTrigger: scrollTriggerConfig });
+    const tween = gsap.to(lines, {
+      ...vars,
+      immediateRender: false,
+      scrollTrigger: slideTrigger(slide, startEnd),
+    });
     registry.addTween(tween);
   }
 
@@ -99,25 +102,28 @@ export function createHorizontalSlide({
 
     const headingSplit = SplitText.create(heading, { ...splitText.lines });
 
-    const applyLines = (lines, animation, initialSet = {}) => {
-      if (isFirst) {
-        animateSlide(lines, slide, exit, { initialSet });
-        return;
-      }
-      animateSlide(lines, slide, animation, {
-        leaveOnExit: true,
-        isLast,
-        initialSet,
-      });
-    };
+    if (!isFirst) {
+      animateEnter(headingSplit.lines, slide, headingEnter);
+    }
 
-    applyLines(headingSplit.lines, headingEnter, { yPercent: 0 });
+    if (!isLast) {
+      animateExit(headingSplit.lines, slide, exit, {
+        applySet: isFirst,
+        initialSet: isFirst ? { yPercent: 0 } : {},
+      });
+    }
 
     SplitText.create(paragraph, {
       ...splitText.lines,
       ...splitText.paragraph,
       onSplit(self) {
-        applyLines(self.lines, paragraphEnter);
+        if (!isFirst) {
+          animateEnter(self.lines, slide, paragraphEnter);
+        }
+
+        if (!isLast) {
+          animateExit(self.lines, slide, exit, { applySet: isFirst });
+        }
       },
     });
   }
