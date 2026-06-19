@@ -361,3 +361,13 @@ Or it be overkill to create factories but still use a registry for killing and r
 The best balance is separating the files, use a storyboard and config pattern and write classic gsap spaghetti code.
 
 The whole idea is show how we can compose larger abstractions via a basic set of patterns.
+
+
+## Thinking in Abstractions
+
+Making the jump from context specific coding that uses names specific to the thing at hand, aka the ripple animation to more generic names has been a mental leap.
+
+The idea of lifecycle methods for a class or page (think Barba.js for running page transitions) or hooks in React.
+We can apply those process phases to a simple gsap animation component.
+
+This shift moves from context specific to more abstract but latent and deeper patterns in thinking. Meta-thinking.

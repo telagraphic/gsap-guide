@@ -22,6 +22,30 @@ A per-module collection of GSAP handles (tweens, timelines, SplitText instances)
 **Effect**:
 A reusable animation recipe in `js/effects/` — a factory function (e.g. `createWideSlide`) that builds tweens and registers them on the calling module's registry. Not `gsap.registerEffect` unless we later wrap a factory for cross-project reuse.
 
+**Target** (effect-internal):
+One DOM element the effect operates on (`target` or each entry in `targets`).
+_Avoid_: item, phrase, element (in function names)
+
+**Structure** (effect-internal):
+DOM writes before animation can run — char layers, per-char spans, `data-phrase` preservation. Verbs: `createCharLayers`, `splitChars`. No tweens. No listeners.
+
+**Bind** (effect-internal):
+Attach interaction or ScrollTrigger hooks to a structured target. Verbs: `bindHover`, `bindScroll`. No DOM mutation.
+Public effect config key: `bind` — `mode: "hover" | "scroll"` plus `bind.hover` or `bind.scroll` options.
+
+**Play** (effect-internal):
+Fire tweens on hover or interaction. Verbs: `playRipple`. No DOM mutation. No new listeners.
+
+**Refresh** (effect-internal):
+Partial rebuild on layout change (`refreshInit`, `onSplit`). Verbs: `refreshTargets`. Kill tweens, re-structure, run `beforeBind`. Not full `destroy()`.
+
+**beforeBind** (effect lifecycle hook):
+Optional callback after `createCharLayers`, before `bindHover`. Use for unlock steps (e.g. remove `anim-prehide`) that need structured DOM before listeners attach.
+_Avoid_: `onBuild`, `afterCreate` (collides with public `create()`)
+
+**Reduced motion** (textRipple):
+When `prefers-reduced-motion: reduce` matches, `createTextRipple` forces `fade-wave` preset and drops variance — caller config otherwise unchanged.
+
 ## Relationships
 
 - The **Orchestrator** creates one **Module** per **Section**, then calls `create()` on each in DOM order

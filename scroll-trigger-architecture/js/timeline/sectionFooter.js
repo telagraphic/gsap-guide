@@ -44,7 +44,7 @@ export function createSectionFooter() {
     footerTimeline
       .to(footerTitle, {
         opacity: 1,
-        duration: 0.5,
+        duration: 2,
         ease: EASEOUTQUAD,
       })
       .to(
