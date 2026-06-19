@@ -51,6 +51,7 @@ https://madewithgsap.com/effects/tutorial027
 6. Refactor to gsap component lifecycle and
 7. Refine splittext and scrolltrigger creaetion to primitives
 8. Sections 5 and 8 use the same gsap effect under the hood, extract to component then include into section module
+9. Review section 5 for effect component refactoring options in depth
 
 
 
@@ -485,4 +486,194 @@ export const createPageObjectFromSelectors = (selectorChildren) => {
 ```
 
 
+
+## Nested `lineTweens` — scoped tracking for multi-paragraph `autoSplit`
+
+When one section loops over **multiple paragraphs** and each paragraph uses SplitText with `autoSplit: true`, a single module-level registry is not enough for resize rebuilds. You need **nested tracking**: one `lineTweens` array **per paragraph**, closed over inside the loop.
+
+Section 3 (wide-slide effect) is the reference implementation: [`js/effects/textWideSlide.js`](../js/effects/textWideSlide.js).
+
+---
+
+### The problem
+
+`registry.resetAnimations()` kills **every** tween in the module. Section 3 has five `<p>` elements, each with its own `onSplit` callback. If paragraph 2 reflows on resize and you call global reset:
+
+```text
+paragraph 2 onSplit fires
+  → registry.resetAnimations()
+  → kills paragraph 0, 1, 2, 3, 4 tweens
+  → only paragraph 2 rebuilds
+  → paragraphs 0, 1, 3, 4 are dead with no rebuild
+```
+
+You cannot use global registry reset inside per-paragraph `onSplit`.
+
+---
+
+### Two-layer tracking
+
+Use two structures with **different jobs**:
+
+| Layer | Scope | Responsibility |
+|-------|-------|----------------|
+| **`lineTweens`** (per paragraph) | One closure array inside `paragraphs.forEach` | Scoped kill + rebuild when **that** paragraph's `onSplit` fires |
+| **`registry.addTween(key, tween)`** | Whole effect / module | Full teardown on `destroy()`, debug in DevTools |
+
+```text
+paragraphs.forEach((paragraph, paragraphIndex) => {
+  const lineTweens = [];                    ← nested — born per paragraph
+  SplitText.create(paragraph, {
+    onSplit(self) {
+      lineTweens.forEach(registry.killTween);  ← scoped kill
+      lineTweens.length = 0;
+      self.lines.forEach((line, lineIndex) => {
+        const tween = buildLineSpread(line);
+        if (!tween) return;
+        lineTweens.push(tween);
+        registry.addTween(`p${paragraphIndex}-line${lineIndex}`, tween);
+      });
+    },
+  });
+});
+```
+
+This is **not** duplicate tracking. `lineTweens` answers: *which tweens does this paragraph own for resize?* The registry answers: *what must die when the whole effect is destroyed?*
+
+---
+
+### Call flows
+
+**`onSplit` (one paragraph resizes):**
+
+```text
+1. lineTweens.forEach(t => registry.killTween(t))   ← this paragraph only
+2. lineTweens.length = 0
+3. buildLineSpread per line → push to lineTweens + registry.addTween
+```
+
+**`destroy()` (page leave / navigation):**
+
+```text
+1. registry.destroy()   ← kills all paragraphs, reverts splits
+```
+
+Do **not** call `registry.resetAnimations()` inside `onSplit` when multiple paragraphs exist.
+
+---
+
+### Registry rules for this pattern
+
+**1. Unique keys — paragraph index + line index**
+
+```js
+registry.addTween(`p${paragraphIndex}-line${lineIndex}`, tween);
+```
+
+Avoid keys that use only the line index (`line-${lineIndex}`) — they collide across paragraphs. Avoid shadowing `paragraphIndex` with `i` inside `onSplit`.
+
+**2. Always pass both arguments**
+
+```js
+registry.addTween(key, tween);   // ✓
+registry.addTween(tween);        // ✗ key becomes the tween object
+```
+
+**3. Guard null returns**
+
+`buildLineSpread` may return `null` when a line has no words:
+
+```js
+const tween = buildLineSpread(line);
+if (!tween) return;
+```
+
+**4. Orphan Map keys after line count shrinks**
+
+If a paragraph goes from 5 lines to 3 on resize, keys `p0-line3` and `p0-line4` may remain in the Map as references to already-killed tweens. This is harmless — no duplicate ScrollTriggers run, and `destroy()` clears the Map. Optional follow-up: `removeTween(key)` to prune orphans; not required for correctness.
+
+---
+
+### `buildLineSpread` — pure builder, caller registers
+
+Keep animation math separate from lifecycle. The builder **returns** a tween; the `onSplit` loop **registers** it.
+
+```js
+// Builder — no registry, no kill
+function buildLineSpread(line) {
+  const words = [...line.querySelectorAll(".anim-word")];
+  if (!words.length) return null;
+  // spread math …
+  return gsap.to(words, {
+    x: 0,
+    scrollTrigger: { trigger: line, /* scroll config */ },
+  });
+}
+```
+
+Do not register inside `buildLineSpread`. Do not kill inside `buildLineSpread`. One place owns rebuild logic: the `onSplit` callback above.
+
+---
+
+### When to use this pattern
+
+| Situation | Pattern |
+|-----------|---------|
+| Single target, no `autoSplit` | Registry only — register in `create()`, `destroy()` on teardown |
+| Single SplitText, `autoSplit` | Module-level `buildTweens()` + `registry.resetAnimations()` or `killTween` on all module tweens |
+| **Multiple paragraphs**, each `autoSplit` | **Nested `lineTweens` per paragraph** + registry for `destroy()` |
+| Nested effect module (section 3) | Effect owns registry; section wrapper delegates `create()` / `destroy()` |
+
+---
+
+### Nested effect module (section 3)
+
+For complex effects, the registry can live inside the effect file rather than the section wrapper:
+
+```text
+sectionThree.js          textWideSlide.js
+  create()        →        createTextWideSlide({ … })
+  effect.create() →          buildParagraph × N (nested lineTweens each)
+  effect.destroy()→          registry.destroy()
+  get registry()  →        effect.registry
+```
+
+The section passes DOM refs and config; the effect owns SplitText, nested `lineTweens`, and the registry. See [`js/timeline/sectionThree.js`](../js/timeline/sectionThree.js) and [`docs/PLAN.md`](./PLAN.md) for the full module pattern.
+
+---
+
+### Anti-patterns
+
+```js
+// ❌ Global reset inside per-paragraph onSplit (kills other paragraphs)
+onSplit(self) {
+  registry.resetAnimations();
+  // rebuild only this paragraph …
+}
+
+// ❌ No lineTweens — orphaned tweens stack on every resize
+onSplit(self) {
+  self.lines.forEach((line) => {
+    gsap.to(/* … */);  // previous tweens never killed
+  });
+}
+
+// ❌ Shared lineTweens across all paragraphs
+const lineTweens = [];
+paragraphs.forEach((paragraph) => {
+  SplitText.create(paragraph, { onSplit() { /* … */ } });
+}); // one array — kill in paragraph 2 clears paragraph 0's handles incorrectly
+```
+
+---
+
+### Checklist (multi-paragraph `autoSplit`)
+
+- [ ] `lineTweens` declared **inside** `paragraphs.forEach`, not outside the loop
+- [ ] `onSplit` kills via `lineTweens` + `registry.killTween`, not `registry.resetAnimations()`
+- [ ] Keys use `` `p${paragraphIndex}-line${lineIndex}` ``
+- [ ] `registry.addTween(key, tween)` — both args, null guarded
+- [ ] Builder returns tween; `onSplit` registers
+- [ ] `registry.addSplit(`p${paragraphIndex}`, split)` stores SplitText instance
+- [ ] `destroy()` calls `registry.destroy()` on the effect that owns the registry
 

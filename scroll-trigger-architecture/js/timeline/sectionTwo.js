@@ -5,125 +5,130 @@ import { removePrehideClasses } from "../utils.js";
 import { EASEOUTQUAD } from "../easings.js";
 
 /* ─────────────────────────────────────────────────────────
- * SECTION 1 STORYBOARD
+ * SECTION 2 STORYBOARD  (×3 groups)
  *
- *     before   copy waiting below frame
- *    top 50%   title characters rise in, cascading
- * 50%→center   body lines rise and fade in, tied to scroll
- *
+ *     before   copy held back, nothing on stage
+ * center−120   body lines fade in, cascading
+ *     center   headline fades in
  * ─────────────────────────────────────────────────────────
  *
- * PATTERN: ScrollTrigger dives 2 animations
+ * PATTERN: ScrollTrigger drives 2 animations
  *
  * ───────────────────────────────────────────────────────── */
 
-const SECTION_ONE_CONFIG = {
+const SECTION_TWO_CONFIG = {
   SELECTORS: {
-    SECTION: "[data-section='1']",
+    SECTION: "[data-section='2']",
     HEADER: ".page-section__title",
-    PARAGRAPHS: ".page-section__body p",
+    GROUPS: ".page-section__group",
+    PARAGRAPH: "p",
   },
   HEADER: {
     SPLIT_TEXT: {
-      TYPE: "chars,lines",
-      MASK: "chars",
-    },
-    TIMELINE: {
-      FROM: {
-        yPercent: 100,
-      },
-      TO: {
-        yPercent: 0,
-        duration: 1,
-        ease: EASEOUTQUAD,
-        stagger: 0.01,
-      },
-    },
-    SCROLL_TRIGGER: {
-      start: "top 50%",
+      type: "chars",
+      mask: "chars",
     },
   },
-  PARAGRAPHS: {
+  PARAGRAPH: {
     SPLIT_TEXT: {
       type: "lines",
       mask: "lines",
     },
     TIMELINE: {
       FROM: {
-        yPercent: 100,
         opacity: 0,
+        yPercent: 100,
       },
       TO: {
-        yPercent: 0,
         opacity: 1,
+        yPercent: 0,
         duration: 1,
         ease: EASEOUTQUAD,
         stagger: 0.01,
       },
     },
-    SCROLL_TRIGGER: {
-      start: "top 50%",
-    },
   },
 };
 
+export function createSectionTwo() {
+  const registry = createRegistry();
 
-export createSectionTwo() {
+  const sectionTwo = document.querySelector(
+    SECTION_TWO_CONFIG.SELECTORS.SECTION,
+  );
 
+  const sectionTwoGroups = Array.from(
+    sectionTwo.querySelectorAll(SECTION_TWO_CONFIG.SELECTORS.GROUPS),
+  );
 
-
-
+  function setupSplitTween() {
     
+  }
+
+  function createTweens() {
+    registry.resetAnimations();
+
+    sectionTwoGroups.forEach((group) => {
+      const header = group.querySelector(SECTION_TWO_CONFIG.SELECTORS.HEADER);
+
+      const headerTween = gsap.to(header, {
+        onStart: () => {
+          removePrehideClasses(header, paragraph);
+        },
+        opacity: 1,
+        scrollTrigger: {
+          trigger: group,
+          start: "top center",
+          end: "center center",
+          once: true,
+        },
+      });
+
+      registry.addTween(headerTween);
+
+      const paragraph = group.querySelector(
+        SECTION_TWO_CONFIG.SELECTORS.PARAGRAPH,
+      );
+
+      const paragraphLines = new SplitText(paragraph, {
+        type: SECTION_TWO_CONFIG.PARAGRAPH.SPLIT_TEXT.type,
+        mask: SECTION_TWO_CONFIG.PARAGRAPH.SPLIT_TEXT.mask,
+        autoSplit: true,
+        revert: true,
+      }).lines;
+
+      registry.addSplit(paragraphLines);
+
+      gsap.set(paragraphLines, {
+        opacity: 0,
+      });
+
+      const linesTween = gsap.to(paragraphLines, {
+        opacity: 1,
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: group,
+          start: "top center-=120",
+          once: true,
+        },
+      });
+
+      registry.addTween(linesTween);
+    });
+  }
+
+  return {
+    name: "section-two",
+    type: "gsap split and scroll",
+    registry: registry,
+    create() {
+      createTweens();
+    },
+    destroy() {
+      registry.destroy();
+    },
+    revert() {
+      registry.resetSplits();
+    },
+  };
 }
-
-const sectionOne = document.querySelector(SECTION_ONE_CONFIG.SELECTORS.SECTION);
-const sectionOneHeader = sectionOne.querySelector(
-  SECTION_ONE_CONFIG.SELECTORS.HEADER,
-);
-const sectionOneParagraphs = sectionOne.querySelectorAll(
-  SECTION_ONE_CONFIG.SELECTORS.PARAGRAPHS,
-);
-
-const sectionOneHeaderChars = new SplitText(sectionOneHeader, {
-  type: SECTION_ONE_CONFIG.HEADER.SPLIT_TEXT.TYPE,
-  mask: SECTION_ONE_CONFIG.HEADER.SPLIT_TEXT.MASK,
-}).chars;
-
-gsap.set(sectionOneHeaderChars, {
-  yPercent: SECTION_ONE_CONFIG.HEADER.TIMELINE.FROM.yPercent,
-});
-
-gsap.to(sectionOneHeaderChars, {
-  yPercent: SECTION_ONE_CONFIG.HEADER.TIMELINE.TO.yPercent,
-  stagger: SECTION_ONE_CONFIG.HEADER.TIMELINE.stagger,
-  ease: SECTION_ONE_CONFIG.HEADER.TIMELINE.ease,
-  scrollTrigger: {
-    trigger: sectionOne,
-    start: SECTION_ONE_CONFIG.HEADER.SCROLL_TRIGGER.start,
-  },
-});
-
-const sectionOneParagraphsLines = new SplitText(sectionOneParagraphs, {
-  type: SECTION_ONE_CONFIG.PARAGRAPHS.SPLIT_TEXT.type,
-  mask: SECTION_ONE_CONFIG.PARAGRAPHS.SPLIT_TEXT.mask,
-  autoSplit: true,
-  onSplit(self) {
-    gsap.set(self.lines, {
-      opacity: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.FROM.opacity,
-      yPercent: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.FROM.yPercent,
-    });
-
-    return gsap.to(self.lines, {
-      opacity: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.TO.opacity,
-      yPercent: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.TO.yPercent,
-      stagger: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.stagger,
-      ease: SECTION_ONE_CONFIG.PARAGRAPHS.TIMELINE.ease,
-      scrollTrigger: {
-        trigger: sectionOne,
-        start: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.start,
-        end: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.end,
-        scrub: SECTION_ONE_CONFIG.PARAGRAPHS.SCROLL_TRIGGER.scrub,
-      },
-    });
-  },
-});
