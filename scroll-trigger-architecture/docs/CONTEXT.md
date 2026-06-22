@@ -46,6 +46,9 @@ _Avoid_: `onBuild`, `afterCreate` (collides with public `create()`)
 **Reduced motion** (textRipple):
 When `prefers-reduced-motion: reduce` matches, `createTextRipple` forces `fade-wave` preset and drops variance — caller config otherwise unchanged.
 
+**Motion presets**:
+Shared data in [`js/effects/motionPresets.js`](../js/effects/motionPresets.js) — three families: `CHAR_CELL_PRESETS` (textRoll), `PHRASE_DUAL_PRESETS` and `PHRASE_SINGLE_PRESETS` (textRipple). Same preset name can mean different motion per family; merge at the effect factory top.
+
 ## Relationships
 
 - The **Orchestrator** creates one **Module** per **Section**, then calls `create()` on each in DOM order

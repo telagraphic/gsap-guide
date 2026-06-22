@@ -1,12 +1,17 @@
 import gsap, { SplitText } from "../shared/gsap.js";
 import { createRegistry } from "../shared/registry.js";
+import { CHAR_CELL_PRESETS } from "./motionPresets.js";
 
 /**
  * Text Roll
  *
- * Slot-machine char roll — visible span exits down, hidden span enters from above.
+ * Slot-machine char roll — dual spans inside overflow-hidden char cells.
  * Chars only; word/line units are out of scope.
  *
+ * preset                   CHAR_CELL_PRESETS key — overrides roll.preset when set
+ * roll.preset              CHAR_CELL_PRESETS key (default "roll-down")
+ * roll.visible.from / .to  merged on top of preset visible layer
+ * roll.hidden.from / .to   merged on top of preset hidden layer
  * roll.stagger             delay between chars (default 0.05)
  * roll.duration            tween duration per char (default 1)
  * roll.ease                required — pass from caller
@@ -19,6 +24,16 @@ import { createRegistry } from "../shared/registry.js";
  * Nested SplitText + timeline rebuild on resize — see docs/REFACTOR.md
  */
 
+/** @deprecated Use CHAR_CELL_PRESETS from motionPresets.js */
+export const ROLL_PRESETS = CHAR_CELL_PRESETS;
+
+const TEXT_ROLL_DEFAULTS = {
+  preset: "roll-down",
+  stagger: 0.05,
+  duration: 1,
+  shuffle: false,
+};
+
 const SPLIT_TEXT_DEFAULTS = {
   type: "chars",
   charsClass: "anim-char-parent",
@@ -30,11 +45,30 @@ export function createTextRoll({
   target,
   targets,
   splitText = {},
+  preset,
   roll = {},
   scrollTrigger,
   onSplit,
 }) {
   const registry = createRegistry();
+  const rollConfig = {
+    ...TEXT_ROLL_DEFAULTS,
+    ...roll,
+    ...(preset !== undefined ? { preset } : {}),
+  };
+  const cellPreset =
+    CHAR_CELL_PRESETS[rollConfig.preset] ??
+    CHAR_CELL_PRESETS[TEXT_ROLL_DEFAULTS.preset];
+  const motion = {
+    visible: {
+      from: { ...cellPreset.visible.from, ...roll.visible?.from },
+      to: { ...cellPreset.visible.to, ...roll.visible?.to },
+    },
+    hidden: {
+      from: { ...cellPreset.hidden.from, ...roll.hidden?.from },
+      to: { ...cellPreset.hidden.to, ...roll.hidden?.to },
+    },
+  };
 
   function createDualSpans(chars) {
     chars.forEach((charEl) => {
@@ -46,8 +80,8 @@ export function createTextRoll({
 
   function setRollStyles(chars) {
     chars.forEach((charEl) => {
-      gsap.set(charEl.querySelector(".anim-char-visible"), { yPercent: 0 });
-      gsap.set(charEl.querySelector(".anim-char-hidden"), { yPercent: -100 });
+      gsap.set(charEl.querySelector(".anim-char-visible"), motion.visible.from);
+      gsap.set(charEl.querySelector(".anim-char-hidden"), motion.hidden.from);
     });
   }
 
@@ -61,14 +95,14 @@ export function createTextRoll({
 
       timeline.fromTo(
         visible,
-        { yPercent: 0 },
-        { yPercent: 100, ease, duration },
+        motion.visible.from,
+        { ...motion.visible.to, ease, duration },
         index * stagger,
       );
       timeline.fromTo(
         hidden,
-        { yPercent: -100 },
-        { yPercent: 0, ease, duration },
+        motion.hidden.from,
+        { ...motion.hidden.to, ease, duration },
         index * stagger,
       );
     });
@@ -98,7 +132,7 @@ export function createTextRoll({
           },
         });
 
-        appendRolls(timeline, self.chars, roll);
+        appendRolls(timeline, self.chars, rollConfig);
         registry.addTimeline(key, timeline);
 
         return timeline;

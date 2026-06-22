@@ -54,6 +54,39 @@ flowchart LR
 
 **Naming (housekeeping):** `createCharLayers`, `splitChars`, `bindHover`, `playRipple`, `initTarget`, `refreshTargets`, `beforeBind`.
 
+### Call chain (textRipple.js)
+
+```text
+create()
+  └─ elements.forEach → initTarget(index)
+       ├─ createCharLayers(target, layerMode)     [Structure]
+       ├─ beforeBind?.(target)                      [hook]
+       └─ bindTarget(target, key)                   [Bind]
+            ├─ [mode=scroll] bindScroll
+            │    └─ gsap.timeline({ scrollTrigger })
+            │         └─ appendRippleTweens(tl, target, staggerFrom)
+            └─ [mode=hover] bindHover
+                 └─ mouseover → playRipple(target, charIndex)
+                      └─ appendRippleTweens(tl, target, origin, { reset: true })
+
+appendRippleTweens                          [Play]
+  ├─ query visibleChars (+ hiddenChars if dual)
+  ├─ [variance] tweenLayerChars × N layers
+  └─ [no variance] tweenLayer × N layers (hidden at "<" if dual)
+       └─ fromTo | to
+
+ScrollTrigger "refreshInit" → refreshTargets  [Refresh]
+  ├─ killScrollTimeline | killTweensOf + remove hovered class
+  ├─ createCharLayers(target, layerMode)
+  ├─ beforeBind?.(target)
+  └─ [mode=scroll] bindScroll only (hover listeners persist)
+
+destroy()
+  ├─ abort.abort()          — removes hover listeners
+  ├─ remove refreshInit listener
+  └─ registry.destroy()
+```
+
 ### 1b. Listener + rebuild cleanup
 
 - `AbortController` removes hover listeners on `destroy()`
@@ -115,7 +148,7 @@ bind: {
 
 **Status:** implemented
 
-**Scope:** Named presets as shortcuts; `ripple.visible` / `ripple.hidden` `from`/`to` merge on top for multi-property motion.
+**Scope:** Named presets as shortcuts; `ripple.visible` / `ripple.hidden` `from`/`to` merge on top for multi-property motion. Preset data lives in [`motionPresets.js`](../js/effects/motionPresets.js) — `PHRASE_DUAL_PRESETS` and `PHRASE_SINGLE_PRESETS` (textRoll uses `CHAR_CELL_PRESETS` in the same file).
 
 | Preset | Layer mode | Visible | Hidden | Notes |
 |--------|------------|---------|--------|-------|
@@ -150,9 +183,9 @@ ripple: {
 
 ## Follow-up — preset families & lessons learned
 
-**Status:** notes for a future pass (no implementation yet)
+**Status:** implemented — presets live in [`motionPresets.js`](../js/effects/motionPresets.js); `textRipple.js` uses `layerMode` on presets plus optional `ripple.layerMode` override.
 
-Phase 4 presets exposed two distinct effect families. Today `appendRippleTweens` always builds **dual phrase layers** and tweens **both** visible and hidden char sets — even when a preset only needs one line of chars. Separating these families later would unlock lighter DOM and more preset variety.
+Phase 4 presets exposed two distinct effect families. `appendRippleTweens` skips hidden layer tweens when `layerMode === "single"`; `createCharLayers` builds one visible span only in single mode.
 
 ### Dual-layer pair roll
 
@@ -224,13 +257,14 @@ Working pattern (same family as `pop`): visible **lands** at `yPercent: 0`; hidd
 
 ### Proposed follow-up (when revisiting)
 
-| Item | Idea |
-|------|------|
-| Layer mode API | `ripple.layers: "dual" \| "single"` or tag presets by family |
-| Single-layer structure | `createCharLayers` optional — one span + `splitChars` only |
-| `appendRippleTweens` | Skip hidden tween when preset is single-layer |
-| Preset metadata | `RIPPLE_PRESETS[name].mode: "dual" \| "single"` |
-| Docs | Keep preset table `Layer mode` column in sync with code |
+| Item | Status |
+|------|--------|
+| Layer mode API | `ripple.layerMode` override + preset `layerMode` |
+| Single-layer structure | `createCharLayers` — one span when single |
+| `appendRippleTweens` | Skips hidden tween when single |
+| Preset metadata | `layerMode` on PHRASE_DUAL / PHRASE_SINGLE entries |
+| Shared presets | [`motionPresets.js`](../js/effects/motionPresets.js) — three families |
+| Docs | Preset table + call chain above |
 | Phase 6 | `fade-wave` + `prefers-reduced-motion` on single-layer path |
 | Avoid | `filter`, `xPercent` spread, dual-layer presets without pair-roll semantics |
 

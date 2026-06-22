@@ -1,4 +1,5 @@
 import { createTextRipple } from "../effects/textRipple.js";
+import { EASEINOUTQUART } from "../easings.js";
 
 /* ─────────────────────────────────────────────────────────
  * SECTION 8 STORYBOARD  (per phrase item)
@@ -31,8 +32,8 @@ const SECTION_EIGHT_CONFIG = {
     char: "animation-character-ripple__char",
   },
   RIPPLE: {
-    preset: "roll-down",
-    ease: "back.out(2)",
+    preset: "roll-combo",
+    ease: EASEINOUTQUART,
     duration: 0.6,
     stagger: { each: 0.023 },
   },

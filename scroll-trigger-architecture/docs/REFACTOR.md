@@ -18,11 +18,211 @@ https://madewithgsap.com/effects/tutorial041
 https://madewithgsap.com/effects/tutorial027
 
 - Component based on html shape
-- Or tagging the html with a data-animation="animationType" to then create the markup, assign styles and run the code
+- Or tagging the html with a `data-animation="animationType"` to create markup, assign styles, and run the code — see [Animation configuration patterns](#animation-configuration-patterns-reference) below
 
+---
 
+## Animation configuration patterns (reference)
 
-# Before Refactoring
+**Status:** design notes for future work — not implemented
+
+Shared motion presets live in [`js/effects/motionPresets.js`](../js/effects/motionPresets.js). Effect factories (`createTextRoll`, `createTextRipple`) are the **executor** layer. The patterns below differ only in **where config lives** and **how targets are discovered** — not in the GSAP logic itself.
+
+### Common pipeline
+
+All patterns follow the same four steps:
+
+```text
+Discover targets  →  Resolve config  →  Run effect factory  →  Lifecycle (create / refresh / destroy)
+```
+
+| Layer | Responsibility |
+|-------|----------------|
+| **Discover** | Find DOM nodes to animate |
+| **Config** | Preset, ease, stagger, scrollTrigger, bind mode |
+| **Execute** | `createTextRoll`, `createTextRipple`, etc. |
+| **Lifecycle** | Registry; `create()` / `destroy()` / `revert()`; orchestrator teardown |
+
+Effects stay the same across patterns. You choose where **intent** lives: JS module, HTML attrs, central manifest, component props, or CMS.
+
+### Declarative markup (`data-*`) — proposed enhancement
+
+Tag elements so each can use the same effect factory with different presets:
+
+```html
+<div
+  class="animation-slot-machine-roll__track anim-mask anim-prehide"
+  data-animation="text-roll"
+  data-preset="skew-roll"
+  data-roll-shuffle="true"
+  data-scroll-start="center 60%"
+  data-scroll-end="top top"
+  data-scroll-scrub="0.4"
+>
+  SPLITTEXT
+</div>
+```
+
+Container-level random preset pool:
+
+```html
+<div
+  class="animation-slot-machine-roll"
+  data-animation-preset-pool="roll-down,pop-roll,skew-roll,roll-crossfade"
+>
+  <!-- child: data-preset="random" picks from pool once at create() -->
+</div>
+```
+
+A page- or section-scoped scanner bootstraps factories:
+
+```text
+initDeclarativeAnimations(sectionRoot, defaults)
+  → query [data-animation]
+  → EFFECT_REGISTRY["text-roll"](parsedConfig)
+  → register instances for destroyAllModules()
+```
+
+**Suggested config precedence:**
+
+```text
+element data-*  >  section CONFIG  >  effect TEXT_*_DEFAULTS
+```
+
+**Attribute schema (minimal):**
+
+| Attribute | Maps to |
+|-----------|---------|
+| `data-animation` | Effect registry key (`text-roll`, `text-ripple`) |
+| `data-preset` | Preset key in the matching `motionPresets` family |
+| `data-preset="random"` | Pick from container `data-animation-preset-pool` |
+| `data-roll-shuffle`, `data-roll-stagger`, … | Flat roll options |
+| `data-scroll-start`, `data-scroll-end`, `data-scroll-scrub` | Shared scrollTrigger merge |
+| `data-animation-config` | Optional JSON escape hatch for complex overrides |
+
+**Implementation phases (when adopted):**
+
+1. Effect registry map — `{ "text-roll": createTextRoll, "text-ripple": createTextRipple }`
+2. `parseAnimationElement(el)` — attrs → factory args; validate preset keys against `motionPresets`
+3. `initDeclarativeAnimations(root, defaults)` — returns a module `{ create, destroy }`
+4. Pilot on section 7 (per-item presets) or migrated section 4
+5. Keep complex sections (5, 6, 8) as section modules
+
+**Design notes:**
+
+- Use **factory + registry + scanner**, not OOP classes, unless migrating all effects to classes.
+- Scope scanner to a **section container**, not the whole document — preserves the orchestrator model in [`js/script.js`](../js/script.js).
+- Validate preset names at init; fail loudly on typos.
+- `data-animation="text-roll"` → `CHAR_CELL_PRESETS`; `text-ripple` → phrase dual/single (+ bind, layers).
+- Optional JSON `data-animation-config` only for overrides that don’t deserve first-class attrs.
+
+**DOM shape matters — not every element fits `text-roll`:**
+
+| Shape | Example | Effect |
+|-------|---------|--------|
+| Char cell (SplitText → dual span per char) | Sections 5, 7 | `createTextRoll` |
+| Phrase layers (visible + hidden at `bottom: 100%`) | Section 8 | `createTextRipple` |
+| Word-level dual span (pre-built in HTML) | Section 4 tracks | Today: hand-rolled tweens; future: `track-roll` or migrate to SplitText + `textRoll` |
+
+Section 4 markup uses whole-word `.anim-char-visible` / `.anim-char-hidden` pairs inside `.anim-clip-slot`. `textRoll` SplitTexts per **char** and injects spans inside `.anim-char-parent` — different visual and CSS. Do not assume one effect key covers both without a migration.
+
+**Randomness — two levels:**
+
+| Kind | Mechanism |
+|------|-----------|
+| Char order | `roll.shuffle` in `createTextRoll` |
+| Preset per element | `data-preset` or `data-preset="random"` + container pool |
+
+### Pattern comparison
+
+Five ways to wire the same pipeline in a frontend app:
+
+#### 1 — Section modules (current default)
+
+```text
+script.js orchestrator → createSectionSeven() → SECTION_*_CONFIG → createTextRoll({ … })
+```
+
+| Pros | Cons |
+|------|------|
+| Storyboard + selectors next to animation code | Duplication for many similar targets |
+| Easy multi-effect sections (5, 6, 8) | Preset changes require JS edits |
+| Clear registry / destroy ownership | Poor fit for “100 rows, each different preset” |
+
+**Best for:** Composed storyboards, teaching demos where JS is the documentation.
+
+#### 2 — Declarative markup (`data-*`)
+
+| Pros | Cons |
+|------|------|
+| Variation visible in HTML | Two config sources without clear precedence |
+| Same factory, many instances | Attr typos; needs preset validation |
+| Random pools are natural | Complex effects need more attrs or section defaults |
+
+**Best for:** Slot grids, icon lists, CMS templates, per-block A/B motion.
+
+#### 3 — Central manifest
+
+One JS/JSON file maps selectors → `{ effect, preset, scrollTrigger }`. DOM stays clean; bootstrap walks the manifest.
+
+| Pros | Cons |
+|------|------|
+| All motion in one searchable file | Selectors drift from HTML refactors |
+| Schema / type validation | Less obvious when reading HTML |
+| Easy to generate from spreadsheets | Fragile nth-child selectors |
+
+**Best for:** Medium sites, design-system docs, marketing spreadsheets.
+
+#### 4 — Component props (framework apps)
+
+`<AnimatedText preset="pop-roll" />` → hook calls `createTextRoll` on mount, destroy on unmount.
+
+| Pros | Cons |
+|------|------|
+| Typed, IDE-friendly config | Framework lifecycle required |
+| Design-system composition | SSR + SplitText timing needs care |
+| Same GSAP factories underneath | Not the current vanilla stack without a wrapper |
+
+**Best for:** React/Vue/Svelte product apps.
+
+#### 5 — CMS / content layer
+
+CMS fields render into `data-*` or props at build time. Runtime is pattern 2 or 4.
+
+| Pros | Cons |
+|------|------|
+| Editors tune motion without deploys | Needs allowlists and preview |
+| Scales to marketing sites | Overkill for fixed demo pages |
+
+**Best for:** Headless CMS, multi-tenant templates.
+
+### Where config lives — same pattern, different wiring
+
+| Layer | Section module | `data-*` | Manifest | Component |
+|-------|----------------|----------|----------|-----------|
+| Discover | Module queries section | Scanner queries `[data-animation]` | Manifest selectors | Ref / mount |
+| Config | `SECTION_*_CONFIG` | Element attrs + container defaults | Central map | Props |
+| Execute | Effect factories | Same | Same | Same (in hook) |
+| Lifecycle | Module `create` / `destroy` | Scanner module or parent section | Bootstrap module | `useEffect` / unmount |
+
+### Recommended hybrid (this project)
+
+| Section type | Pattern |
+|--------------|---------|
+| 5, 6, 8 — multi-effect storyboards | **Section modules** (keep) |
+| 4, 7 — many similar targets, per-item variation | **Declarative** or **manifest** scoped inside the section |
+| Shared presets | **`motionPresets.js`** |
+| Page teardown | **`destroyAllModules()`** — scanner instances register as modules |
+
+### Decision guide
+
+- Variation in HTML without new JS files → **Pattern 2** (`data-*`)
+- One file to grep all motion → **Pattern 3** (manifest)
+- Composed scene (title + paragraphs + pin) → **Pattern 1** (section module)
+- React app with types → **Pattern 4** (component props)
+- Marketing edits motion → **Pattern 5** (CMS → 2 or 4)
+
+---
 
 - convert gsap.set to styles
 - extract repeated properties styles into css properties

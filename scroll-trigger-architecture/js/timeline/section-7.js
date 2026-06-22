@@ -20,6 +20,7 @@ const SECTION_SEVEN_CONFIG = {
     ITEMS: ".animation-character-waterdrop__item",
   },
   ROLL: {
+    preset: "pop-roll",
     ease: EASEINOUTQUART,
     stagger: 0.05,
     duration: 1,

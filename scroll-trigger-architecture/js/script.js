@@ -1,14 +1,14 @@
 import { ScrollTrigger } from "./shared/gsap.js";
-import { createHeader } from "./timeline/sectionHeader.js";
-import { createSectionOne } from "./timeline/sectionOne.js";
-import { createSectionTwo } from "./timeline/sectionTwo.js";
-import { createSectionThree } from "./timeline/sectionThree.js";
-import { createSectionFour } from "./timeline/sectionFour.js";
-import { createSectionFive } from "./timeline/sectionFive.js";
-import { createSectionSix } from "./timeline/sectionSix.js";
-import { createSectionSeven } from "./timeline/sectionSeven.js";
-import { createSectionEight } from "./timeline/sectionEight.js";
-import { createSectionFooter } from "./timeline/sectionFooter.js";
+import { createHeader } from "./timeline/section-header.js";
+import { createSectionOne } from "./timeline/section-1.js";
+import { createSectionTwo } from "./timeline/section-2.js";
+import { createSectionThree } from "./timeline/section-3.js";
+import { createSectionFour } from "./timeline/section-4.js";
+import { createSectionFive } from "./timeline/section-5.js";
+import { createSectionSix } from "./timeline/section-6.js";
+import { createSectionSeven } from "./timeline/section-7.js";
+import { createSectionEight } from "./timeline/section-8.js";
+import { createSectionFooter } from "./timeline/section-footer.js";
 
 const modules = [];
 
