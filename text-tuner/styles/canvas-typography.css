@@ -16,7 +16,7 @@
   text-transform: var(--playground-text-transform);
 }
 
-/* SplitText may bake font-size inline — inherit live vars from scoped target */
+/* SplitText may bake typography inline — track live vars from scoped target */
 [data-playground] .word,
 [data-playground] .line,
 [data-playground] .char,
@@ -28,7 +28,7 @@
   font-size: inherit !important;
   font-style: inherit;
   line-height: inherit;
-  letter-spacing: inherit;
-  text-align: inherit;
-  text-transform: inherit;
+  letter-spacing: var(--playground-letter-spacing);
+  text-align: var(--playground-text-align);
+  text-transform: var(--playground-text-transform);
 }

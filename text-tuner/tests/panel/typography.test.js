@@ -17,7 +17,7 @@ function mockPlaygroundTarget() {
       },
     },
     querySelectorAll(selector) {
-      if (selector === ".word, .line, .char") return splitNodes;
+      if (String(selector).includes(".word")) return splitNodes;
       return [];
     },
     addSplitNode(inlineFontSize) {
@@ -25,6 +25,9 @@ function mockPlaygroundTarget() {
       if (inlineFontSize) props.set("font-size", inlineFontSize);
       const node = {
         style: {
+          setProperty(name, value) {
+            props.set(name, value);
+          },
           removeProperty(name) {
             props.delete(name);
           },
@@ -45,7 +48,7 @@ function mockPlaygroundTarget() {
 }
 
 const SAMPLE_TYPOGRAPHY = {
-  fontVar: "--font-fh-enso",
+  fontVar: "--font-basier-circle",
   fontSize: 2,
   lineHeight: 1.35,
   letterSpacing: 0.02,
@@ -58,23 +61,27 @@ describe("applyTypographyToScope", () => {
     const root = mockPlaygroundTarget();
     applyTypographyToScope(root, SAMPLE_TYPOGRAPHY);
 
-    assert.equal(root.style.getPropertyValue("--font-sans-serif"), "var(--font-fh-enso)");
+    assert.equal(root.style.getPropertyValue("--font-sans-serif"), "var(--font-basier-circle)");
     assert.equal(root.style.getPropertyValue("--playground-font-size"), "2rem");
     assert.equal(root.style.getPropertyValue("--playground-line-height"), "1.35");
     assert.equal(root.style.getPropertyValue("--playground-letter-spacing"), "0.02em");
     assert.equal(root.style.getPropertyValue("--playground-text-align"), "center");
     assert.equal(root.style.getPropertyValue("--playground-text-transform"), "uppercase");
+    assert.equal(root.style.textAlign, "center");
+    assert.equal(root.style.textTransform, "uppercase");
   });
 
-  it("clears inline font-size on split descendants (.word, .line, .char)", () => {
+  it("clears inline typography on split descendants (.word, .line, .char)", () => {
     const root = mockPlaygroundTarget();
     const word = root.addSplitNode("24px");
+    word.style.setProperty("text-align", "left");
     const line = root.addSplitNode("18px");
     const char = root.addSplitNode("14px");
 
     applyTypographyToScope(root, SAMPLE_TYPOGRAPHY);
 
     assert.equal(word.style.getPropertyValue("font-size"), "");
+    assert.equal(word.style.getPropertyValue("text-align"), "");
     assert.equal(line.style.getPropertyValue("font-size"), "");
     assert.equal(char.style.getPropertyValue("font-size"), "");
   });

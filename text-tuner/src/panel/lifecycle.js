@@ -155,11 +155,13 @@ export function createPanelLifecycle({
   function requestTypographyUpdate() {
     if (!isPanelOpen()) return;
     markTypographyDirty();
+
+    const typography = readConfigFromForm().typography;
+    applyTypography(typography);
+
     clearTimeout(typographyDebounce);
     typographyDebounce = setTimeout(() => {
       typographyDebounce = null;
-      const typography = readConfigFromForm().typography;
-      applyTypography(typography);
       setWorkingConfig(
         deepMerge(getWorkingConfig() || getCommittedConfig(), { typography })
       );

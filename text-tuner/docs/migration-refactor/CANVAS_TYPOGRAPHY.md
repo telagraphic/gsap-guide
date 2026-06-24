@@ -92,10 +92,10 @@ Each call clears `font-size` inline on `.word`, `.line`, `.char` under the scope
 
 | Split type | Mask | Instance / demo | Live font-size | Live line-height | Commit fixes masks |
 |------------|------|-----------------|----------------|------------------|--------------------|
-| `words,lines` | `lines` | `cold-start-lines` | AT-033a | AT-033a | Yes |
+| `words,lines` | `lines` | `section-1` | AT-033a | AT-033a | Yes |
 | `words,lines` | `lines` | `imported-paragraph` | AT-033b | AT-033b | Yes |
 | `words` | `none` | `config-header` | AT-033c | AT-033c | N/A |
-| `chars` (or `words,chars`) | any | `char-reveal` | AT-033d | AT-033d | N/A |
+| `chars` (or `words,chars`) | any | `section-4` | AT-033d | AT-033d | N/A |
 
 AT-033 (original) — pending indicator + rebuild on panel close — remains P0.
 

@@ -14,8 +14,8 @@ Use for QA before release and regression after changes.
 
 ### AT-001 — Discover cold-start instance (P0)
 
-**GIVEN** a page with `<p data-playground="cold-start-lines">` and no `define()` entry for that id  
-**WHEN** `discover()` and `attach({ activeId: "cold-start-lines" })` run  
+**GIVEN** a page with `<p data-playground="section-1">` and no `define()` entry for that id  
+**WHEN** `discover()` and `attach({ activeId: "section-1" })` run  
 **THEN** the instance appears in the registry  
 **AND** the runner creates SplitText on that element  
 **AND** opening the panel shows scaffold defaults (lines mask, yPercent 100→0, scrub on)
@@ -25,7 +25,7 @@ Use for QA before release and regression after changes.
 **GIVEN** `define({ "config-header": { animate: "words", … } })` and matching DOM node  
 **WHEN** `discover()` builds registry  
 **THEN** `config-header` defaults match `define()` not global scaffold  
-**AND** `cold-start-lines` (undefined) still uses scaffold
+**AND** `section-1` (undefined) still uses scaffold
 
 ### AT-003 — DOM ↔ registry validation (P1)
 
@@ -174,7 +174,7 @@ Use for QA before release and regression after changes.
 
 ### AT-033a — Live typography, lines + line mask (P1)
 
-**GIVEN** panel open, active instance `cold-start-lines` (`words,lines`, mask `lines`)  
+**GIVEN** panel open, active instance `section-1` (`words,lines`, mask `lines`)  
 **WHEN** user changes font size, line-height, and font family on Type tab  
 **THEN** preview updates live on canvas before panel close  
 **AND** Typography tab shows pending until commit
@@ -194,7 +194,7 @@ Use for QA before release and regression after changes.
 
 ### AT-033d — Live typography, chars split (P1)
 
-**GIVEN** panel open, active instance `char-reveal` (`chars`, mask `none`)  
+**GIVEN** panel open, active instance `section-4` (`chars`, mask `none`)  
 **WHEN** user changes font size on Type tab  
 **THEN** char nodes inherit live size (no stale inline `font-size` on `.char`)
 

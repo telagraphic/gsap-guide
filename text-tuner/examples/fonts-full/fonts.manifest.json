@@ -20,46 +20,16 @@
       "family": "FH 1089"
     },
     {
-      "slug": "fh-alpha",
-      "label": "FH Alpha",
-      "cssVar": "--font-fh-alpha",
-      "family": "FH Alpha"
-    },
-    {
       "slug": "fh-anorma",
       "label": "FH Anorma",
       "cssVar": "--font-fh-anorma",
       "family": "FH Anorma"
     },
     {
-      "slug": "fh-cordelia",
-      "label": "FH Cordelia",
-      "cssVar": "--font-fh-cordelia",
-      "family": "FH Cordelia"
-    },
-    {
       "slug": "fh-dfaalt",
       "label": "FH Dfaalt",
       "cssVar": "--font-fh-dfaalt",
       "family": "FH Dfaalt"
-    },
-    {
-      "slug": "fh-duo",
-      "label": "FH Duo",
-      "cssVar": "--font-fh-duo",
-      "family": "FH Duo"
-    },
-    {
-      "slug": "fh-duo-display",
-      "label": "FH Duo Display",
-      "cssVar": "--font-fh-duo-display",
-      "family": "FH Duo Display"
-    },
-    {
-      "slug": "fh-enso",
-      "label": "FH Enso",
-      "cssVar": "--font-fh-enso",
-      "family": "FH Enso"
     },
     {
       "slug": "fh-giselle",
@@ -102,18 +72,6 @@
       "label": "FH Premier",
       "cssVar": "--font-fh-premier",
       "family": "FH Premier"
-    },
-    {
-      "slug": "fh-total-display",
-      "label": "FH Total Display",
-      "cssVar": "--font-fh-total-display",
-      "family": "FH Total Display"
-    },
-    {
-      "slug": "fh-total-fine",
-      "label": "FH Total Fine",
-      "cssVar": "--font-fh-total-fine",
-      "family": "FH Total Fine"
     },
     {
       "slug": "giest",

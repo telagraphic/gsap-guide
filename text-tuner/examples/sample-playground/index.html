@@ -12,56 +12,67 @@
   </head>
   <body>
     <main class="page text-tuner-canvas">
-      <section class="frame frame--spacer" aria-label="Scroll spacer">
-        <p class="frame__copy">Scroll down. Four workflow demos + one non-playground footer.</p>
+      <header class="frame" aria-label="Scroll spacer" data-playground-trigger="header">
+        <div class="frame__content">
+          <p class="frame__copy" data-playground="header">SplitText Tuner.</p>
+        </div>
+      </header>
+
+      <section
+        class="frame"
+        data-playground-trigger="section-1"
+        aria-label="section one"
+      >
+        <div class="frame__content">
+          <p class="frame__copy split-target" data-playground="section-1">
+            &#8984;K to open the control panel. 
+          </p>
+        </div>
       </section>
 
       <section
         class="frame"
-        data-playground-trigger="cold-start-lines"
-        aria-label="Workflow 1 — cold start"
+        data-playground-trigger="section-2"
+        aria-label="section 2"
       >
-        <p class="frame__copy split-target" data-playground="cold-start-lines">
-          Cold start: only <code>data-playground</code> on this element. Config comes from
-          discover() scaffold defaults.
-        </p>
+        <div class="frame__content">
+          <p class="frame__copy split-target" data-playground="section-2">
+            Easily compare font settings, styles, splits, masks and more.
+            More kern, less burn.
+          </p>
+        </div>
       </section>
 
       <section
         class="frame"
-        data-playground-trigger="imported-paragraph"
-        aria-label="Workflow 2 — import"
+        data-playground-trigger="section-3"
+        aria-label="section three"
       >
-        <p class="frame__copy split-target" data-playground="imported-paragraph">
-          Import tab: paste canonical spaghetti, Convert, Apply. This instance uses a define()
-          block that matches what Apply would write to in-memory config.
-        </p>
+        <div class="frame__content">
+          <p class="frame__copy split-target" data-playground="section-3">
+            Tune ScrollTrigger settings for perfect timing, stagger and ease.
+          </p>
+        </div>
       </section>
 
       <section
         class="frame"
-        data-playground-trigger="config-header"
-        aria-label="Workflow 3 — config"
+        data-playground-trigger="section-4"
+        aria-label="section four"
       >
-        <h2 class="frame__title split-target" data-playground="config-header">
-          Config header reveal
-        </h2>
+        <div class="frame__content">
+          <p class="frame__copy split-target" data-playground="section-4">
+            Adjust tween properties to get it tight and right.
+          </p>
+        </div>
       </section>
 
-      <section
-        class="frame"
-        data-playground-trigger="char-reveal"
-        aria-label="Workflow 4 — chars split"
-      >
-        <p class="frame__copy split-target" data-playground="char-reveal">
-          Character split for typography contract testing.
-        </p>
-      </section>
-
-      <footer class="site-footer" aria-label="Non-playground footer">
-        <p class="site-footer__copy">
-          No data-playground — production spaghetti could animate this separately.
-        </p>
+      <footer class="frame" aria-label="Non-playground footer" data-playground-trigger="footer">
+        <div class="frame__content">
+          <p class="frame__copy" data-playground="footer">
+            Copy &amp; paste GSAP code and CSS tokens.
+          </p>
+        </div>
       </footer>
     </main>
 

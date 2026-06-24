@@ -31,7 +31,7 @@ export const GLOBAL_SCAFFOLD = {
     markers: false,
   },
   typography: {
-    fontVar: "--font-fh-enso",
+    fontVar: "--font-basier-circle",
     fontSize: 1.25,
     lineHeight: 1.5,
     letterSpacing: 0,

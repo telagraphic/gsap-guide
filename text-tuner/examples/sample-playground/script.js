@@ -10,8 +10,8 @@ define(SAMPLE_DEFINE_CONFIGS);
 discover();
 
 await attach({
-  fallbackId: "cold-start-lines",
-  storageKey: "sample-playground",
+  fallbackId: "section-1",
+  storageKey: "sample-playground-v2",
   targets: ".split-target",
   fontsManifest: new URL("../../fonts.manifest.json", import.meta.url).href,
 });

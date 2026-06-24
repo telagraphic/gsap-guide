@@ -11,6 +11,9 @@ export function applyTypographyToScope(scopeOrEl, typography) {
       : scopeOrEl;
   if (!root) return;
 
+  const textAlign = typography.textAlign || "left";
+  const textTransform = typography.textTransform || "none";
+
   root.style.setProperty("--font-sans-serif", `var(${typography.fontVar})`);
   root.style.setProperty("--playground-font-size", `${typography.fontSize}rem`);
   root.style.setProperty("--playground-line-height", String(typography.lineHeight));
@@ -18,13 +21,27 @@ export function applyTypographyToScope(scopeOrEl, typography) {
     "--playground-letter-spacing",
     `${typography.letterSpacing}em`
   );
-  root.style.setProperty("--playground-text-align", typography.textAlign);
-  root.style.setProperty("--playground-text-transform", typography.textTransform);
+  root.style.setProperty("--playground-text-align", textAlign);
+  root.style.setProperty("--playground-text-transform", textTransform);
+  root.style.textAlign = textAlign;
+  root.style.textTransform = textTransform;
 
-  // SplitText can pin font-size inline on split nodes (words, lines, chars)
-  root.querySelectorAll(".word, .line, .char").forEach((node) => {
-    node.style.removeProperty("font-size");
-  });
+  // Propagate to consumer frame wrappers (styles.css reads --playground-* on .frame)
+  if (typeof root.closest === "function") {
+    for (const el of [root.closest(".frame__content"), root.closest(".frame")]) {
+      if (!el || el === root) continue;
+      el.style.setProperty("--playground-text-align", textAlign);
+      el.style.textAlign = textAlign;
+    }
+  }
+
+  // SplitText can pin typography inline on split nodes — strip so live vars win
+  const splitTypographyProps = ["font-size", "text-align", "letter-spacing", "text-transform"];
+  root
+    .querySelectorAll(".word, .line, .char, [class*='-mask']")
+    .forEach((node) => {
+      splitTypographyProps.forEach((prop) => node.style.removeProperty(prop));
+    });
 }
 
 export function createTypographyHelpers({ getScope, getTargetsSelector }) {

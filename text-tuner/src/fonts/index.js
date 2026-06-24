@@ -2,12 +2,12 @@
 
 /** Minimal fallback when manifest fetch fails (starter slugs). */
 export const STARTER_FONT_FALLBACK = [
-  { slug: "fh-enso", label: "FH Enso", cssVar: "--font-fh-enso", family: "FH Enso" },
+  { slug: "basier-circle", label: "Basier Circle", cssVar: "--font-basier-circle", family: "Basier Circle" },
   { slug: "editorial-new", label: "Editorial New", cssVar: "--font-editorial-new", family: "Editorial New" },
   { slug: "maple-mono", label: "Maple Mono", cssVar: "--font-maple-mono", family: "Maple Mono" },
   { slug: "fh-noetica", label: "FH Noetica", cssVar: "--font-fh-noetica", family: "FH Noetica" },
   { slug: "lock-serif", label: "Lock Serif", cssVar: "--font-lock-serif", family: "Lock Serif" },
-  { slug: "basier-circle", label: "Basier Circle", cssVar: "--font-basier-circle", family: "Basier Circle" },
+  { slug: "fh-dfaalt", label: "FH Dfaalt", cssVar: "--font-fh-dfaalt", family: "FH Dfaalt" },
 ];
 
 /**

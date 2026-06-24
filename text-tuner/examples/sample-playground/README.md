@@ -4,10 +4,10 @@ Local dev page for testing **text-tuner** runner, schema, panel, and registry AP
 
 | Instance id | Workflow |
 |-------------|----------|
-| `cold-start-lines` | Tier 0 — `discover()` scaffold only (AT-033a: lines + line mask) |
+| `section-1` | Tier 0 — `discover()` scaffold only (AT-033a: lines + line mask) |
 | `imported-paragraph` | Tier 1 — simulates post–Import Apply (AT-033b) |
 | `config-header` | Tier 1 — hand-written `define()` config (AT-033c: words-only title) |
-| `char-reveal` | Tier 1 — chars split typography contract (AT-033d) |
+| `section-4` | Tier 1 — chars split typography contract (AT-033d) |
 
 ## Run
 
