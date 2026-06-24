@@ -1,0 +1,80 @@
+/* Text Tuner — tabs/scroll-trigger.css (migrated from playground-v2.css) */
+
+.tt-field--scrub .tt-field__label {
+  margin-bottom: var(--tt-space-2);
+}
+
+.tt-field--scrub .tt-segment-bar {
+  margin-bottom: var(--tt-space-2);
+}
+
+.tt-st-position-field {
+  margin-bottom: var(--tt-space-4);
+}
+
+/* ScrollTrigger tab — section dividers */
+.tt-tab-panel--scroll > .tt-scroll-section {
+  margin-bottom: 0;
+}
+
+.tt-tab-panel--scroll > .tt-scroll-section + .tt-scroll-section {
+  margin-top: var(--tt-space-5);
+  padding-top: var(--tt-space-5);
+  border-top: 1px solid var(--tt-border);
+}
+
+.tt-st-position {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tt-space-2);
+}
+
+.tt-st-position__edges,
+.tt-st-position__offsets {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--tt-space-2);
+  align-items: start;
+}
+
+.tt-st-position__edge,
+.tt-st-position__offset-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tt-space-1);
+  min-width: 0;
+}
+
+.tt-st-position__hint {
+  font-size: var(--tt-font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--tt-text-subtle);
+}
+
+#text-tuner-panel .tt-st-position__edge.is-edge-selected .tt-select {
+  background: var(--tt-accent-fill);
+}
+
+#text-tuner-panel .tt-st-position__edge.is-edge-selected .tt-select:focus {
+  background: var(--tt-accent-fill);
+}
+
+.tt-st-position__edge.is-offset-active {
+  opacity: 0.45;
+}
+
+.tt-st-position__offset-col.is-edge-selected {
+  opacity: 0.45;
+}
+
+.tt-st-position__offsets > .tt-track-slider,
+.tt-st-position__offset-col > .tt-track-slider {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.tt-st-position__units {
+  display: flex;
+}

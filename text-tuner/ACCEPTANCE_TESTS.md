@@ -6,7 +6,7 @@ Use for QA before release and regression after changes.
 **Format:** GIVEN / WHEN / THEN  
 **Priority:** P0 = ship blocker, P1 = should have, P2 = nice to have
 
-**Test page:** `split-text/playground-v2/examples/sample-playground/` until `text-tuner/examples/` exists.
+**Test page:** `text-tuner/examples/sample-playground/`
 
 ---
 
@@ -171,6 +171,34 @@ Use for QA before release and regression after changes.
 
 **WHEN** user closes panel  
 **THEN** rebuild runs (line breaks may change)
+
+### AT-033a — Live typography, lines + line mask (P1)
+
+**GIVEN** panel open, active instance `cold-start-lines` (`words,lines`, mask `lines`)  
+**WHEN** user changes font size, line-height, and font family on Type tab  
+**THEN** preview updates live on canvas before panel close  
+**AND** Typography tab shows pending until commit
+
+### AT-033b — Live typography, imported paragraph (P1)
+
+**GIVEN** panel open, active instance `imported-paragraph`  
+**WHEN** user changes font size and line-height on Type tab  
+**THEN** preview updates live (same as AT-033a)
+
+### AT-033c — Live typography, words-only headline (P1)
+
+**GIVEN** panel open, active instance `config-header` (`words`, mask `none`, `.frame__title`)  
+**WHEN** user changes font size on Type tab  
+**THEN** headline scale updates live (via `--playground-font-size` + title multiplier)  
+**AND** other Type fields still update live
+
+### AT-033d — Live typography, chars split (P1)
+
+**GIVEN** panel open, active instance `char-reveal` (`chars`, mask `none`)  
+**WHEN** user changes font size on Type tab  
+**THEN** char nodes inherit live size (no stale inline `font-size` on `.char`)
+
+**Note:** See [CANVAS_TYPOGRAPHY.md](./migration-refactor/CANVAS_TYPOGRAPHY.md) for runtime + consumer CSS contract.
 
 ### AT-034 — Scrub tri-state (P1)
 
@@ -357,11 +385,9 @@ Use for QA before release and regression after changes.
 
 ## 11. Regression — v2 parity
 
-### AT-100 — Single-instance tuner parity (P1)
+### AT-100 — Single-instance tuner parity (P1, deferred)
 
-**GIVEN** v2-style `attach({ init, defaults })` on 3-frame tuner markup  
-**WHEN** user tunes ST start live and SplitText mask on commit  
-**THEN** behavior matches `split-text/playground-v2/tuner/` reference
+**Status:** Deferred — legacy `split-text/playground-v2/tuner/` removed from repo. v2 compat shim (`attach({ init, defaults })`) remains testable via text-tuner; full pixel parity vs v2 tuner is git history only.
 
 ---
 
@@ -372,7 +398,7 @@ Use for QA before release and regression after changes.
 | Boot & API | 2 | AT-001, AT-002 |
 | Ownership | 2 | AT-010, AT-013 |
 | Panel | 2 | AT-020, AT-023 |
-| Live/rebuild | 3 | AT-030, AT-032, AT-033 |
+| Live/rebuild | 7 | AT-030, AT-032, AT-033, AT-033a–d |
 | Workflows | 4 | AT-040–AT-043 |
 | Export | 3 | AT-050, AT-053, AT-054 |
 | Import | 1 | AT-060 |
@@ -384,8 +410,8 @@ Use for QA before release and regression after changes.
 
 ## 13. Running tests (manual)
 
-1. Serve: `split-text/serve.sh`
-2. Open sample playground or text-tuner example when available
+1. Serve: `cd text-tuner && npm run demo` → [examples/sample-playground/](examples/sample-playground/)
+2. Open sample playground in browser
 3. DevTools console open for warnings (AT-003, AT-011)
 4. Record pass/fail per release in checklist below
 

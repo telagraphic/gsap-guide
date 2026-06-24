@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "families": [
+    {
+      "slug": "basier-circle",
+      "label": "Basier Circle",
+      "cssVar": "--font-basier-circle",
+      "family": "Basier Circle"
+    },
+    {
+      "slug": "editorial-new",
+      "label": "Editorial New",
+      "cssVar": "--font-editorial-new",
+      "family": "Editorial New"
+    },
+    {
+      "slug": "fh-enso",
+      "label": "FH Enso",
+      "cssVar": "--font-fh-enso",
+      "family": "FH Enso"
+    },
+    {
+      "slug": "fh-noetica",
+      "label": "FH Noetica",
+      "cssVar": "--font-fh-noetica",
+      "family": "FH Noetica"
+    },
+    {
+      "slug": "lock-serif",
+      "label": "Lock Serif",
+      "cssVar": "--font-lock-serif",
+      "family": "Lock Serif"
+    },
+    {
+      "slug": "maple-mono",
+      "label": "Maple Mono",
+      "cssVar": "--font-maple-mono",
+      "family": "Maple Mono"
+    }
+  ]
+}

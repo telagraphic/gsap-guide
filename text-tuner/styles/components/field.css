@@ -1,0 +1,78 @@
+/* Text Tuner — components/field.css (migrated from playground-v2.css) */
+
+/* Default vertical rhythm between form blocks */
+.tt-field-block {
+  margin-bottom: var(--tt-space-4);
+}
+
+
+.tt-field {
+  margin-bottom: var(--tt-space-4);
+}
+
+.tt-field > .tt-field-block {
+  margin-bottom: 0;
+}
+
+.tt-fieldset {
+  margin: 0 0 var(--tt-space-4);
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.tt-fieldset__legend {
+  display: block;
+  width: 100%;
+  margin-bottom: var(--tt-space-5);
+  padding-bottom: var(--tt-space-3);
+  border-bottom: 1px solid var(--tt-border);
+  font-size: var(--tt-label-size);
+  font-weight: var(--tt-label-weight);
+  letter-spacing: var(--tt-label-tracking);
+  text-transform: uppercase;
+  color: var(--tt-text-muted);
+  line-height: 1;
+}
+
+.tt-fieldset .tt-field:last-child {
+  margin-bottom: 0;
+}
+
+.tt-field__label {
+  display: block;
+  margin-bottom: var(--tt-space-2);
+  font-size: var(--tt-label-size);
+  font-weight: var(--tt-label-weight);
+  letter-spacing: var(--tt-label-tracking);
+  text-transform: uppercase;
+  color: var(--tt-text-muted);
+  line-height: 1;
+}
+
+.tt-control-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tt-space-2);
+  margin-bottom: var(--tt-space-4);
+}
+
+.tt-control-stack > .tt-field-block {
+  margin-bottom: 0;
+}
+
+.tt-control-stack:has(+ .tt-props-fieldset) {
+  margin-bottom: 0;
+}
+
+.tt-props-fieldset {
+  border: 0;
+  border-top: 1px solid var(--tt-border);
+  margin: var(--tt-space-5) 0 0;
+  padding: var(--tt-space-5) 0 0;
+  min-width: 0;
+}
+
+.tt-st-position-field {
+  margin-bottom: var(--tt-space-4);
+}

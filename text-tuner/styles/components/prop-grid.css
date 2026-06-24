@@ -1,0 +1,109 @@
+/* Text Tuner — components/prop-grid.css (migrated from playground-v2.css) */
+
+.tt-prop-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tt-space-2);
+  margin-top: 0;
+}
+
+.tt-prop-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--tt-prop-reset-col) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--tt-space-2);
+  min-height: var(--tt-control-height);
+}
+
+.tt-prop-row--head {
+  min-height: 0;
+  margin-bottom: var(--tt-space-1);
+}
+
+.tt-prop-row__head {
+  font-size: var(--tt-label-size);
+  font-weight: var(--tt-label-weight);
+  letter-spacing: var(--tt-label-tracking);
+  text-transform: uppercase;
+  color: var(--tt-text-muted);
+  line-height: 1;
+}
+
+.tt-prop-row__head-spacer {
+  display: block;
+}
+
+.tt-prop-row__reset {
+  width: var(--tt-prop-reset-col);
+  height: var(--tt-prop-reset-col);
+  justify-self: center;
+}
+
+.tt-prop-row .tt-track-slider {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.tt-prop-row .tt-track-slider__label,
+.tt-control-bar__label--prop {
+  font-family: var(--tt-font-mono);
+  text-transform: uppercase;
+}
+
+.tt-prop-row .tt-track-slider--label-none .tt-track-slider__value {
+  right: var(--tt-control-inset-x);
+  font-size: var(--tt-font-size-sm);
+}
+
+.tt-prop-row--text .tt-control-bar {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.tt-prop-row--text .tt-control-bar--compact .tt-input {
+  padding-left: 6rem;
+  font-family: var(--tt-font-mono);
+  font-size: var(--tt-font-size-sm);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.tt-prop-row--text .tt-control-bar--compact .tt-control-bar__label--prop {
+  font-size: var(--tt-label-size);
+  left: var(--tt-control-inset-x);
+}
+
+.tt-prop-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  appearance: none;
+  border: 0;
+  border-radius: var(--tt-radius-sm);
+  color: var(--tt-text-subtle);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.tt-prop-reset:hover {
+  color: var(--tt-text);
+  background: var(--tt-bg-input);
+}
+
+.tt-prop-reset:focus-visible {
+  outline: 2px solid var(--tt-accent-ring);
+  outline-offset: 2px;
+}
+
+.tt-prop-reset:active {
+  /* transform: scale(0.96); */
+}

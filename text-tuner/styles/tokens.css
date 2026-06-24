@@ -1,0 +1,48 @@
+/* Text Tuner — tokens.css (migrated from playground-v2.css) */
+
+#text-tuner-panel {
+  --tt-bg: #f7f7f7;
+  --tt-bg-elevated: #ffffff;
+  --tt-bg-input: #ececec;
+  --tt-bg-input-hover: #e0e0e0;
+  --tt-bg-input-active: #d4d4d4;
+  --tt-border: rgb(0 0 0 / 0.08);
+  --tt-text: #0a0a0a;
+  --tt-text-muted: #525252;
+  --tt-text-subtle: #737373;
+  --tt-accent: #4a7ae0;
+  --tt-accent-hover: #3d6ed4;
+  --tt-accent-soft: rgb(74 122 224 / 0.18);
+  --tt-accent-fill: #d3d3d3;
+  --tt-accent-ring: rgb(74 122 224 / 0.35);
+  --tt-radius-sm: 8px;
+  --tt-radius-md: 10px;
+  --tt-radius: var(--tt-radius-md);
+  --tt-space-1: 4px;
+  --tt-space-2: 6px;
+  --tt-space-3: 8px;
+  --tt-space-4: 10px;
+  --tt-space-5: 12px;
+  --tt-space-6: 14px;
+  --tt-control-height: 40px;
+  --tt-segment-pad: var(--tt-space-1);
+  --tt-control-inset-x: var(--tt-space-4);
+  --tt-segment-row-label-width: 6.25rem;
+  --tt-prop-reset-col: 28px;
+  --tt-font-size-md: 14px;
+  --tt-font-size: 13px;
+  --tt-font-size-sm: 12px;
+  --tt-font-size-xs: 11px;
+  --tt-label-size: var(--tt-font-size);
+  --tt-label-weight: 600;
+  --tt-label-tracking: 0.04em;
+  --tt-shadow-control:
+    0 0 0 1px rgb(0 0 0 / 0.06),
+    0 1px 2px rgb(0 0 0 / 0.04);
+  --tt-shadow-control-hover:
+    0 0 0 1px rgb(0 0 0 / 0.08),
+    0 1px 3px rgb(0 0 0 / 0.06);
+  --tt-shadow-panel:
+    -1px 0 0 rgb(0 0 0 / 0.06),
+    -4px 0 24px rgb(0 0 0 / 0.04);
+}

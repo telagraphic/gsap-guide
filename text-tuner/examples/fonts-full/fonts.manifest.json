@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "families": [
+    {
+      "slug": "basier-circle",
+      "label": "Basier Circle",
+      "cssVar": "--font-basier-circle",
+      "family": "Basier Circle"
+    },
+    {
+      "slug": "editorial-new",
+      "label": "Editorial New",
+      "cssVar": "--font-editorial-new",
+      "family": "Editorial New"
+    },
+    {
+      "slug": "fh-1089",
+      "label": "FH 1089",
+      "cssVar": "--font-fh-1089",
+      "family": "FH 1089"
+    },
+    {
+      "slug": "fh-alpha",
+      "label": "FH Alpha",
+      "cssVar": "--font-fh-alpha",
+      "family": "FH Alpha"
+    },
+    {
+      "slug": "fh-anorma",
+      "label": "FH Anorma",
+      "cssVar": "--font-fh-anorma",
+      "family": "FH Anorma"
+    },
+    {
+      "slug": "fh-cordelia",
+      "label": "FH Cordelia",
+      "cssVar": "--font-fh-cordelia",
+      "family": "FH Cordelia"
+    },
+    {
+      "slug": "fh-dfaalt",
+      "label": "FH Dfaalt",
+      "cssVar": "--font-fh-dfaalt",
+      "family": "FH Dfaalt"
+    },
+    {
+      "slug": "fh-duo",
+      "label": "FH Duo",
+      "cssVar": "--font-fh-duo",
+      "family": "FH Duo"
+    },
+    {
+      "slug": "fh-duo-display",
+      "label": "FH Duo Display",
+      "cssVar": "--font-fh-duo-display",
+      "family": "FH Duo Display"
+    },
+    {
+      "slug": "fh-enso",
+      "label": "FH Enso",
+      "cssVar": "--font-fh-enso",
+      "family": "FH Enso"
+    },
+    {
+      "slug": "fh-giselle",
+      "label": "FH Giselle",
+      "cssVar": "--font-fh-giselle",
+      "family": "FH Giselle"
+    },
+    {
+      "slug": "fh-lecturis",
+      "label": "FH Lecturis",
+      "cssVar": "--font-fh-lecturis",
+      "family": "FH Lecturis"
+    },
+    {
+      "slug": "fh-noetica",
+      "label": "FH Noetica",
+      "cssVar": "--font-fh-noetica",
+      "family": "FH Noetica"
+    },
+    {
+      "slug": "fh-noetica-display",
+      "label": "FH Noetica Display",
+      "cssVar": "--font-fh-noetica-display",
+      "family": "FH Noetica Display"
+    },
+    {
+      "slug": "fh-oscar-condensed",
+      "label": "FH Oscar Condensed",
+      "cssVar": "--font-fh-oscar-condensed",
+      "family": "FH Oscar Condensed"
+    },
+    {
+      "slug": "fh-oscar-pro",
+      "label": "FH Oscar Pro",
+      "cssVar": "--font-fh-oscar-pro",
+      "family": "FH Oscar Pro"
+    },
+    {
+      "slug": "fh-premier",
+      "label": "FH Premier",
+      "cssVar": "--font-fh-premier",
+      "family": "FH Premier"
+    },
+    {
+      "slug": "fh-total-display",
+      "label": "FH Total Display",
+      "cssVar": "--font-fh-total-display",
+      "family": "FH Total Display"
+    },
+    {
+      "slug": "fh-total-fine",
+      "label": "FH Total Fine",
+      "cssVar": "--font-fh-total-fine",
+      "family": "FH Total Fine"
+    },
+    {
+      "slug": "giest",
+      "label": "Giest",
+      "cssVar": "--font-giest",
+      "family": "Giest"
+    },
+    {
+      "slug": "giest-mono",
+      "label": "Giest Mono",
+      "cssVar": "--font-giest-mono",
+      "family": "Giest Mono"
+    },
+    {
+      "slug": "kh-hekto-lut",
+      "label": "KH Hekto Lut",
+      "cssVar": "--font-kh-hekto-lut",
+      "family": "KH Hekto Lut"
+    },
+    {
+      "slug": "kh-hekto-plan",
+      "label": "KH Hekto Plan",
+      "cssVar": "--font-kh-hekto-plan",
+      "family": "KH Hekto Plan"
+    },
+    {
+      "slug": "lock-serif",
+      "label": "Lock Serif",
+      "cssVar": "--font-lock-serif",
+      "family": "Lock Serif"
+    },
+    {
+      "slug": "maple-mono",
+      "label": "Maple Mono",
+      "cssVar": "--font-maple-mono",
+      "family": "Maple Mono"
+    }
+  ]
+}

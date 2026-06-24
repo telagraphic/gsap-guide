@@ -1,0 +1,39 @@
+/* Text Tuner — components/select-row.css (migrated from playground-v2.css) */
+
+/* Inline label + select (Ease, Animate — matches track slider row) */
+.tt-select-row {
+  display: flex;
+  align-items: center;
+  gap: var(--tt-space-2);
+  height: var(--tt-control-height);
+  padding: 0 var(--tt-control-inset-x);
+  border-radius: var(--tt-radius-md);
+  background: var(--tt-bg-input);
+  /* box-shadow: var(--tt-shadow-control); */
+}
+
+.tt-select-row__label {
+  flex-shrink: 0;
+  min-width: 4.5rem;
+  font-size: var(--tt-label-size);
+  font-weight: var(--tt-label-weight);
+  letter-spacing: var(--tt-label-tracking);
+  text-transform: uppercase;
+  color: var(--tt-text-muted);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.tt-select-row:focus-within {
+  box-shadow:
+    var(--tt-shadow-control-hover),
+    0 0 0 2px var(--tt-accent-ring);
+}
+
+.tt-select-row .tt-select--row {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23525252' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right center;
+  cursor: pointer;
+  appearance: none;
+}

@@ -1,0 +1,34 @@
+/**
+ * Canvas typography — consumer snippet for live Type tab preview with SplitText.
+ * Import alongside your layout CSS and fonts.css.
+ *
+ * @see migration-refactor/CANVAS_TYPOGRAPHY.md
+ */
+
+.split-target,
+[data-playground] {
+  font-family: var(--font-sans-serif);
+  font-size: var(--playground-font-size);
+  font-weight: 400;
+  line-height: var(--playground-line-height);
+  letter-spacing: var(--playground-letter-spacing);
+  text-align: var(--playground-text-align);
+  text-transform: var(--playground-text-transform);
+}
+
+/* SplitText may bake font-size inline — inherit live vars from scoped target */
+[data-playground] .word,
+[data-playground] .line,
+[data-playground] .char,
+.split-target .word,
+.split-target .line,
+.split-target .char {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit !important;
+  font-style: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+}

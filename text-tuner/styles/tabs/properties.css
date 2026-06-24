@@ -1,0 +1,36 @@
+/* Text Tuner — tabs/properties.css (migrated from playground-v2.css) */
+
+.tt-stagger-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tt-space-5);
+  margin-top: 0;
+}
+
+.tt-stagger-block > .tt-field-block {
+  margin-bottom: 0;
+}
+
+.tt-stagger-block > .tt-field {
+  margin-bottom: 0;
+}
+
+.tt-stagger-timing-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--tt-space-2);
+}
+
+.tt-stagger-timing-row > .tt-field-block {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.tt-stagger-timing-row.is-timing-amount > .tt-track-slider:last-child {
+  opacity: 0.45;
+}
+
+.tt-stagger-timing-row.is-timing-each > .tt-track-slider:first-child {
+  opacity: 0.45;
+}

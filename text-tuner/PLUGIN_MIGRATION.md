@@ -34,7 +34,7 @@ Consumers must install and load these **before** text-tuner:
 | Requirement | Implementation |
 |-------------|----------------|
 | No production panel | `productionEnabled: false` default; tree-shake or `import 'text-tuner/dev'` |
-| CSS not in prod bundle | Separate export: `text-tuner/styles.css` |
+| CSS not in prod bundle | Separate exports: `text-tuner/styles.css`, `text-tuner/canvas-typography.css` |
 | Runner optional in prod | Consumers paste **Copy code**; runner not required on production pages |
 
 Document: importing the panel in production throws or no-ops with a console warning.
@@ -43,11 +43,10 @@ Document: importing the panel in production throws or no-ops with a console warn
 
 | Format | Use case |
 |--------|----------|
-| **ESM** | `import { discover, define, attach } from 'text-tuner'` — Vite, webpack, etc. |
-| **UMD / IIFE** (optional) | Script tag CDN: `TextTuner.attach()` |
+| **ESM** (v3.0 only) | `import { discover, define, attach } from 'text-tuner'` — Vite, webpack, `<script type="module">` |
 | **CSS** | `import 'text-tuner/styles.css'` |
 
-v2 is script-tag first; v3 package should ship ESM as primary, UMD as optional for parity with v2 demos.
+v2 was script-tag / IIFE (`SplitTextPlaygroundV2`). v3.0 does **not** ship UMD. See [ADR-0007](./docs/adr/0007-esm-only-build.md).
 
 ### 1.4 Global vs named exports
 
@@ -58,7 +57,7 @@ v2 is script-tag first; v3 package should ship ESM as primary, UMD as optional f
 import { discover, define, attach, createSplitScrollRunner, convert } from 'text-tuner';
 ```
 
-Optional UMD build may attach `window.TextTuner` for non-bundler demos.
+Demos: `<script type="module" src="./main.js">`. No `window.TextTuner` global in v3.0.
 
 ### 1.5 GSAP plugin registration
 
@@ -128,7 +127,7 @@ text-tuner/
 ├── styles/
 │   └── text-tuner.css
 ├── examples/
-│   └── sample-playground/    # moved from split-text/playground-v2/examples
+│   └── sample-playground/    # canonical demo (4 instances)
 └── docs/
     ├── PLAYGROUND_V3_PRD.md
     ├── ACCEPTANCE_TESTS.md
@@ -190,7 +189,7 @@ Maps internally to single-entry registry. Deprecate in v4 docs, support through 
 - [ ] Move runner from `tuner/animation.js` → `text-tuner/src/runner/`
 - [ ] Move scaffold defaults → `text-tuner/src/schema/`
 - [ ] Implement `discover()`, `define()`, registry `attach()` in `text-tuner/src/`
-- [ ] Rename globals: `SplitTextPlaygroundV2` → `TextTuner` (or keep alias)
+- [ ] Sample playground uses `<script type="module">`; verify cold start & v2-style `attach({ init, defaults })` shim
 - [ ] Update `examples/sample-playground` to import from `../src` or local bundle
 - [ ] Verify v2 tuner still works via symlink or duplicate script until cutover
 
@@ -207,7 +206,7 @@ Maps internally to single-entry registry. Deprecate in v4 docs, support through 
     }
   }
   ```
-- [ ] Build step (esbuild / rollup): ESM + optional UMD
+- [ ] Build step (esbuild / rollup): ESM only
 - [ ] CSS copied to `dist/`
 - [ ] `peerDependencies`: gsap
 - [ ] README: install, peer deps, Club SplitText note, DEV-only
@@ -314,7 +313,7 @@ if (!isActive()) {
 | Panel shipped to prod | `productionEnabled: false`; build-time strip with `import.meta.env.DEV` |
 | Copy code / import drift | Single `export.js` + `convert/` share canonical template |
 | Breaking config schema | `__schema` + migrate on sessionStorage load |
-| v2 users broken | Alias `SplitTextPlaygroundV2.attach` → `TextTuner.attach` for one major |
+| v2 attach API | ESM shim: `attach({ init, defaults })` maps to single-entry InstanceManager (no global bundle) |
 
 ---
 

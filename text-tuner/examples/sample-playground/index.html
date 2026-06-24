@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Tuner — sample playground</title>
+    <link rel="stylesheet" href="../../fonts.css" />
+    <link rel="stylesheet" href="../../styles/canvas-typography.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Text Tuner panel styles (Phase 4) -->
+    <link rel="stylesheet" href="../../styles/text-tuner.css" />
+  </head>
+  <body>
+    <main class="page text-tuner-canvas">
+      <section class="frame frame--spacer" aria-label="Scroll spacer">
+        <p class="frame__copy">Scroll down. Four workflow demos + one non-playground footer.</p>
+      </section>
+
+      <section
+        class="frame"
+        data-playground-trigger="cold-start-lines"
+        aria-label="Workflow 1 — cold start"
+      >
+        <p class="frame__label">Workflow 1 · discover()</p>
+        <p class="frame__copy split-target" data-playground="cold-start-lines">
+          Cold start: only <code>data-playground</code> on this element. Config comes from
+          discover() scaffold defaults.
+        </p>
+      </section>
+
+      <section
+        class="frame"
+        data-playground-trigger="imported-paragraph"
+        aria-label="Workflow 2 — import"
+      >
+        <p class="frame__label">Workflow 2 · import → apply</p>
+        <p class="frame__copy split-target" data-playground="imported-paragraph">
+          Import tab: paste canonical spaghetti, Convert, Apply. This instance uses a define()
+          block that matches what Apply would write to in-memory config.
+        </p>
+      </section>
+
+      <section
+        class="frame"
+        data-playground-trigger="config-header"
+        aria-label="Workflow 3 — config"
+      >
+        <p class="frame__label">Workflow 3 · define()</p>
+        <h2 class="frame__title split-target" data-playground="config-header">
+          Config header reveal
+        </h2>
+      </section>
+
+      <section
+        class="frame"
+        data-playground-trigger="char-reveal"
+        aria-label="Workflow 4 — chars split"
+      >
+        <p class="frame__label">Workflow 4 · chars (AT-033d)</p>
+        <p class="frame__copy split-target" data-playground="char-reveal">
+          Character split for typography contract testing.
+        </p>
+      </section>
+
+      <footer class="site-footer" aria-label="Non-playground footer">
+        <p class="site-footer__copy">
+          No data-playground — production spaghetti could animate this separately.
+        </p>
+      </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+
+    <!-- Panel + registry ship from text-tuner src (Phase 3) -->
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

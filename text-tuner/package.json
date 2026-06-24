@@ -1,0 +1,59 @@
+{
+  "name": "text-tuner",
+  "version": "0.1.0",
+  "description": "Dev-only SplitText + ScrollTrigger tuning panel for GSAP (ESM)",
+  "private": true,
+  "type": "module",
+  "types": "./index.d.ts",
+  "bin": {
+    "text-tuner": "./bin/text-tuner.mjs",
+    "text-tuner-convert": "./bin/text-tuner-convert.mjs"
+  },
+  "files": [
+    "src",
+    "styles",
+    "fonts",
+    "fonts.css",
+    "fonts.manifest.json",
+    "bin",
+    "scripts",
+    "index.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./schema": "./src/schema/index.js",
+    "./runner": "./src/runner/index.js",
+    "./panel": "./src/panel/index.js",
+    "./styles": "./styles/text-tuner.css",
+    "./styles.css": "./styles/text-tuner.css",
+    "./canvas-typography.css": "./styles/canvas-typography.css",
+    "./fonts.css": "./fonts.css",
+    "./fonts.manifest.json": "./fonts.manifest.json",
+    "./convert": "./src/convert/index.js"
+  },
+  "peerDependencies": {
+    "gsap": ">=3.12.0"
+  },
+  "peerDependenciesMeta": {
+    "gsap": {
+      "optional": false
+    }
+  },
+  "scripts": {
+    "test": "node --test tests/**/*.test.js",
+    "demo": "npx --yes serve . -p 3000",
+    "fonts:generate": "node scripts/generate-preview-fonts.mjs",
+    "fonts:generate:full": "node scripts/generate-preview-fonts.mjs --dir examples/fonts-full/fonts --out-css examples/fonts-full/fonts.css --out-manifest examples/fonts-full/fonts.manifest.json"
+  },
+  "keywords": [
+    "gsap",
+    "split-text",
+    "scroll-trigger",
+    "animation",
+    "dev-tools"
+  ],
+  "license": "UNLICENSED"
+}

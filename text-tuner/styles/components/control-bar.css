@@ -1,0 +1,57 @@
+/* Text Tuner — components/control-bar.css (migrated from playground-v2.css) */
+
+/* Select / text bar — matches track slider chrome */
+.tt-control-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--tt-control-height);
+  border: 0;
+  border-radius: var(--tt-radius-md);
+  background: var(--tt-bg-input);
+  /* box-shadow: var(--tt-shadow-control); */
+  overflow: hidden;
+}
+
+.tt-control-bar__label {
+  position: absolute;
+  left: var(--tt-control-inset-x);
+  z-index: 1;
+  pointer-events: none;
+  font-size: var(--tt-label-size);
+  font-weight: var(--tt-label-weight);
+  letter-spacing: var(--tt-label-tracking);
+  text-transform: uppercase;
+  color: var(--tt-text-muted);
+  line-height: 1;
+}
+
+.tt-control-bar .tt-input {
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0 var(--tt-control-inset-x) 0 5.5rem;
+}
+
+.tt-control-bar .tt-input:focus {
+  box-shadow: none;
+  background: transparent;
+}
+
+.tt-control-bar--value-only .tt-input {
+  padding: 0 var(--tt-control-inset-x);
+  font-family: var(--tt-font-mono);
+  font-size: var(--tt-font-size-sm);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.tt-control-bar--value-only .tt-input::placeholder {
+  color: var(--tt-text-subtle);
+  font-weight: 400;
+}

@@ -1,0 +1,30 @@
+/* Panel chrome fonts — shipped with text-tuner; independent of consumer fonts/ */
+
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/panel/Geist-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/panel/Geist-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("./fonts/panel/GeistMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+#text-tuner-panel {
+  --tt-font: "Geist", system-ui, sans-serif;
+  --tt-font-mono: "Geist Mono", ui-monospace, monospace;
+}

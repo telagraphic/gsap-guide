@@ -1,0 +1,32 @@
+/* Text Tuner — base.css (migrated from playground-v2.css) */
+
+.tt-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.tt-section-title {
+  margin: var(--tt-space-6) 0 var(--tt-space-3);
+  font-size: var(--tt-font-size-sm);
+  font-weight: var(--tt-label-weight);
+  letter-spacing: var(--tt-label-tracking);
+  text-transform: uppercase;
+  /* color: var(--tt-text-muted); */
+  line-height: 1;
+}
+
+.tt-section-title:first-child {
+  margin-top: 0;
+}
+
+.tt-section-title--prop {
+  display: block;
+  margin: 0;
+}
