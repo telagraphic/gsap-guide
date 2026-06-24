@@ -32,6 +32,10 @@ await attach({ storageKey: "my-project", fontsManifest: "./fonts.manifest.json" 
 
 Copy the starter font pack from `node_modules/text-tuner/fonts/` — see [ADDING_FONTS.md](./migration-refactor/ADDING_FONTS.md).
 
+### Playgrounds (local sandboxes)
+
+For client work and experiments, use a separate folder under [`playgrounds/`](../playgrounds/) — not `examples/`. See [docs/PLAYGROUNDS.md](./docs/PLAYGROUNDS.md).
+
 ## Package exports (ESM)
 
 | Import | Path |
@@ -55,6 +59,7 @@ Types: `index.d.ts` (JSDoc-aligned stubs, ADR-0009).
 | [PLAYGROUND_V3_PRD.md](./PLAYGROUND_V3_PRD.md) | Locked requirements |
 | [issues/QUEUE.md](./issues/QUEUE.md) | Implementation queue |
 | [PLUGIN_MIGRATION.md](./PLUGIN_MIGRATION.md) | npm consumer checklist |
+| [docs/PLAYGROUNDS.md](./docs/PLAYGROUNDS.md) | User sandboxes + existing codebase intake |
 | [ACCEPTANCE_TESTS.md](./ACCEPTANCE_TESTS.md) | Manual QA scenarios |
 | [docs/adr/](./docs/adr/) | Architectural decisions |
 

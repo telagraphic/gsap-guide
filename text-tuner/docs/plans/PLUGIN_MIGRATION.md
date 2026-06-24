@@ -232,6 +232,7 @@ Maps internally to single-entry registry. Deprecate in v4 docs, support through 
 
 ### Phase E — Consumer migration doc
 
+- [x] Playgrounds + existing codebase intake — [docs/PLAYGROUNDS.md](./docs/PLAYGROUNDS.md), [playgrounds/](../playgrounds/)
 - [ ] “Replace DEV block” one-pager for existing v2 users
 - [ ] Codemod or find-replace: `SplitTextPlaygroundV2` → `TextTuner`
 - [ ] Final output doc: **Copy code** = production spaghetti (unchanged contract)

@@ -1,5 +1,7 @@
 # Text Tuner examples
 
+**Maintainer-only.** User and client sandboxes live in [`playgrounds/`](../../playgrounds/) at the repo root — see [docs/PLAYGROUNDS.md](../docs/PLAYGROUNDS.md).
+
 ## Sample playground (primary demo)
 
 ```bash
